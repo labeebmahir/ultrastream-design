@@ -1,6 +1,8 @@
 # UltraStream design
 
-The UltraStream design file, in plain HTML, CSS and JavaScript. There is no framework and no build step. Each screen is one HTML page, and tickets link to the page that shows the design.
+The UltraStream design file, in plain HTML, CSS and JavaScript. There is no framework and no build step. Tickets link to the prototype that shows the design.
+
+Live site: https://labeebmahir.github.io/ultrastream-design/
 
 ## Run it
 
@@ -8,26 +10,32 @@ Open `index.html` in a browser. To serve it locally instead, run `npx serve` in 
 
 ## Layout
 
-| Folder | What's in it |
-|---|---|
-| `app/` | Mobile app screens (phone size) |
-| `admin/` | Admin panel screens (desktop) |
-| `web/` | Public website pages |
-| `assets/css/` | `base.css` holds shared tokens and components; `app.css` and `admin.css` are per surface |
-| `assets/js/` | `data.js` holds placeholder data, `store.js` holds demo state and rules, `proto-bar.js` is the review toolbar |
-| `assets/vendor/` | jsPDF, used for the downloadable report |
+| Folder | What's in it | Link |
+|---|---|---|
+| `index.html` | List of all prototypes | `/` |
+| `app/` | The current app, rebuilt screen by screen, without unreleased features | `/app/` |
+| `prototypes/<feature>/` | One feature's prototype: its own pages, scripts, styles and placeholder data | `/prototypes/<feature>/` |
+| `assets/` | Shared by everything: `css/` tokens and components, `js/app.js` content and feed, `img/` logo | |
 
-## Adding a screen or feature
+Figma is for reference only, and new design work happens here. Screens follow the open-source shadcn/ui kit used in Figma, so use the tokens and components in `assets/css/base.css` instead of new colours or fonts.
 
-1. Add a page in `app/`, `admin/` or `web/`, copying the `<head>` and script tags from a page beside it.
-2. Use the tokens and components in `assets/css/base.css` instead of new colours or fonts. The app's components come from the open-source shadcn/ui kit, so follow its patterns for anything new.
-3. Keep placeholder data in `data.js` and label it as a placeholder on screen.
-4. Add the page to the links in `assets/js/proto-bar.js` and `index.html`.
-5. Link the page in the ticket.
+## Adding a prototype
 
-The Figma file is for reference only. New design work happens here.
+1. Create a branch for the feature. Unfinished work stays off the live site until it's merged into `main`.
+2. Add `prototypes/<feature>/` with an `index.html`, using `prototypes/billboard/` as the example.
+3. Keep anything only this feature needs inside its folder. Don't change `app/` for a feature that hasn't shipped.
+4. Label placeholder data as placeholder on screen.
+5. Add it to the list in the top-level `index.html`.
+6. Merge into `main`, then put its link on the ticket. Never move or rename the folder after that, because the link would break.
+
+## When a prototype is agreed or ships
+
+- **Agreed:** copy the files it uses from `assets/` into its folder and point its pages at those copies, so later style changes can't alter what was agreed.
+- **Shipped:** add the feature to `app/` and keep the prototype folder as the record.
 
 ## Status
 
-- **Billboard (first release):** prototype ready for review.
-- **Rest of the app:** to be rebuilt here from the Figma reference.
+| Work | Status |
+|---|---|
+| Billboard, first release | In review |
+| Rebuilt app | In progress: Discover and the video page |

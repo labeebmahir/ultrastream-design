@@ -46,7 +46,6 @@
     return d;
   };
 
-  US.esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   US.fmtDate = (d) => d.toLocaleDateString("en-AU", { day: "numeric", month: "short", year: "numeric" });
   US.fmtMoney = (n) => "A$" + n.toLocaleString("en-AU");
   US.fmtNum = (n) => n.toLocaleString("en-AU");
@@ -158,16 +157,6 @@
         <span class="ad__cta">Learn more ↗</span>
       </span>
     </${tag}>`;
-  };
-
-  US.toast = (message) => {
-    document.querySelector(".toast")?.remove();
-    const el = document.createElement("div");
-    el.className = "toast";
-    el.setAttribute("role", "status");
-    el.textContent = message;
-    document.body.append(el);
-    setTimeout(() => el.remove(), 3200);
   };
 
   // Re-render other open tabs when demo state changes there.

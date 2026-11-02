@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="data:,">
+  <title>UltraStream design prototypes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="css/billboard.css">
+  <style>
+    .page { max-width: 880px; margin: 0 auto; padding: 40px 16px 72px; }
+    .back-link { color: var(--text-2); text-decoration: none; font-size: 14px; }
+    .page h1 { font-size: 34px; margin: 12px 0 8px; }
+    .lede { color: var(--text-2); font-size: 16px; margin: 0 0 28px; }
+    .page h2 { font-size: 19px; margin: 34px 0 12px; }
+    .step { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 14px; margin-bottom: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); text-decoration: none; }
+    .step:hover { border-color: var(--border-orange); }
+    .step__n { display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: var(--orange-dim); color: var(--orange); font-weight: 700; }
+    .step strong { display: block; }
+    .step small { display: block; color: var(--text-2); font-size: 14px; }
+    .page ul { padding-left: 20px; color: var(--text-2); margin: 0; }
+    .page li { margin-bottom: 6px; }
+    @media (max-width: 560px) { .step { grid-template-columns: 34px minmax(0, 1fr); } .step .tag { grid-column: 2; justify-self: start; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <a class="back-link" href="../../index.html">← All prototypes</a>
+    <h1>Billboard: first release prototype</h1>
+    <p class="lede">Follow the campaign from enquiry to report. Brands never use the app: sales handles the brand, admin creates the campaign, and the system publishes and stops it.</p>
+
+    <a class="step" href="web/advertise.html">
+      <span class="step__n">1</span><span><strong>Advertiser enquiry page</strong><small>A brand asks about advertising at ultrastream.one/advertise.</small></span><span class="tag">Desktop</span>
+    </a>
+    <a class="step" href="admin/campaign-new.html">
+      <span class="step__n">2</span><span><strong>Admin: Create campaign</strong><small>Once paid, admin adds the creative, link, package and start date.</small></span><span class="tag">Desktop</span>
+    </a>
+    <a class="step" href="app/discover.html">
+      <span class="step__n">3</span><span><strong>The four ad types in Discover</strong><small>Prime Billboard (Normal and Prime Time), Prime Banner and Standard Banner.</small></span><span class="tag">Phone</span>
+    </a>
+    <a class="step" href="admin/campaigns.html">
+      <span class="step__n">4</span><span><strong>Admin: Campaign list</strong><small>Grouped by scheduled, live and ended.</small></span><span class="tag">Desktop</span>
+    </a>
+    <a class="step" href="admin/report.html?id=c7">
+      <span class="step__n">5</span><span><strong>End-of-campaign PDF report</strong><small>Period, package and cost, impressions, clicks and click-through rate.</small></span><span class="tag">Desktop</span>
+    </a>
+
+    <h2>Try the whole flow</h2>
+    <ul>
+      <li>Create a campaign that starts tomorrow, then find it under Scheduled.</li>
+      <li>Use <strong>Demo time</strong> at the top of the page to move forward a day. It goes live and appears in Discover.</li>
+      <li>Move forward until the package ends. It moves to Ended and its PDF report becomes available.</li>
+      <li>Press <strong>Reset</strong> to start again. Your changes stay in your own browser.</li>
+    </ul>
+
+    <h2>What's real and what isn't</h2>
+    <ul>
+      <li>Package names, prices, durations, prime-time hours and creative specs are placeholders.</li>
+      <li>Advertisers and results are made up. Results are simulated, plus any views and clicks you make here.</li>
+      <li>App and admin styling is approximate and will be matched to the current design.</li>
+      <li>The enquiry form sends nothing.</li>
+    </ul>
+  </main>
+
+  <script src="../../assets/js/app.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/proto-bar.js"></script>
+</body>
+</html>

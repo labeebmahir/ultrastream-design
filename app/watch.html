@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
   <link rel="icon" href="data:,">
-  <title>Watch – UltraStream prototype</title>
+  <title>Watch – UltraStream design</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/base.css">
@@ -37,28 +37,11 @@
           <button class="pill-btn" type="button" aria-label="Report"><svg class="icon" viewBox="0 0 24 24"><path d="M4 22V4s1-1 4-1 5 2 8 2 4-1 4-1v11s-1 1-4 1-5-2-8-2-4 1-4 1"/></svg></button>
         </div>
         <div class="description">Placeholder description for this prototype.</div>
-        <p class="note">Billboard rule: no ads on this screen. Ads appear only in the Discover feed, never during a video or live stream.</p>
       </section>
     </main>
   </div>
 
-  <script src="../assets/js/data.js"></script>
-  <script src="../assets/js/store.js"></script>
-  <script src="../assets/js/proto-bar.js"></script>
-  <script>
-    const params = new URLSearchParams(location.search);
-    const live = params.has("live");
-    const item = US.CONTENT.find((c) => c.id === params.get("id")) || US.CONTENT[0];
-    const player = document.getElementById("player");
-    player.style.background = `linear-gradient(135deg,hsl(${item.hue} 55% 32%),hsl(${(item.hue + 50) % 360} 65% 18%))`;
-    if (live) player.innerHTML = '<span class="thumb-pill thumb-pill--left">Live</span><span class="thumb-pill thumb-pill--right">12.5k</span>';
-    document.getElementById("title").textContent = item.title;
-    document.getElementById("sub").textContent = live ? "Live now" : `${item.views} views • ${item.age}`;
-    document.getElementById("channel").textContent = item.channel;
-    document.getElementById("handle").textContent = "@" + item.channel.toLowerCase();
-    const avatar = document.getElementById("avatar");
-    avatar.textContent = item.channel[0];
-    avatar.style.background = `hsl(${item.hue} 70% 70%)`;
-  </script>
+  <script src="../assets/js/app.js"></script>
+  <script>US.renderWatch();</script>
 </body>
 </html>

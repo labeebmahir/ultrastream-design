@@ -8,7 +8,8 @@
   <title>Advertise – UltraStream prototype</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../../../assets/css/base.css">
+  <link rel="stylesheet" href="../css/billboard.css">
   <style>
     /* Public website: keeps the ultrastream.one look rather than the app's */
     :root { --orange: #ff5c00; --orange-hover: #e05200; --input: rgba(255, 255, 255, 0.15); --font-display: "Space Grotesk", system-ui, sans-serif; }
@@ -119,9 +120,10 @@
   </main>
   <footer>Prototype of ultrastream.one/advertise. Nothing entered here is sent or saved.</footer>
 
-  <script src="../assets/js/data.js"></script>
-  <script src="../assets/js/store.js"></script>
-  <script src="../assets/js/proto-bar.js"></script>
+  <script src="../../../assets/js/app.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/store.js"></script>
+  <script src="../js/proto-bar.js"></script>
   <script>
     const val = (id) => document.getElementById(id).value.trim();
     const mark = (id, bad) => { document.getElementById(id).classList.toggle("field--invalid", bad); return bad; };

@@ -1,6 +1,6 @@
 // Review toolbar shown on every prototype page, with a demo clock to move campaigns through their states.
 (function () {
-  const root = document.currentScript.src.replace(/assets\/js\/proto-bar\.js.*$/, "");
+  const root = document.currentScript.src.replace(/js\/proto-bar\.js.*$/, "");
   const here = location.href.split(/[?#]/)[0];
   const links = [
     ["Overview", "index.html"],
