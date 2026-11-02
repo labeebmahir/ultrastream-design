@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="data:,">
+  <title>Campaign report – UltraStream admin prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body>
+  <div class="admin">
+    <aside class="side">
+      <span class="logo">Ultra<span>Stream</span></span>
+      <a class="side__link side__link--on" href="campaigns.html">Campaigns</a>
+      <div class="side__other">Existing admin sections go here</div>
+    </aside>
+    <main class="main report">
+      <a class="crumb" href="campaigns.html">← Campaigns</a>
+      <div id="content"></div>
+    </main>
+  </div>
+
+  <script src="../assets/vendor/jspdf.umd.min.js"></script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/proto-bar.js"></script>
+  <script>
+    const id = new URLSearchParams(location.search).get("id");
+    const FOOTNOTE = "Prototype: placeholder package and cost, simulated results.";
+
+    function render() {
+      const c = US.campaign(id);
+      const box = document.getElementById("content");
+      if (!c) {
+        box.innerHTML = `<div class="empty">This campaign wasn't found. Press Reset or go back to Campaigns.</div>`;
+        return;
+      }
+      if (US.status(c) !== "ended") {
+        box.innerHTML = `<div class="empty">The report for ${US.esc(c.advertiser)} will be available when the campaign ends, after ${US.fmtDate(US.lastDay(c))}.</div>`;
+        return;
+      }
+      const m = US.metrics(c);
+      box.innerHTML = `
+        <div class="head"><h1>Campaign report</h1><button class="btn btn--primary" type="button" id="download">Download PDF</button></div>
+        <p class="sub">This report can be shared with the brand.</p>
+        <article class="sheet">
+          <span class="logo">Ultra<span>Stream</span></span>
+          <h2>${US.esc(c.advertiser)}</h2>
+          <p class="sheet__sub">End-of-campaign report</p>
+          <table class="sheet__rows">
+            <tr><td>Campaign period</td><td>${US.period(c)}</td></tr>
+            <tr><td>Package</td><td>${US.esc(US.packageName(c))}</td></tr>
+            <tr><td>Package cost</td><td>${US.fmtMoney(US.cost(c))}</td></tr>
+          </table>
+          <div class="stats">
+            <div class="stat"><span class="stat__num">${US.fmtNum(m.impressions)}</span><span class="stat__label">Impressions</span></div>
+            <div class="stat"><span class="stat__num">${US.fmtNum(m.clicks)}</span><span class="stat__label">Clicks</span></div>
+            <div class="stat"><span class="stat__num">${US.fmtPct(m.ctr)}</span><span class="stat__label">Click-through rate</span></div>
+          </div>
+          <p class="sheet__foot">${FOOTNOTE}</p>
+        </article>`;
+      document.getElementById("download").addEventListener("click", () => downloadPdf(c, m));
+    }
+
+    function downloadPdf(c, m) {
+      const doc = new window.jspdf.jsPDF({ unit: "pt", format: "a4" });
+      const left = 56;
+      const right = 539;
+      const ink = [22, 22, 22];
+      const muted = [92, 92, 92];
+
+      doc.setFont("helvetica", "bold").setFontSize(18).setTextColor(...ink).text("Ultra", left, 72);
+      doc.setTextColor(255, 92, 0).text("Stream", left + doc.getTextWidth("Ultra"), 72);
+      doc.setFontSize(26).setTextColor(...ink).text(doc.splitTextToSize(c.advertiser, right - left)[0], left, 130);
+      doc.setFont("helvetica", "normal").setFontSize(13).setTextColor(...muted).text("End-of-campaign report", left, 152);
+
+      let y = 196;
+      [["Campaign period", US.period(c)], ["Package", US.packageName(c)], ["Package cost", US.fmtMoney(US.cost(c))]].forEach(([k, v]) => {
+        doc.setDrawColor(228).line(left, y - 18, right, y - 18);
+        doc.setFont("helvetica", "normal").setFontSize(12).setTextColor(...muted).text(k, left, y);
+        doc.setFont("helvetica", "bold").setTextColor(...ink).text(v.replace("–", "-").replace("·", "-"), right, y, { align: "right" });
+        y += 36;
+      });
+
+      y += 8;
+      const gap = 12;
+      const w = (right - left - gap * 2) / 3;
+      [[US.fmtNum(m.impressions), "Impressions"], [US.fmtNum(m.clicks), "Clicks"], [US.fmtPct(m.ctr), "Click-through rate"]].forEach(([num, label], i) => {
+        const x = left + i * (w + gap);
+        doc.setFillColor(244).roundedRect(x, y, w, 84, 6, 6, "F");
+        doc.setFont("helvetica", "bold").setFontSize(21).setTextColor(...ink).text(num, x + 14, y + 40);
+        doc.setFont("helvetica", "normal").setFontSize(11).setTextColor(...muted).text(label, x + 14, y + 62);
+      });
+
+      doc.setFontSize(10).setTextColor(...muted).text(FOOTNOTE, left, y + 118);
+      const slug = c.advertiser.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+      doc.save(`ultrastream-report-${slug || "campaign"}-${c.start}.pdf`);
+    }
+
+    render();
+    document.addEventListener("us:change", render);
+  </script>
+</body>
+</html>

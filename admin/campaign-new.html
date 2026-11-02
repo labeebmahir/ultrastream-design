@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="data:,">
+  <title>Create campaign – UltraStream admin prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body>
+  <div class="admin">
+    <aside class="side">
+      <span class="logo">Ultra<span>Stream</span></span>
+      <a class="side__link side__link--on" href="campaigns.html">Campaigns</a>
+      <div class="side__other">Existing admin sections go here</div>
+    </aside>
+    <main class="main">
+      <a class="crumb" href="campaigns.html">← Campaigns</a>
+      <div class="head"><h1>Create campaign</h1></div>
+      <p class="sub">Create a campaign once sales has confirmed payment and received the brand's assets.</p>
+
+      <form id="form" class="form-grid" novalidate>
+        <div>
+          <section class="panel">
+            <h2>Advertiser</h2>
+            <label class="field" id="f-advertiser">
+              <span class="field__label">Advertiser name</span>
+              <input class="input" id="advertiser" autocomplete="off">
+              <span class="field__error">Enter the advertiser's name.</span>
+            </label>
+          </section>
+
+          <section class="panel">
+            <h2>Package <span class="tag tag--placeholder">Placeholder names, prices and durations</span></h2>
+            <div class="field">
+              <span class="field__label" id="type-label">Ad type</span>
+              <div class="options" id="types" role="radiogroup" aria-labelledby="type-label"></div>
+            </div>
+            <div class="field" style="margin-bottom:0">
+              <span class="field__label" id="dur-label">Duration</span>
+              <div class="options options--3" id="durations" role="radiogroup" aria-labelledby="dur-label"></div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <h2>Creative</h2>
+            <div class="field" id="f-creative">
+              <span class="field__label">Creative image</span>
+              <div class="dropzone">
+                <label class="btn" for="file">Upload image</label>
+                <input id="file" type="file" accept="image/*" hidden>
+                <button class="btn" type="button" id="sample">Use a sample</button>
+                <span class="cell-sub" id="file-name">Nothing added yet</span>
+              </div>
+              <span class="field__hint" id="spec"></span>
+              <span class="field__error">Add a creative.</span>
+            </div>
+            <label class="field" id="f-url" style="margin-bottom:0">
+              <span class="field__label">Click-through link</span>
+              <input class="input" id="url" type="url" inputmode="url" placeholder="https://" autocomplete="off">
+              <span class="field__error">Enter a full link starting with https://</span>
+            </label>
+          </section>
+
+          <section class="panel">
+            <h2>Schedule</h2>
+            <label class="field" id="f-start">
+              <span class="field__label">Start date</span>
+              <input class="input" id="start" type="date" style="max-width:220px">
+              <span class="field__hint">The ad publishes automatically at the start of this date and stops when the package ends.</span>
+              <span class="field__error">Choose a start date after today.</span>
+            </label>
+            <div class="field" id="f-confirm" style="margin-bottom:0">
+              <label class="check">
+                <input id="confirm" type="checkbox">
+                <span>Sales has confirmed payment and the assets are complete. I understand this campaign can't be stopped once it's live.</span>
+              </label>
+              <span class="field__error">Confirm this before scheduling.</span>
+            </div>
+          </section>
+        </div>
+
+        <aside class="panel summary">
+          <h2>How it will look</h2>
+          <div class="preview-phone" id="preview"></div>
+          <dl id="summary"></dl>
+          <p class="note" id="overlap" hidden></p>
+          <div class="actions">
+            <button class="btn btn--primary" type="submit">Schedule campaign</button>
+            <a class="btn" href="campaigns.html">Cancel</a>
+          </div>
+        </aside>
+      </form>
+    </main>
+  </div>
+
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/proto-bar.js"></script>
+  <script src="../assets/js/campaign-new.js"></script>
+</body>
+</html>

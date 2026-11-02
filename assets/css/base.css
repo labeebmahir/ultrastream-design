@@ -1,0 +1,88 @@
+/* Tokens from ultrastream.one. Compare against the app when Figma or code access arrives. */
+:root {
+  --black: #0a0a0a;
+  --surface: #111111;
+  --surface-2: #1a1a1a;
+  --surface-3: #2a2a2a;
+  --white: #ffffff;
+  --text: #f2f2f2;
+  --text-2: #a8a8a8;
+  --text-3: #808080;
+  --orange: #ff5c00;
+  --orange-hover: #e05200;
+  --orange-dim: rgba(255, 92, 0, 0.12);
+  --border: rgba(255, 255, 255, 0.09);
+  --border-orange: rgba(255, 92, 0, 0.35);
+  --green: #4ade80;
+  --red: #f87171;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --bar-h: 44px;
+}
+
+* { box-sizing: border-box; }
+html { color-scheme: dark; }
+body { margin: 0; background: var(--black); color: var(--text); font: 15px/1.5 var(--font-body); }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; margin: 0; }
+a { color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+img { display: block; max-width: 100%; }
+:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+
+.logo { font: 700 18px var(--font-display); color: var(--white); text-decoration: none; }
+.logo span { color: var(--orange); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 40px; padding: 8px 16px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface-2); text-decoration: none; font-weight: 600; font-size: 14px; cursor: pointer; }
+.btn:hover { background: var(--surface-3); }
+.btn--primary { background: var(--orange); border-color: var(--orange); color: #111; }
+.btn--primary:hover { background: var(--orange-hover); }
+.btn--sm { min-height: 32px; padding: 4px 10px; font-size: 13px; }
+
+.field { display: block; margin-bottom: 18px; }
+.field__label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+.field__hint { display: block; color: var(--text-2); font-size: 13px; margin-top: 6px; }
+.field__error { display: none; color: var(--red); font-size: 13px; margin-top: 6px; }
+.field--invalid .field__error { display: block; }
+.field--invalid .input { border-color: var(--red); }
+.input { width: 100%; min-height: 44px; padding: 10px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); }
+textarea.input { min-height: 110px; resize: vertical; }
+.opt { color: var(--text-3); font-weight: 400; }
+
+.tag { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; background: var(--surface-3); color: var(--text-2); }
+.tag--placeholder { background: var(--orange-dim); color: var(--orange); }
+.note { padding: 12px 14px; border: 1px solid var(--border-orange); border-radius: var(--radius-sm); background: var(--orange-dim); font-size: 14px; }
+
+/* Prototype bar: review tooling, not part of the product */
+.proto-bar { position: sticky; top: 0; z-index: 50; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; min-height: var(--bar-h); padding: 6px 16px; background: #24140a; border-bottom: 1px solid var(--border-orange); font-size: 13px; }
+.proto-bar__label { font-weight: 700; color: var(--orange); white-space: nowrap; }
+.proto-bar__nav { display: flex; flex-wrap: wrap; gap: 2px 12px; }
+.proto-bar__nav a { text-decoration: none; color: var(--text-2); padding: 4px 0; white-space: nowrap; }
+.proto-bar__nav a:hover, .proto-bar__nav a[aria-current] { color: var(--white); }
+.proto-bar__time { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-left: auto; }
+.proto-bar__time input { min-height: 30px; padding: 2px 6px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; font-size: 13px; }
+.proto-bar__time button { min-height: 30px; padding: 2px 8px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px; font-size: 12px; cursor: pointer; white-space: nowrap; }
+.proto-bar__time button:hover { background: var(--surface-3); }
+
+@media (max-width: 480px) {
+  .proto-bar { padding: 4px 12px; }
+  .proto-bar__nav a:not(:first-child), .proto-bar__time label, .proto-bar__time [data-reset] { display: none; }
+  .proto-bar__time { flex-wrap: nowrap; width: 100%; margin-left: 0; }
+  .proto-bar__time input { flex: 1; min-width: 0; font-size: 12px; }
+}
+
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 60; max-width: calc(100vw - 32px); padding: 10px 16px; background: var(--white); color: #111; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); }
+
+/* Ad components, shared by the feed and the Create campaign preview */
+.ad { display: block; text-decoration: none; background: var(--surface); }
+.ad__media { display: block; width: 100%; object-fit: cover; background: var(--surface-2); }
+.ad__meta { display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 13px; }
+.ad__name { font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ad__cta { margin-left: auto; color: var(--orange); font-weight: 600; white-space: nowrap; }
+.sponsored { flex: none; padding: 1px 6px; border: 1px solid var(--text-3); border-radius: 4px; color: var(--text-2); font-size: 11px; font-weight: 600; }
+.ad--billboard .ad__media { aspect-ratio: 16 / 9; }
+.ad--prime-banner { margin: 10px 12px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+.ad--prime-banner .ad__media { aspect-ratio: 3 / 1; }
+.ad--standard { margin: 6px 12px 14px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+.ad--standard .ad__media { aspect-ratio: 4 / 1; }

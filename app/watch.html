@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="data:,">
+  <title>Watch – UltraStream prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+</head>
+<body>
+  <div class="stage">
+    <main class="phone" aria-label="Watch">
+      <header class="topbar">
+        <a class="btn btn--sm" href="discover.html">← Discover</a>
+      </header>
+      <div class="player" id="player"><span class="player__play" aria-hidden="true">▶</span></div>
+      <section class="watch">
+        <h1 id="title"></h1>
+        <div class="card__sub" id="sub"></div>
+        <div class="watch__actions">
+          <button class="btn btn--sm" type="button">Like</button>
+          <button class="btn btn--sm" type="button">Follow</button>
+          <button class="btn btn--sm btn--primary" type="button">Reward</button>
+        </div>
+        <p class="note">Billboard rule: no ads on this screen. Ads appear only in the Discover feed, never during a video or live stream.</p>
+      </section>
+    </main>
+  </div>
+
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/proto-bar.js"></script>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const live = params.has("live");
+    const item = US.CONTENT.find((c) => c.id === params.get("id")) || US.CONTENT[0];
+    document.getElementById("player").style.background = `linear-gradient(135deg,hsl(${item.hue} 55% 32%),hsl(${(item.hue + 50) % 360} 65% 18%))`;
+    if (live) document.getElementById("player").insertAdjacentHTML("afterbegin", '<span class="player__live">LIVE</span>');
+    document.getElementById("title").textContent = live ? "Live now: " + item.title : item.title;
+    document.getElementById("sub").textContent = `${item.channel} · ${live ? "1.2K watching" : item.views + " views · " + item.age}`;
+  </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="data:,">
+  <title>Discover feed – UltraStream prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+</head>
+<body>
+  <div class="stage">
+    <main class="phone" aria-label="Discover feed">
+      <header class="topbar">
+        <span class="logo">Ultra<span>Stream</span></span>
+        <button class="icon-btn" type="button" aria-label="Search" data-todo>
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        </button>
+      </header>
+      <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
+      <div class="feed" id="feed"></div>
+      <nav class="tabbar" aria-label="Main">
+        <button type="button" aria-current="page"><svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9h-6v-6H9v6H3z"/></svg>Discover</button>
+        <button type="button" data-todo><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="3"/><path d="m10.5 9.5 4 2.5-4 2.5z"/></svg>Shorts</button>
+        <button type="button" data-todo><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Create</button>
+        <button type="button" data-todo><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>Profile</button>
+      </nav>
+    </main>
+
+    <aside class="review" aria-label="Review notes">
+      <h1>Discover feed</h1>
+      <p id="review-time"></p>
+      <div class="review__actions">
+        <button class="btn btn--sm" type="button" id="jump-normal">Set to normal time (11:00)</button>
+        <button class="btn btn--sm" type="button" id="jump-prime">Set to prime time (19:00)</button>
+      </div>
+      <h2>Showing now</h2>
+      <div id="review-slots"></div>
+      <button class="btn btn--sm" type="button" id="jump-banner">Scroll to next Standard Banner</button>
+      <h2>Rules to check</h2>
+      <ul>
+        <li>Every ad has a “Sponsored” label.</li>
+        <li>Ads appear in this feed only. Open any video to see that it has none, or <a href="watch.html?live=1">open a live stream</a>.</li>
+        <li>Prime hours are a placeholder: 18:00–22:00.</li>
+      </ul>
+    </aside>
+  </div>
+
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/proto-bar.js"></script>
+  <script src="../assets/js/discover.js"></script>
+</body>
+</html>
