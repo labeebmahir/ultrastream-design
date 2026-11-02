@@ -38,12 +38,14 @@ US.CONTENT = [
   ["video", "Education", "Learn the basics of colour grading", "PlainTerms", "22K", "1w"],
 ].map(([kind, category, title, channel, views, age], i) => ({ id: "v" + i, kind, category, title, channel, views, age: AGES[age], live: i === 0, hue: (i * 47) % 360 }));
 
+const PILLS = `<span class="thumb-pill thumb-pill--left"><i class="icon icon--xs" data-lucide="radio"></i>Live</span><span class="thumb-pill thumb-pill--right"><i class="icon icon--xs" data-lucide="eye"></i>12.5k</span>`;
+
 const thumbStyle = (item) => `background:linear-gradient(135deg,hsl(${item.hue} 55% 32%),hsl(${(item.hue + 50) % 360} 65% 18%))`;
 
 US.cardHTML = (item) => {
   const href = item.live ? "watch.html?live=1" : `watch.html?id=${item.id}`;
   const pills = item.live
-    ? `<span class="thumb-pill thumb-pill--left">Live</span><span class="thumb-pill thumb-pill--right">12.5k</span>`
+    ? PILLS
     : "";
   const sub = item.live ? US.esc(item.channel) : `${US.esc(item.channel)} • ${item.views} views • ${item.age}`;
   return `<a class="card" href="${href}">
@@ -111,7 +113,7 @@ US.renderWatch = () => {
   const item = US.CONTENT.find((c) => c.id === params.get("id")) || US.CONTENT[0];
   const player = document.getElementById("player");
   player.style.background = thumbStyle(item).replace("background:", "");
-  if (live) player.innerHTML = '<span class="thumb-pill thumb-pill--left">Live</span><span class="thumb-pill thumb-pill--right">12.5k</span>';
+  if (live) player.innerHTML = PILLS;
   document.getElementById("title").textContent = item.title;
   document.getElementById("sub").textContent = live ? "Live now" : `${item.views} views • ${item.age}`;
   document.getElementById("channel").textContent = item.channel;
@@ -120,3 +122,10 @@ US.renderWatch = () => {
   avatar.textContent = item.channel[0];
   avatar.style.background = `hsl(${item.hue} 70% 70%)`;
 };
+
+// Lucide icons: write <i class="icon" data-lucide="bell"></i> anywhere, including in content rendered later.
+US.renderIcons = () => {
+  if (window.lucide && document.querySelector("i[data-lucide]")) window.lucide.createIcons();
+};
+US.renderIcons();
+new MutationObserver(US.renderIcons).observe(document.body, { childList: true, subtree: true });

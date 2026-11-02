@@ -154,7 +154,7 @@
       <span class="ad__meta">
         <span class="sponsored">Sponsored</span>
         <span class="ad__name">${US.esc(c.advertiser)}</span>
-        <span class="ad__cta">Learn more ↗</span>
+        <span class="ad__cta">Learn more <i class="icon icon--sm" data-lucide="arrow-up-right"></i></span>
       </span>
     </${tag}>`;
   };

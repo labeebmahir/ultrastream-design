@@ -1,0 +1,59 @@
+/* Official palette, from the Figma colour styles. Use step 6 as the base of each brand colour. */
+:root {
+  --brand-red-1: #fbe7e6;
+  --brand-red-2: #f6c4c2;
+  --brand-red-3: #ee9691;
+  --brand-red-4: #e6655e;
+  --brand-red-5: #df362e;
+  --brand-red-6: #d80a00;
+  --brand-red-7: #b80900;
+  --brand-red-8: #990700;
+  --brand-red-9: #7b0600;
+  --brand-red-10: #610500;
+
+  --brand-orange-1: #fff2e6;
+  --brand-orange-2: #ffe0c2;
+  --brand-orange-3: #ffc891;
+  --brand-orange-4: #ffae5e;
+  --brand-orange-5: #ff962e;
+  --brand-orange-6: #ff7f00;
+  --brand-orange-7: #d96c00;
+  --brand-orange-8: #b55a00;
+  --brand-orange-9: #914800;
+  --brand-orange-10: #733900;
+
+  --brand-orange-dark-1: #fceee6;
+  --brand-orange-dark-2: #f8d7c2;
+  --brand-orange-dark-3: #f2b891;
+  --brand-orange-dark-4: #ec965e;
+  --brand-orange-dark-5: #e6772e;
+  --brand-orange-dark-6: #e15900;
+  --brand-orange-dark-7: #bf4c00;
+  --brand-orange-dark-8: #a03f00;
+  --brand-orange-dark-9: #803300;
+  --brand-orange-dark-10: #652800;
+
+  --brand-gold-1: #fef8ec;
+  --brand-gold-2: #fcedd2;
+  --brand-gold-3: #fadfaf;
+  --brand-gold-4: #f8d08a;
+  --brand-gold-5: #f6c266;
+  --brand-gold-6: #f4b545;
+  --brand-gold-7: #cf9a3b;
+  --brand-gold-8: #ad8131;
+  --brand-gold-9: #8b6727;
+  --brand-gold-10: #6e511f;
+
+  --neutral-black-1: #e6e6e6;
+  --neutral-black-2: #c2c2c2;
+  --neutral-black-3: #919191;
+  --neutral-black-4: #5e5e5e;
+  --neutral-black-5: #2e2e2e;
+  --neutral-black-6: #000000;
+
+  --neutral-white-1: #ffffff;
+  --neutral-white-7: #d9d9d9;
+  --neutral-white-8: #b5b5b5;
+  --neutral-white-9: #919191;
+  --neutral-white-10: #737373;
+}

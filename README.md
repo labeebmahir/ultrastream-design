@@ -15,9 +15,19 @@ Open `index.html` in a browser. To serve it locally instead, run `npx serve` in 
 | `index.html` | List of all prototypes | `/` |
 | `app/` | The current app, rebuilt screen by screen, without unreleased features | `/app/` |
 | `prototypes/<feature>/` | One feature's prototype: its own pages, scripts, styles and placeholder data | `/prototypes/<feature>/` |
-| `assets/` | Shared by everything: `css/` tokens and components, `js/app.js` content and feed, `img/` logo | |
+| `assets/` | Shared by everything: `css/` tokens and components, `js/app.js` content and feed, `img/` logo, `vendor/` Lucide icons | |
 
 Figma is for reference only, and new design work happens here. Screens follow the open-source shadcn/ui kit used in Figma, so use the tokens and components in `assets/css/base.css` instead of new colours or fonts.
+
+Colours come from the official palette in `assets/css/palette.css`: brand red, orange, orange-dark and gold, and neutral black and white, each in numbered steps with 6 as the base. Use a palette token instead of a new hex value.
+
+Icons are [Lucide](https://lucide.dev/icons/), the set used in Figma. Add one by name, with no other setup, on any page that loads `assets/vendor/lucide.min.js` and `assets/js/app.js`:
+
+```html
+<i class="icon" data-lucide="bell-dot"></i>
+```
+
+Don't draw icons by hand. Where Lucide has a round version of an icon, use it, for example `user-round-search`, because that's what Figma uses. Add `icon--sm` (16px) or `icon--xs` (14px) for smaller sizes.
 
 ## Adding a prototype
 

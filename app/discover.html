@@ -18,25 +18,26 @@
         <img class="topbar__logo" src="../assets/img/logo-icon.png" alt="UltraStream">
         <div class="topbar__actions">
           <button class="icon-btn" type="button" aria-label="Notifications" data-todo>
-            <svg class="icon" viewBox="0 0 24 24"><path d="M6 10a6 6 0 0 1 8-5.6M18 11c0 5 2 6.500 2 6.500H4s2-1.500 2-6.500"/><path d="M10.300 21a2 2 0 0 0 3.400 0"/><circle cx="17.500" cy="6" r="2.500"/></svg>
+            <i class="icon" data-lucide="bell-dot"></i>
           </button>
           <button class="icon-btn" type="button" aria-label="Search" data-todo>
-            <svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.300-4.300"/></svg>
+            <i class="icon" data-lucide="search"></i>
           </button>
         </div>
       </header>
       <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
       <div class="feed" id="feed"></div>
       <nav class="tabbar" aria-label="Main">
-        <button type="button" aria-current="page"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16.200 7.800-2.100 6.300-6.300 2.100 2.100-6.300z"/></svg>Discover</button>
-        <button type="button" data-todo><svg class="icon" viewBox="0 0 24 24"><circle cx="10" cy="8" r="5"/><path d="M2 21a8 8 0 0 1 10.400-7.600"/><circle cx="18" cy="18" r="3"/><path d="m22 22-1.900-1.900"/></svg>My Feed</button>
-        <button type="button" data-todo><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>Create</button>
-        <button type="button" data-todo><svg class="icon" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4z"/></svg>Shorts</button>
-        <button type="button" data-todo><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.700a5 5 0 0 1 10 0"/></svg>Profile</button>
+        <button type="button" aria-current="page"><i class="icon" data-lucide="compass"></i>Discover</button>
+        <button type="button" data-todo><i class="icon" data-lucide="user-round-search"></i>My Feed</button>
+        <button type="button" data-todo><i class="icon" data-lucide="circle-plus"></i>Create</button>
+        <button type="button" data-todo><i class="icon" data-lucide="video"></i>Shorts</button>
+        <button type="button" data-todo><i class="icon" data-lucide="circle-user-round"></i>Profile</button>
       </nav>
     </main>
   </div>
 
+  <script src="../assets/vendor/lucide.min.js"></script>
   <script src="../assets/js/app.js"></script>
   <script src="discover.js"></script>
 </body>
