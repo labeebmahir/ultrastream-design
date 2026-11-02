@@ -20,7 +20,7 @@ Open `index.html` in a browser. To serve it locally instead, run `npx serve` in 
 ## Adding a screen or feature
 
 1. Add a page in `app/`, `admin/` or `web/`, copying the `<head>` and script tags from a page beside it.
-2. Use the tokens in `assets/css/base.css` instead of new colours or fonts.
+2. Use the tokens and components in `assets/css/base.css` instead of new colours or fonts. The app's components come from the open-source shadcn/ui kit, so follow its patterns for anything new.
 3. Keep placeholder data in `data.js` and label it as a placeholder on screen.
 4. Add the page to the links in `assets/js/proto-bar.js` and `index.html`.
 5. Link the page in the ticket.

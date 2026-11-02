@@ -1,23 +1,26 @@
-/* Tokens from ultrastream.one. Compare against the app when Figma or code access arrives. */
+/* Tokens sampled from the Figma exports. The app's components come from the open-source shadcn/ui kit. */
 :root {
   --black: #0a0a0a;
-  --surface: #111111;
+  --surface: #141414;
   --surface-2: #1a1a1a;
   --surface-3: #2a2a2a;
   --white: #ffffff;
-  --text: #f2f2f2;
+  --text: #ffffff;
   --text-2: #a8a8a8;
-  --text-3: #808080;
-  --orange: #ff5c00;
-  --orange-hover: #e05200;
-  --orange-dim: rgba(255, 92, 0, 0.12);
-  --border: rgba(255, 255, 255, 0.09);
-  --border-orange: rgba(255, 92, 0, 0.35);
+  --text-3: #848484;
+  --orange: #ff7f00;
+  --primary: linear-gradient(90deg, #d80b00, #e15800);
+  --primary-hover: linear-gradient(90deg, #c00a00, #c94f00);
+  --destructive: #dc2626;
+  --orange-dim: rgba(255, 127, 0, 0.12);
+  --border: #262626;
+  --input: #ffffff;
+  --border-orange: rgba(255, 127, 0, 0.4);
   --green: #4ade80;
-  --red: #f87171;
+  --red: #dc2626;
   --radius: 12px;
   --radius-sm: 8px;
-  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-display: "Inter", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
   --bar-h: 44px;
 }
@@ -31,22 +34,23 @@ button, input, select, textarea { font: inherit; color: inherit; }
 img { display: block; max-width: 100%; }
 :focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
 
-.logo { font: 700 18px var(--font-display); color: var(--white); text-decoration: none; }
-.logo span { color: var(--orange); }
+.logo { font: 700 18px "Space Grotesk", system-ui, sans-serif; color: var(--white); text-decoration: none; }
+.logo span { color: #ff5c00; }
 
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 40px; padding: 8px 16px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface-2); text-decoration: none; font-weight: 600; font-size: 14px; cursor: pointer; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 40px; padding: 8px 16px; border: 1px solid var(--input); border-radius: var(--radius-sm); background: transparent; text-decoration: none; font-weight: 500; font-size: 14px; cursor: pointer; }
 .btn:hover { background: var(--surface-3); }
-.btn--primary { background: var(--orange); border-color: var(--orange); color: #111; }
-.btn--primary:hover { background: var(--orange-hover); }
+.btn--primary { background: var(--primary); border-color: transparent; color: var(--white); }
+.btn--primary:hover { background: var(--primary-hover); }
+.btn--danger { border-color: var(--destructive); color: var(--destructive); }
 .btn--sm { min-height: 32px; padding: 4px 10px; font-size: 13px; }
 
 .field { display: block; margin-bottom: 18px; }
-.field__label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+.field__label { display: block; font-weight: 500; font-size: 14px; margin-bottom: 6px; }
 .field__hint { display: block; color: var(--text-2); font-size: 13px; margin-top: 6px; }
 .field__error { display: none; color: var(--red); font-size: 13px; margin-top: 6px; }
 .field--invalid .field__error { display: block; }
 .field--invalid .input { border-color: var(--red); }
-.input { width: 100%; min-height: 44px; padding: 10px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); }
+.input { width: 100%; min-height: 40px; padding: 8px 12px; background: transparent; border: 1px solid var(--input); border-radius: var(--radius-sm); }
 textarea.input { min-height: 110px; resize: vertical; }
 .opt { color: var(--text-3); font-weight: 400; }
 
@@ -74,15 +78,13 @@ textarea.input { min-height: 110px; resize: vertical; }
 
 .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 60; max-width: calc(100vw - 32px); padding: 10px 16px; background: var(--white); color: #111; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); }
 
-/* Ad components, shared by the feed and the Create campaign preview */
-.ad { display: block; text-decoration: none; background: var(--surface); }
-.ad__media { display: block; width: 100%; object-fit: cover; background: var(--surface-2); }
-.ad__meta { display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 13px; }
-.ad__name { font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.ad__cta { margin-left: auto; color: var(--orange); font-weight: 600; white-space: nowrap; }
+/* Ad components, shared by the feed and the Create campaign preview. Sized to sit with the feed's cards. */
+.ad { display: block; margin: 0 16px 20px; text-decoration: none; }
+.ad__media { display: block; width: 100%; object-fit: cover; background: var(--surface-2); border-radius: var(--radius); }
+.ad__meta { display: flex; align-items: center; gap: 8px; padding-top: 10px; font-size: 14px; }
+.ad__name { font-weight: 500; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ad__cta { margin-left: auto; color: var(--orange); font-weight: 500; white-space: nowrap; }
 .sponsored { flex: none; padding: 1px 6px; border: 1px solid var(--text-3); border-radius: 4px; color: var(--text-2); font-size: 11px; font-weight: 600; }
 .ad--billboard .ad__media { aspect-ratio: 16 / 9; }
-.ad--prime-banner { margin: 10px 12px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
 .ad--prime-banner .ad__media { aspect-ratio: 3 / 1; }
-.ad--standard { margin: 6px 12px 14px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
 .ad--standard .ad__media { aspect-ratio: 4 / 1; }

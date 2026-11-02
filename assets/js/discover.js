@@ -1,45 +1,65 @@
 (function () {
   const feed = document.getElementById("feed");
   const chips = document.getElementById("chips");
-  let category = "All";
+  let category = null;
   let rendered = 0;
+  let nextBanner = US.STANDARD_EVERY;
   let bannerIndex = 0;
-  const BATCH = 10;
+  let videoIndex = 0;
+  let shortIndex = 0;
+  let step = 0;
+  const BATCH = 8;
 
-  chips.innerHTML = ["All", ...US.CATEGORIES]
-    .map((c) => `<button class="chip" type="button" data-cat="${c}" aria-pressed="${c === "All"}">${c}</button>`)
+  chips.innerHTML = US.CATEGORIES
+    .map((c) => `<button class="chip" type="button" data-cat="${c}" aria-pressed="false">${c}</button>`)
     .join("");
 
+  const thumbStyle = (item) => `background:linear-gradient(135deg,hsl(${item.hue} 55% 32%),hsl(${(item.hue + 50) % 360} 65% 18%))`;
+
   function cardHTML(item) {
-    const a = `hsl(${item.hue} 55% 32%)`;
-    const b = `hsl(${(item.hue + 50) % 360} 65% 18%)`;
-    return `<a class="card" href="watch.html?id=${item.id}">
-      <span class="card__thumb" style="background:linear-gradient(135deg,${a},${b})">
-        ${item.kind === "short" ? '<span class="card__badge">Short</span>' : ""}
-        <span class="card__len">${item.length}</span>
-      </span>
+    const href = item.live ? "watch.html?live=1" : `watch.html?id=${item.id}`;
+    const pills = item.live
+      ? `<span class="thumb-pill thumb-pill--left">Live</span><span class="thumb-pill thumb-pill--right">12.5k</span>`
+      : "";
+    const sub = item.live ? US.esc(item.channel) : `${US.esc(item.channel)} • ${item.views} views • ${item.age}`;
+    return `<a class="card" href="${href}">
+      <span class="card__thumb" style="${thumbStyle(item)}">${pills}</span>
       <span class="card__row">
         <span class="avatar" style="background:hsl(${item.hue} 70% 70%)">${item.channel[0]}</span>
         <span>
           <span class="card__title">${US.esc(item.title)}</span>
-          <span class="card__sub">${US.esc(item.channel)} · ${item.views} views · ${item.age}</span>
+          <span class="card__sub">${sub}</span>
         </span>
       </span>
     </a>`;
   }
 
-  const pool = () => (category === "All" ? US.CONTENT : US.CONTENT.filter((c) => c.category === category));
+  const inCategory = (c) => !category || c.category === category;
+
+  // As in the design: two full-width videos, then two shorts side by side.
+  function nextBlock() {
+    const videos = US.CONTENT.filter((c) => c.kind === "video" && inCategory(c));
+    const shorts = US.CONTENT.filter((c) => c.kind === "short" && inCategory(c));
+    const wantShorts = videos.length === 0 || (shorts.length > 0 && step % 3 === 2);
+    step += 1;
+    if (wantShorts) {
+      const a = shorts[shortIndex++ % shorts.length];
+      const b = shorts[shortIndex++ % shorts.length];
+      rendered += 2;
+      return `<div class="short-row">${cardHTML(a)}${cardHTML(b)}</div>`;
+    }
+    rendered += 1;
+    return cardHTML(videos[videoIndex++ % videos.length]);
+  }
 
   function appendBatch() {
-    const items = pool();
     const { standard } = US.feedAds();
     let html = "";
     for (let i = 0; i < BATCH; i++) {
-      html += cardHTML(items[rendered % items.length]);
-      rendered += 1;
-      if (rendered % US.STANDARD_EVERY === 0 && standard.length) {
-        html += US.adHTML(standard[bannerIndex % standard.length]);
-        bannerIndex += 1;
+      html += nextBlock();
+      if (rendered >= nextBanner) {
+        nextBanner += US.STANDARD_EVERY;
+        if (standard.length) html += US.adHTML(standard[bannerIndex++ % standard.length]);
       }
     }
     sentinel.insertAdjacentHTML("beforebegin", html);
@@ -69,7 +89,11 @@
 
   function renderFeed() {
     rendered = 0;
+    nextBanner = US.STANDARD_EVERY;
     bannerIndex = 0;
+    videoIndex = 0;
+    shortIndex = 0;
+    step = 0;
     feed.scrollTop = 0;
     const { billboard, primeBanner } = US.feedAds();
     feed.innerHTML = (billboard ? US.adHTML(billboard) : "") + (primeBanner ? US.adHTML(primeBanner) : "");
@@ -88,14 +112,15 @@
     document.getElementById("review-slots").innerHTML =
       slot("Top of feed", billboard) +
       slot("After the billboard", primeBanner) +
-      `<div class="slot"><strong>Every ${US.STANDARD_EVERY} posts</strong><span>${standard.length ? standard.map((c) => US.esc(c.advertiser)).join(", ") : "Nothing live"}</span></div>`;
+      `<div class="slot"><strong>About every ${US.STANDARD_EVERY} posts</strong><span>${standard.length ? standard.map((c) => US.esc(c.advertiser)).join(", ") : "Nothing live"}</span></div>`;
   }
 
+  // Tap a category to filter, tap it again to clear.
   chips.addEventListener("click", (e) => {
     const cat = e.target.dataset.cat;
     if (!cat) return;
-    category = cat;
-    chips.querySelectorAll(".chip").forEach((c) => c.setAttribute("aria-pressed", c.dataset.cat === cat));
+    category = category === cat ? null : cat;
+    chips.querySelectorAll(".chip").forEach((c) => c.setAttribute("aria-pressed", c.dataset.cat === category));
     renderFeed();
   });
 
@@ -112,8 +137,8 @@
   document.getElementById("jump-normal").addEventListener("click", () => setHour("11"));
   document.getElementById("jump-prime").addEventListener("click", () => setHour("19"));
   document.getElementById("jump-banner").addEventListener("click", () => {
-    const banner = [...feed.querySelectorAll(".ad--standard")].find((b) => b.offsetTop > feed.scrollTop + 20);
-    if (banner) feed.scrollTo({ top: banner.offsetTop - 60, behavior: "smooth" });
+    const banner = [...feed.querySelectorAll(".ad--standard")].find((b) => b.offsetTop - feed.offsetTop > feed.scrollTop + 20);
+    if (banner) feed.scrollTo({ top: banner.offsetTop - feed.offsetTop - 60, behavior: "smooth" });
     else US.toast("No Standard Banner is live at this demo time");
   });
 

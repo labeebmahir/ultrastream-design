@@ -35,6 +35,8 @@ US.SEED_CAMPAIGNS = [
 
 US.CATEGORIES = ["Gaming", "Music", "Sports", "Tech", "Entertainment", "Art", "Education", "Food", "Travel"];
 
+const AGES = { "5h": "5 hours ago", "6h": "6 hours ago", "9h": "9 hours ago", "1d": "1 day ago", "2d": "2 days ago", "3d": "3 days ago", "4d": "4 days ago", "5d": "5 days ago", "6d": "6 days ago", "1w": "1 week ago", "2w": "2 weeks ago" };
+
 US.CONTENT = [
   ["video", "Gaming", "Ranked grind to the final circle", "PixelForge", "12:48", "48K", "2d"],
   ["short", "Food", "One-pan garlic noodles", "StreetPlate", "0:42", "210K", "5h"],
@@ -54,4 +56,4 @@ US.CONTENT = [
   ["video", "Travel", "The train ride nobody talks about", "FarRoutes", "11:09", "31K", "2w"],
   ["short", "Art", "Timelapse: charcoal portrait", "OpenCanvas", "0:51", "75K", "3d"],
   ["video", "Education", "Learn the basics of colour grading", "PlainTerms", "27:44", "22K", "1w"],
-].map(([kind, category, title, channel, length, views, age], i) => ({ id: "v" + i, kind, category, title, channel, length, views, age, hue: (i * 47) % 360 }));
+].map(([kind, category, title, channel, length, views, age], i) => ({ id: "v" + i, kind, category, title, channel, views, age: AGES[age], live: i === 0, hue: (i * 47) % 360 }));
