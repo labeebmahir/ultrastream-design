@@ -120,10 +120,10 @@
   US.isPrimeTime = (now = US.now()) => now.getHours() >= US.PRIME_HOURS.start && now.getHours() < US.PRIME_HOURS.end;
   US.liveOf = (type, now = US.now()) => US.campaigns().filter((c) => c.type === type && US.status(c, now) === "live");
 
-  // Assumptions for review:
+  // How the slots behave in this prototype:
   // Prime Time shows during prime hours. Normal Time holds the slot whenever no Prime Time ad is showing.
   // An empty slot collapses, so Prime Banner rises to the top if no billboard is live.
-  // Several campaigns in one slot rotate per feed load (exclusive vs rotating is undecided).
+  // Several campaigns in one slot rotate per feed load.
   US.feedAds = (now = US.now()) => {
     const load = read().feedLoads;
     const pick = (list) => (list.length ? list[load % list.length] : null);

@@ -40,16 +40,16 @@ US.CONTENT = [
 
 const PILLS = `<span class="thumb-pill thumb-pill--left"><i class="icon icon--xs" data-lucide="radio"></i>Live</span><span class="thumb-pill thumb-pill--right"><i class="icon icon--xs" data-lucide="eye"></i>12.5k</span>`;
 
-const thumbStyle = (item) => `background:linear-gradient(135deg,hsl(${item.hue} 55% 32%),hsl(${(item.hue + 50) % 360} 65% 18%))`;
+US.thumbStyle = (item) => `background:linear-gradient(135deg,hsl(${item.hue} 55% 32%),hsl(${(item.hue + 50) % 360} 65% 18%))`;
 
-US.cardHTML = (item) => {
-  const href = item.live ? "watch.html?live=1" : `watch.html?id=${item.id}`;
+US.cardHTML = (item, options) => {
+  const href = options?.href || (item.live ? "watch.html?live=1" : `watch.html?id=${item.id}`);
   const pills = item.live
     ? PILLS
     : "";
   const sub = item.live ? US.esc(item.channel) : `${US.esc(item.channel)} • ${item.views} views • ${item.age}`;
   return `<a class="card" href="${href}">
-    <span class="card__thumb" style="${thumbStyle(item)}">${pills}</span>
+    <span class="card__thumb" style="${US.thumbStyle(item)}">${pills}</span>
     <span class="card__row">
       <span class="avatar" style="background:hsl(${item.hue} 70% 70%)">${item.channel[0]}</span>
       <span>
@@ -103,16 +103,28 @@ US.setupChips = (container, onChange) => {
 
 US.setupNotBuilt = () => {
   document.addEventListener("click", (e) => {
-    if (e.target.closest("[data-todo]")) US.toast("Not rebuilt yet. Only Discover and the video screen exist so far.");
+    if (e.target.closest("[data-todo]")) US.toast("This screen isn't rebuilt yet.");
   });
 };
 
 US.renderWatch = () => {
   const params = new URLSearchParams(location.search);
-  const live = params.has("live");
-  const item = US.CONTENT.find((c) => c.id === params.get("id")) || US.CONTENT[0];
+  US.setupNotBuilt();
+  const id = params.get("id");
+  const item = id ? US.CONTENT.find((c) => c.id === id) : US.CONTENT[0];
+  if (!item) {
+    document.getElementById("player").remove();
+    document.querySelector(".watch").outerHTML = `<div class="empty-state">
+      <i class="icon empty-state__icon" data-lucide="video-off"></i>
+      <h1 class="empty-state__title">Content not found</h1>
+      <p class="empty-state__text">The content you're looking for is no longer available.</p>
+      <a class="btn btn--primary" href="discover.html">Go to discovery</a>
+    </div>`;
+    return;
+  }
+  const live = params.has("live") || item.live;
   const player = document.getElementById("player");
-  player.style.background = thumbStyle(item).replace("background:", "");
+  player.style.background = US.thumbStyle(item).replace("background:", "");
   if (live) player.innerHTML = PILLS;
   document.getElementById("title").textContent = item.title;
   document.getElementById("sub").textContent = live ? "Live now" : `${item.views} views • ${item.age}`;

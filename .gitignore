@@ -1,0 +1,12 @@
+# Private product knowledge. Never publish this.
+.knowledge/
+
+# Design references that include third-party artwork
+figma-exports/
+
+# Tests
+tests/node_modules/
+tests/output/
+
+# Personal Claude Code settings
+.claude/settings.local.json

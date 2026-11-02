@@ -1,0 +1,12 @@
+{
+  "name": "ultrastream-design-tests",
+  "private": true,
+  "type": "module",
+  "description": "Browser tests only. The site itself has no build step and no dependencies.",
+  "scripts": {
+    "test": "node run.mjs"
+  },
+  "devDependencies": {
+    "playwright-core": "1.64.1"
+  }
+}

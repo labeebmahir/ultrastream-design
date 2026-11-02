@@ -1,7 +1,7 @@
 /* Styles only this prototype needs. Shared tokens and components are in assets/css. */
 
 /* Prototype bar: review tooling, not part of the product */
-.proto-bar { position: sticky; top: 0; z-index: 50; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; min-height: var(--bar-h); padding: 6px 16px; background: #24140a; border-bottom: 1px solid var(--border-orange); font-size: 13px; }
+.proto-bar { position: sticky; top: 0; z-index: 50; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; min-height: var(--bar-h); padding: 6px 16px; background: var(--proto-bar-bg); border-bottom: 1px solid var(--border-orange); font-size: 13px; }
 .proto-bar__label { font-weight: 700; color: var(--orange); white-space: nowrap; }
 .proto-bar__nav { display: flex; flex-wrap: wrap; gap: 2px 12px; }
 .proto-bar__nav a { text-decoration: none; color: var(--text-2); padding: 4px 0; white-space: nowrap; }

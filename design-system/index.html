@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="data:,">
+  <title>Design system – UltraStream design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <style>
+    .page { max-width: 960px; margin: 0 auto; padding: 48px 16px 72px; }
+    .page h1 { font-size: 30px; margin: 14px 0 8px; }
+    .page > h2 { font-size: 20px; margin: 44px 0 6px; padding-top: 20px; border-top: 1px solid var(--border); }
+    .page > h3 { font-size: 15px; margin: 22px 0 10px; color: var(--text-2); font-weight: 500; }
+    .lede, .hint { color: var(--text-2); margin: 0 0 14px; }
+    .back { color: var(--text-2); text-decoration: none; font-size: 14px; }
+    .scale { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; }
+    .swatch { min-height: 56px; padding: 6px; border-radius: 6px; font-size: 11px; line-height: 1.3; word-break: break-all; }
+    .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .demo { max-width: 402px; }
+    .demo-box { position: relative; min-height: 300px; border: 1px solid var(--border); border-radius: var(--radius); }
+    .icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
+    .icon-cell { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 6px; background: var(--surface); border-radius: var(--radius-sm); font-size: 12px; color: var(--text-2); text-align: center; word-break: break-word; }
+    code { font-size: 12px; color: var(--text-2); }
+    @media (max-width: 640px) { .scale { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <a class="back has-icon" href="../index.html"><i class="icon icon--sm" data-lucide="arrow-left"></i>All prototypes</a>
+    <h1>Design system</h1>
+    <p class="lede">The tokens, components and icons every screen is built from. Reuse these before adding anything new.</p>
+
+    <h2>Colour</h2>
+    <p class="hint">From <code>assets/css/palette.css</code>. Step 6 is the base of each brand colour.</p>
+    <div id="palette"></div>
+
+    <h2>Type</h2>
+    <p class="hint">Inter. Not yet confirmed against Figma.</p>
+    <h1 style="margin:0 0 8px">Screen heading</h1>
+    <p class="card__title">Card title, 16px medium</p>
+    <p class="card__sub">Secondary text, 14px</p>
+
+    <h2>Buttons</h2>
+    <h3><code>.btn</code>, <code>.btn--primary</code>, <code>.btn--danger</code>, <code>.btn--sm</code></h3>
+    <div class="row">
+      <button class="btn btn--primary" type="button">Save changes</button>
+      <button class="btn" type="button">Cancel</button>
+      <button class="btn btn--danger" type="button">Delete channel</button>
+      <button class="btn btn--sm" type="button">Small</button>
+      <button class="btn" type="button"><i class="icon icon--sm" data-lucide="share"></i>With icon</button>
+    </div>
+    <h3>Action row: <code>.pill-btn</code>, <code>.pill-btn--on</code></h3>
+    <div class="row">
+      <button class="pill-btn pill-btn--on" type="button"><i class="icon" data-lucide="thumbs-up"></i>12.5k</button>
+      <button class="pill-btn" type="button" aria-label="Dislike"><i class="icon" data-lucide="thumbs-down"></i></button>
+      <button class="pill-btn" type="button"><i class="icon" data-lucide="hand-coins"></i>Reward</button>
+    </div>
+
+    <h2>Forms</h2>
+    <div class="demo">
+      <label class="field"><span class="field__label">Channel name</span><input class="input" value="Alex's Diary"><span class="field__warning">If you change your channel name, you won't be able to change it again for 30 days.</span></label>
+      <label class="field field--invalid"><span class="field__label">Email</span><input class="input" value="john@gmail"><span class="field__error">Enter a valid email address.</span></label>
+      <label class="field"><span class="field__label">Category</span><select class="input"><option>Gaming</option><option>Music</option></select></label>
+      <label class="field"><span class="field__label">Bio <span class="opt">(optional)</span></span><textarea class="input"></textarea></label>
+      <div class="row" style="justify-content:space-between"><span id="switch-label">Schedule for later</span><button class="switch" type="button" role="switch" aria-checked="true" aria-labelledby="switch-label" data-switch></button></div>
+    </div>
+
+    <h2>Chips and tabs</h2>
+    <h3><code>.chip</code> with <code>aria-pressed</code></h3>
+    <div class="row">
+      <button class="chip" type="button" aria-pressed="true">Scheduled</button>
+      <button class="chip" type="button" aria-pressed="false">Published</button>
+    </div>
+
+    <h2>Screen header</h2>
+    <div class="demo"><header class="app-header"><a class="icon-btn" href="#" aria-label="Back"><i class="icon" data-lucide="arrow-left"></i></a><h3 class="app-header__title">Manage contents</h3></header></div>
+
+    <h2>Cards</h2>
+    <h3><code>US.cardHTML(item)</code>, and <code>.short-row</code> for two shorts</h3>
+    <div class="demo" id="cards"></div>
+
+    <h2>States</h2>
+    <h3><code>.empty-state</code>, used for empty, error, offline and loading</h3>
+    <div class="demo demo-box">
+      <div class="empty-state">
+        <i class="icon empty-state__icon" data-lucide="clapperboard"></i>
+        <h3 class="empty-state__title">No content scheduled yet</h3>
+        <p class="empty-state__text">Start scheduling videos, or shorts to share with your audience.</p>
+        <button class="btn btn--primary" type="button">Schedule content</button>
+      </div>
+    </div>
+
+    <h2>Dialog</h2>
+    <h3><code>.dialog</code> inside <code>.dialog-backdrop</code> on a screen</h3>
+    <div class="demo">
+      <section class="dialog" role="dialog" aria-labelledby="dialog-title" aria-describedby="dialog-text">
+        <button class="dialog__close icon-btn" type="button" aria-label="Close"><i class="icon" data-lucide="x"></i></button>
+        <h3 class="dialog__title" id="dialog-title">Delete video?</h3>
+        <p class="dialog__text" id="dialog-text">Are you sure you want to delete this video? This cannot be undone.</p>
+        <button class="btn btn--primary" type="button">Yes</button>
+        <button class="btn" type="button">Cancel</button>
+      </section>
+    </div>
+
+    <h2>Lists</h2>
+    <h3><code>.list-row</code></h3>
+    <div class="demo">
+      <a class="list-row" href="#"><i class="icon" data-lucide="history"></i><span class="list-row__label">Watch history</span><span class="list-row__meta">12</span><i class="icon icon--sm" data-lucide="chevron-right"></i></a>
+    </div>
+
+    <h2>Labels and messages</h2>
+    <h3><code>.tag</code>, <code>.tag--placeholder</code>, <code>.thumb-pill</code>, <code>.note</code>, <code>US.toast("Text")</code></h3>
+    <div class="row">
+      <span class="tag">In review</span>
+      <span class="tag tag--placeholder">Placeholder</span>
+      <button class="btn btn--sm" type="button" id="toast-demo">Show a toast</button>
+    </div>
+    <p class="note" style="margin-top:12px">A note for something reviewers need to know.</p>
+
+    <h2>Tab bar</h2>
+    <h3><code>.tabbar</code>, with <code>aria-current</code> on the active tab. Tabs can be links or buttons</h3>
+    <div class="demo">
+      <nav class="tabbar" aria-label="Example tabs">
+        <a href="#" aria-current="page"><i class="icon" data-lucide="compass"></i>Discover</a>
+        <a href="#"><i class="icon" data-lucide="user-round-search"></i>My Feed</a>
+        <a href="#"><i class="icon" data-lucide="circle-plus"></i>Create</a>
+        <a href="#"><i class="icon" data-lucide="video"></i>Shorts</a>
+        <a href="#"><i class="icon" data-lucide="circle-user-round"></i>Profile</a>
+      </nav>
+    </div>
+
+    <h2>Icons</h2>
+    <p class="hint">Lucide, round version where one exists. Add any icon from <a href="https://lucide.dev/icons/">lucide.dev/icons</a> by name.</p>
+    <div class="icon-grid" id="icons"></div>
+  </main>
+
+  <script src="../assets/vendor/lucide.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    const SCALES = {
+      "brand-red": 10, "brand-orange": 10, "brand-orange-dark": 10, "brand-gold": 10, "neutral-black": 6,
+    };
+    const style = getComputedStyle(document.documentElement);
+    const scaleHTML = (name, steps) => {
+      let cells = "";
+      for (let i = 1; i <= steps; i++) {
+        const value = style.getPropertyValue(`--${name}-${i}`).trim();
+        const dark = i >= 4 && !(name === "brand-gold" && i < 8) && !(name === "brand-orange" && i < 7);
+        cells += `<div class="swatch" style="background:${value};color:${dark ? "#fff" : "#000"}">${i}<br>${value}</div>`;
+      }
+      return `<h3 style="font-size:14px;font-weight:500;color:var(--text-2);margin:16px 0 8px">${name}</h3><div class="scale">${cells}</div>`;
+    };
+    document.getElementById("palette").innerHTML = Object.entries(SCALES).map(([n, s]) => scaleHTML(n, s)).join("");
+
+    const shorts = US.CONTENT.filter((c) => c.kind === "short").slice(0, 2);
+    document.getElementById("cards").innerHTML =
+      US.cardHTML(US.CONTENT[0]) + US.cardHTML(US.CONTENT[2]) +
+      `<div class="short-row">${shorts.map(US.cardHTML).join("")}</div>`;
+
+    const ICONS = ["compass", "user-round-search", "circle-plus", "video", "circle-user-round", "bell-dot", "search", "arrow-left", "thumbs-up", "thumbs-down", "message-circle", "hand-coins", "share", "flag", "radio", "eye", "x", "ellipsis-vertical", "clapperboard", "triangle-alert", "wifi-off", "loader-circle", "bell-off", "video-off", "history", "chevron-right"];
+    document.getElementById("icons").innerHTML = ICONS.map((n) => `<div class="icon-cell"><i class="icon" data-lucide="${n}"></i>${n}</div>`).join("");
+
+    document.getElementById("toast-demo").addEventListener("click", () => US.toast("Saved"));
+    document.querySelectorAll("[data-switch]").forEach((s) => s.addEventListener("click", () => {
+      s.setAttribute("aria-checked", s.getAttribute("aria-checked") !== "true");
+    }));
+  </script>
+</body>
+</html>
