@@ -4,7 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <link rel="icon" href="data:,">
+  <link rel="icon" type="image/png" href="../../../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../../../assets/img/apple-touch-icon.png">
   <title>Advertise – UltraStream prototype</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -12,7 +13,7 @@
   <link rel="stylesheet" href="../css/billboard.css">
   <style>
     /* Public website: keeps the ultrastream.one look rather than the app's */
-    :root { --orange: #ff5c00; --orange-hover: #e05200; --input: rgba(255, 255, 255, 0.15); --font-display: "Space Grotesk", system-ui, sans-serif; }
+    :root { --orange: #ff5c00; --orange-hover: #e05200; --input: rgba(255, 255, 255, 0.15); --font-display: "Space Grotesk", system-ui, sans-serif; --font-body: "Inter", system-ui, sans-serif; }
     .btn--primary { background: var(--orange); color: #111; font-weight: 600; }
     .btn--primary:hover { background: var(--orange-hover); }
     .site-nav { display: flex; justify-content: space-between; align-items: center; max-width: 1120px; margin: 0 auto; padding: 22px 24px; }
@@ -20,7 +21,9 @@
     .eyebrow { color: var(--orange); font-weight: 600; font-size: 14px; margin: 0 0 12px; }
     .pitch h1 { font-size: 46px; letter-spacing: -0.01em; margin-bottom: 16px; }
     .pitch > p:not(.eyebrow) { color: var(--text-2); font-size: 17px; margin: 0 0 32px; max-width: 520px; }
-    .type { padding: 16px 0; border-top: 1px solid var(--border); }
+    .type { display: block; padding: 16px 0; border-top: 1px solid var(--border); text-decoration: none; }
+    .type:hover h2 { color: var(--orange); }
+    .hero-cta { display: none; margin-bottom: 32px; }
     .type h2 { font-size: 16px; margin-bottom: 2px; }
     .type p { margin: 0; color: var(--text-2); font-size: 14px; }
     .how { margin-top: 32px; }
@@ -38,6 +41,7 @@
       .wrap { grid-template-columns: minmax(0, 1fr); gap: 32px; }
       .pitch h1 { font-size: 34px; }
       .card-form { padding: 20px; }
+      .hero-cta { display: inline-flex; }
     }
     @media (max-width: 420px) { .two { grid-template-columns: minmax(0, 1fr); gap: 0; } }
   </style>
@@ -49,11 +53,12 @@
       <p class="eyebrow">Advertise on UltraStream</p>
       <h1>Put your brand in the Discover feed</h1>
       <p>Reach adults browsing videos, shorts and live streams. Ads sit in the feed and never interrupt a video or live stream.</p>
+      <a class="btn btn--primary hero-cta" href="#panel">Enquire now</a>
 
-      <div class="type"><h2>Prime Billboard – Normal Time</h2><p>Top of the Discover feed.</p></div>
-      <div class="type"><h2>Prime Billboard – Prime Time</h2><p>Top of the Discover feed, during prime-time hours.</p></div>
-      <div class="type"><h2>Prime Banner</h2><p>Directly after the Prime Billboard.</p></div>
-      <div class="type"><h2>Standard Banner</h2><p>Appears about every 15 posts as people scroll.</p></div>
+      <a class="type" href="#panel" data-ad-type="Prime Billboard – Normal Time"><h2>Prime Billboard – Normal Time</h2><p>Top of the Discover feed.</p></a>
+      <a class="type" href="#panel" data-ad-type="Prime Billboard – Prime Time"><h2>Prime Billboard – Prime Time</h2><p>Top of the Discover feed, during prime-time hours.</p></a>
+      <a class="type" href="#panel" data-ad-type="Prime Banner"><h2>Prime Banner</h2><p>Directly after the Prime Billboard.</p></a>
+      <a class="type" href="#panel" data-ad-type="Standard Banner"><h2>Standard Banner</h2><p>Appears about every 15 posts as people scroll.</p></a>
 
       <div class="how">
         <h2>How it works</h2>
@@ -87,7 +92,7 @@
         </label>
         <label class="field" id="f-phone">
           <span class="field__label">Phone</span>
-          <input class="input" id="phone" type="tel" autocomplete="tel">
+          <input class="input" id="phone" type="tel" inputmode="tel" autocomplete="tel">
           <span class="field__error">Enter a phone number.</span>
         </label>
         <label class="field" id="f-type">
@@ -106,9 +111,9 @@
           <span class="field__label">Preferred dates</span>
           <div class="two">
             <label><span class="field__hint" style="margin:0 0 4px">From</span><input class="input" id="from" type="date"></label>
-            <label><span class="field__hint" style="margin:0 0 4px">To</span><input class="input" id="to" type="date"></label>
+            <label><span class="field__hint" style="margin:0 0 4px">To (optional)</span><input class="input" id="to" type="date"></label>
           </div>
-          <span class="field__error">Choose a start date, and an end date after it.</span>
+          <span class="field__error">Choose a start date from today onwards, and an end date after it.</span>
         </div>
         <label class="field">
           <span class="field__label">Message <span class="opt">(optional)</span></span>
@@ -130,6 +135,17 @@
     const mark = (id, bad) => { document.getElementById(id).classList.toggle("field--invalid", bad); return bad; };
 
     let attempted = false;
+    const now = new Date();
+    const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+    document.getElementById("from").min = today;
+    document.getElementById("to").min = today;
+    document.getElementById("from").addEventListener("change", (e) => { document.getElementById("to").min = e.target.value || today; });
+
+    // Tapping an ad type picks it in the form.
+    document.querySelectorAll("[data-ad-type]").forEach((link) => link.addEventListener("click", () => {
+      document.getElementById("type").value = link.dataset.adType;
+      if (attempted) validate();
+    }));
 
     function validate() {
       const errors = [
@@ -138,7 +154,7 @@
         mark("f-email", !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val("email"))),
         mark("f-phone", val("phone").replace(/\D/g, "").length < 6),
         mark("f-type", !val("type")),
-        mark("f-dates", !val("from") || (val("to") && val("to") < val("from"))),
+        mark("f-dates", !val("from") || val("from") < today || (val("to") && val("to") < val("from"))),
       ];
       return !errors.some(Boolean);
     }

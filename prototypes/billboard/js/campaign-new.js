@@ -52,7 +52,8 @@
       "prime-banner": skeleton + ad + skeleton,
       standard: skeleton + ad + skeleton,
     }[t.format];
-    $("preview").innerHTML = creative || useSample ? placed : `<div class="empty" style="margin:0 10px;border:0">Add a creative to preview it in the feed.</div>`;
+    const slot = `<div class="preview-slot preview-slot--${t.format}">Your creative goes here</div>`;
+    $("preview").innerHTML = creative || useSample ? placed : placed.replace(ad, slot);
 
     const rows = [["Placement", t.where], ["Package", US.packageName(c)], ["Cost", US.fmtMoney(US.cost(c))]];
     if (c.start) rows.push(["Runs", US.period(c)]);
@@ -135,6 +136,15 @@
     render();
   });
 
+  // People often paste links without the https:// part.
+  $("url").addEventListener("blur", () => {
+    const value = $("url").value.trim();
+    if (value && !/^[a-z]+:\/\//i.test(value)) {
+      $("url").value = "https://" + value;
+      render();
+    }
+  });
+
   $("types").addEventListener("change", () => { renderDurations(); render(); });
   $("durations").addEventListener("change", render);
   ["advertiser", "start", "url"].forEach((id) => $(id).addEventListener("input", render));
@@ -145,7 +155,9 @@
     e.preventDefault();
     attempted = true;
     if (!validate()) {
-      document.querySelector(".field--invalid")?.scrollIntoView({ block: "center", behavior: "smooth" });
+      const first = document.querySelector(".field--invalid");
+      first?.scrollIntoView({ block: "center", behavior: "smooth" });
+      first?.querySelector("input:not([hidden]), button")?.focus({ preventScroll: true });
       return;
     }
     const saved = US.addCampaign(draft());

@@ -14,7 +14,27 @@ The app's components come from the open-source shadcn/ui kit for Figma, with Ult
 | Chips and action-row buttons | 36px tall. `.btn--sm` is 32px, for tight spots only |
 | Thumbnails | 12px corners. Videos 16:9, shorts in the feed 298:364 |
 | Avatars | 40px in cards, 56px on the video page |
-| Font | Inter (not confirmed against Figma) |
+| Font | Geist, with SF Mono for code |
+
+## Type
+
+From the shadcn/ui kit in Figma, as classes in `assets/css/base.css`:
+
+| Class | Size / line height | Weight | Use |
+|---|---|---|---|
+| `.text-h1` | 48 / 100% | Black | Very large page titles |
+| `.text-h2` | 30 / 36 | Semibold | Page titles on desktop |
+| `.text-h3` | 24 / 32 | Semibold | Section titles on desktop |
+| `.text-h4` | 20 / 28 | Semibold | Screen and dialog titles |
+| `.text-lead` | 20 / 28 | Regular | Introductions |
+| `.text-large` | 18 / 28 | Semibold | Emphasised lines |
+| `.text-p` | 16 / 24 | Regular | Paragraphs, card titles at Medium |
+| `.text-body`, `.text-body-medium` | 14 / 24 | Regular, Medium | Default text |
+| `.text-small` | 14 / 14 | Regular | Labels |
+| `.text-muted` | 14 / 20 | Regular | Help text, views and dates |
+| `.text-xs` | 12 / 16 | Regular | Fine print, tab labels |
+
+The public website pages keep ultrastream.one's fonts, Space Grotesk and Inter.
 
 ## Colour
 
@@ -75,6 +95,12 @@ Short, plain and specific. Tell people what happened and what to do next. Use th
 ## Prototype pages
 
 Every prototype page carries a visible prototype bar, and `<meta name="robots" content="noindex">`. Review tools such as the Billboard demo clock belong in the prototype's own folder, never in `app/`.
+
+Questions go on the prototype's `questions.html`, one at a time. Write each as a short question with two to four answers to tap, and mark the one the prototype uses now. "Something else" is added automatically. Reviewers export a file, and nothing is sent anywhere.
+
+The prototype bar shows the prototype's steps in order. List them in the `CONFIG` at the top of the prototype's bar script, in the order someone should walk through them.
+
+On narrow screens, a table with many columns becomes labelled cards: add `data-label` to its cells, as in the Billboard campaign list. Text inputs are 16px below 1024px wide, because iPhones zoom the page on anything smaller.
 
 Let reviewers reach each state with `?state=empty` on the page's address, and link those from the prototype's overview page.
 

@@ -24,7 +24,6 @@ Claude reads the project's rules from [`CLAUDE.md`](CLAUDE.md) in every chat, so
 | Claude Code and access to this repo | To create screens |
 | The link to the team's Confluence space | Claude asks for it the first time and keeps it on your computer only |
 | Your Atlassian account connected in Claude | So Claude can read the restricted Confluence pages |
-| The Figma exports in a `figma-exports` folder next to this repo | To rebuild screens. Ask the team. They stay out of this repo because they contain third-party artwork |
 | [Node.js](https://nodejs.org) and Microsoft Edge or Google Chrome | To run the tests |
 
 ## See it

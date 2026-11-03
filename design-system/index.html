@@ -4,10 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <link rel="icon" href="data:,">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
   <title>Design system – UltraStream design</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/base.css">
   <link rel="stylesheet" href="../assets/css/app.css">
   <style>
@@ -24,7 +25,8 @@
     .demo-box { position: relative; min-height: 300px; border: 1px solid var(--border); border-radius: var(--radius); }
     .icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
     .icon-cell { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 6px; background: var(--surface); border-radius: var(--radius-sm); font-size: 12px; color: var(--text-2); text-align: center; word-break: break-word; }
-    code { font-size: 12px; color: var(--text-2); }
+    .page h3 code, .hint code { font-size: 12px; line-height: inherit; font-weight: 400; color: var(--text-2); }
+    .type-list > * { display: block; margin: 0 0 14px; }
     @media (max-width: 640px) { .scale { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
   </style>
 </head>
@@ -39,10 +41,22 @@
     <div id="palette"></div>
 
     <h2>Type</h2>
-    <p class="hint">Inter. Not yet confirmed against Figma.</p>
-    <h1 style="margin:0 0 8px">Screen heading</h1>
-    <p class="card__title">Card title, 16px medium</p>
-    <p class="card__sub">Secondary text, 14px</p>
+    <p class="hint">Geist, with SF Mono for code. From the shadcn/ui kit used in Figma.</p>
+    <div class="type-list">
+      <p class="text-h1">h1 48 Black</p>
+      <p class="text-h2">h2 30 Semibold</p>
+      <p class="text-h3">h3 24 Semibold</p>
+      <p class="text-h4">h4 20 Semibold, screen titles</p>
+      <p class="text-lead">lead 20 Regular</p>
+      <p class="text-large">large 18 Semibold</p>
+      <p class="text-p">p 16 Regular</p>
+      <p class="text-body">body 14 Regular</p>
+      <p class="text-body-medium">body-medium 14 Medium</p>
+      <p class="text-small">small 14 Regular, tight</p>
+      <p class="text-muted">muted 14 Regular</p>
+      <p class="text-xs">xs 12 Regular</p>
+      <code class="text-code">inline code 14 Semibold</code>
+    </div>
 
     <h2>Buttons</h2>
     <h3><code>.btn</code>, <code>.btn--primary</code>, <code>.btn--danger</code>, <code>.btn--sm</code></h3>

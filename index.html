@@ -4,44 +4,42 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <link rel="icon" href="data:,">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
   <title>UltraStream design</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/base.css">
-  <style>
-    .page { max-width: 760px; margin: 0 auto; padding: 48px 16px 72px; }
-    .page h1 { font-size: 30px; margin: 18px 0 8px; }
-    .page h2 { font-size: 18px; margin: 36px 0 12px; }
-    .lede { color: var(--text-2); margin: 0; }
-    .item { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; justify-content: space-between; padding: 16px; margin-bottom: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); text-decoration: none; }
-    .item:hover { border-color: var(--text-3); }
-    .item strong { display: block; font-weight: 600; }
-    .item small { display: block; color: var(--text-2); font-size: 14px; }
-  </style>
+  <link rel="stylesheet" href="assets/css/listing.css">
 </head>
 <body>
   <main class="page">
-    <span class="logo">Ultra<span>Stream</span></span>
-    <h1>Design prototypes</h1>
-    <p class="lede">Coded prototypes for UltraStream features. Each one has its own permanent link, which is the link to use on its ticket.</p>
+    <span class="logo page__logo">Ultra<span>Stream</span></span>
+    <h1 class="text-h2 page__title">Design prototypes</h1>
+    <p class="page__lede">Coded prototypes for UltraStream features. Each one has its own permanent link, which is the link to use on its ticket.</p>
 
-    <h2>Prototypes</h2>
-    <a class="item" href="prototypes/billboard/index.html">
-      <span><strong>Billboard: first release</strong><small>Selling ad space in the Discover feed, from enquiry to end-of-campaign report.</small></span>
+    <h2 class="text-h4 page__section">Prototypes</h2>
+    <a class="item item--plain" href="prototypes/billboard/index.html">
+      <span class="item__body"><span class="item__title">Billboard: first release</span><span class="item__text">Selling ad space in the Discover feed, from enquiry to end-of-campaign report.</span></span>
       <span class="tag">In review</span>
+      <i class="icon icon--sm item__arrow" data-lucide="arrow-right"></i>
     </a>
 
-    <h2>The app</h2>
-    <a class="item" href="app/index.html">
-      <span><strong>Rebuilt app</strong><small>The current app, rebuilt screen by screen. New prototypes start from this.</small></span>
+    <h2 class="text-h4 page__section">The app</h2>
+    <a class="item item--plain" href="app/index.html">
+      <span class="item__body"><span class="item__title">Rebuilt app</span><span class="item__text">The current app, rebuilt screen by screen. New prototypes start from this.</span></span>
       <span class="tag">In progress</span>
+      <i class="icon icon--sm item__arrow" data-lucide="arrow-right"></i>
     </a>
 
-    <h2>Design system</h2>
-    <a class="item" href="design-system/index.html">
-      <span><strong>Tokens, components and icons</strong><small>What every screen is built from.</small></span>
+    <h2 class="text-h4 page__section">Design system</h2>
+    <a class="item item--plain" href="design-system/index.html">
+      <span class="item__body"><span class="item__title">Tokens, components and icons</span><span class="item__text">What every screen is built from.</span></span>
+      <i class="icon icon--sm item__arrow" data-lucide="arrow-right"></i>
     </a>
   </main>
+
+  <script src="assets/vendor/lucide.min.js"></script>
+  <script src="assets/js/app.js"></script>
 </body>
 </html>

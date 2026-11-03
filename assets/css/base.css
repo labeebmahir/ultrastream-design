@@ -24,8 +24,9 @@
   --red: #dc2626;
   --radius: 12px;
   --radius-sm: 8px;
-  --font-display: "Inter", system-ui, sans-serif;
-  --font-body: "Inter", system-ui, sans-serif;
+  --font-display: "Geist", system-ui, sans-serif;
+  --font-body: "Geist", system-ui, sans-serif;
+  --font-mono: "SF Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
   --bar-h: 44px;
   --proto-bar-bg: #24140a;
 }
@@ -33,7 +34,7 @@
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 html { color-scheme: dark; }
-body { margin: 0; background: var(--black); color: var(--text); font: 15px/1.5 var(--font-body); }
+body { margin: 0; background: var(--black); color: var(--text); font: 14px/24px var(--font-body); }
 h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; margin: 0; }
 a { color: inherit; }
 button, input, select, textarea { font: inherit; color: inherit; }
@@ -43,20 +44,35 @@ img { display: block; max-width: 100%; }
 .logo { font: 700 18px "Space Grotesk", system-ui, sans-serif; color: var(--white); text-decoration: none; }
 .logo span { color: #ff5c00; }
 
+/* Type scale from the shadcn/ui kit in Figma */
+.text-h1 { font-size: 48px; line-height: 100%; letter-spacing: -1.25px; font-weight: 900; }
+.text-h2 { font-size: 30px; line-height: 36px; letter-spacing: -0.75px; font-weight: 600; }
+.text-h3 { font-size: 24px; line-height: 32px; letter-spacing: -0.6px; font-weight: 600; }
+.text-h4 { font-size: 20px; line-height: 28px; letter-spacing: -0.5px; font-weight: 600; }
+.text-lead { font-size: 20px; line-height: 28px; font-weight: 400; }
+.text-large { font-size: 18px; line-height: 28px; font-weight: 600; }
+.text-p { font-size: 16px; line-height: 24px; font-weight: 400; }
+.text-body { font-size: 14px; line-height: 24px; font-weight: 400; }
+.text-body-medium { font-size: 14px; line-height: 24px; font-weight: 500; }
+.text-small { font-size: 14px; line-height: 14px; font-weight: 400; }
+.text-muted { font-size: 14px; line-height: 20px; font-weight: 400; color: var(--text-3); }
+.text-xs { font-size: 12px; line-height: 16px; }
+code, .text-code { font-family: var(--font-mono); font-size: 14px; line-height: 20px; font-weight: 600; }
+
 .icon { width: 24px; height: 24px; flex: none; stroke-width: 1.5; }
 .icon--sm { width: 16px; height: 16px; }
 .icon--xs { width: 14px; height: 14px; }
-.has-icon { display: inline-flex; align-items: center; gap: 4px; }
+.has-icon { display: inline-flex; align-items: center; gap: 4px; min-height: 40px; }
 
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 40px; padding: 8px 16px; border: 1px solid var(--input); border-radius: var(--radius-sm); background: transparent; text-decoration: none; font-weight: 500; font-size: 14px; cursor: pointer; }
 .btn:hover { background: var(--surface-3); }
 .btn--primary { background: var(--primary); border-color: transparent; color: var(--white); }
 .btn--primary:hover { background: var(--primary-hover); }
 .btn--danger { border-color: var(--destructive); color: var(--destructive); }
-.btn--sm { min-height: 32px; padding: 4px 10px; font-size: 13px; }
+.btn--sm { min-height: 32px; padding: 4px 10px; font-size: 12px; line-height: 16px; }
 
 .field { display: block; margin-bottom: 18px; }
-.field__label { display: block; font-weight: 500; font-size: 14px; margin-bottom: 6px; }
+.field__label { display: block; font-weight: 500; font-size: 14px; line-height: 20px; margin-bottom: 6px; }
 .field__hint { display: block; color: var(--text-2); font-size: 13px; margin-top: 6px; }
 .field__error { display: none; color: var(--red); font-size: 13px; margin-top: 6px; }
 .field--invalid .field__error { display: block; }
@@ -64,6 +80,8 @@ img { display: block; max-width: 100%; }
 .field--invalid .input { border-color: var(--red); }
 .input { width: 100%; min-height: 40px; padding: 8px 12px; background: transparent; border: 1px solid var(--input); border-radius: var(--radius-sm); }
 textarea.input { min-height: 110px; resize: vertical; }
+/* Below 16px, iPhones zoom the page when a field is tapped */
+@media (max-width: 1024px) { .input { font-size: 16px; } }
 .input option { background: var(--surface-2); color: var(--white); }
 .opt { color: var(--text-3); font-weight: 400; }
 
@@ -71,4 +89,5 @@ textarea.input { min-height: 110px; resize: vertical; }
 .tag--placeholder { background: var(--orange-dim); color: var(--orange); }
 .note { padding: 12px 14px; border: 1px solid var(--border-orange); border-radius: var(--radius-sm); background: var(--orange-dim); font-size: 14px; }
 
+body:has(.tabbar) .toast { bottom: 88px; }
 .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 60; max-width: calc(100vw - 32px); padding: 10px 16px; background: var(--white); color: #111; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); }

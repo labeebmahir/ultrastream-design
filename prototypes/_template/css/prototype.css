@@ -1,13 +1,51 @@
 /* Styles only this prototype needs. Shared tokens and components are in assets/css. */
 
 /* Prototype bar: review tooling, not part of the product */
-.proto-bar { position: sticky; top: 0; z-index: 50; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; min-height: var(--bar-h); padding: 6px 16px; background: var(--proto-bar-bg); border-bottom: 1px solid var(--border-orange); font-size: 13px; }
-.proto-bar__label { font-weight: 700; color: var(--orange); white-space: nowrap; }
-.proto-bar__nav { display: flex; flex-wrap: wrap; gap: 2px 12px; }
-.proto-bar__nav a { text-decoration: none; color: var(--text-2); padding: 4px 0; white-space: nowrap; }
-.proto-bar__nav a:hover, .proto-bar__nav a[aria-current] { color: var(--white); }
+.proto-bar { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 6px 16px; background: var(--proto-bar-bg); border-bottom: 1px solid var(--border-orange); font-size: 13px; line-height: 16px; }
+.proto-bar .icon { stroke-width: 2; }
+.proto-bar__home { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 8px; margin-left: -8px; border-radius: 6px; color: var(--white); text-decoration: none; font-weight: 600; white-space: nowrap; }
+.proto-bar__home:hover, .proto-bar__home[aria-current] { background: rgba(255, 255, 255, 0.08); }
+.proto-bar__badge { flex: none; padding: 2px 7px; border: 1px solid var(--border-orange); border-radius: 100px; color: var(--orange); font-size: 11px; line-height: 14px; font-weight: 600; }
+.proto-bar__nav { display: flex; flex: 1; justify-content: center; gap: 2px; min-width: 0; }
+.proto-bar__nav a { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 10px; border-radius: 6px; color: var(--text-2); text-decoration: none; white-space: nowrap; }
+.proto-bar__nav a:hover { color: var(--white); background: rgba(255, 255, 255, 0.06); }
+.proto-bar__nav a[aria-current] { color: var(--white); background: rgba(255, 255, 255, 0.12); font-weight: 500; }
+.proto-bar__n { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); font-size: 11px; line-height: 1; font-weight: 600; }
+.proto-bar__nav a[aria-current] .proto-bar__n { background: var(--orange); color: #111; }
+.proto-bar__count { color: var(--orange); font-size: 12px; font-variant-numeric: tabular-nums; }
+.proto-bar__compact { display: none; flex: 1; align-items: center; gap: 4px; min-width: 0; }
+.proto-bar__arrow { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 6px; color: var(--white); }
+a.proto-bar__arrow:hover { background: rgba(255, 255, 255, 0.08); }
+.proto-bar__arrow.is-off { color: var(--surface-3); }
+.proto-bar__select { flex: 1; min-width: 0; min-height: 36px; padding: 2px 6px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; font-size: 16px; }
+.proto-bar__select option { background: var(--surface-2); color: var(--white); }
+html { scroll-padding-top: calc(var(--bar-h) + 12px); }
 
-@media (max-width: 480px) {
-  .proto-bar { padding: 4px 12px; }
-  .proto-bar__nav a:not(:first-child) { display: none; }
+/* Demo time */
+.proto-bar__clock { position: relative; flex: none; }
+.proto-bar__toggle { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; font-size: 13px; white-space: nowrap; cursor: pointer; }
+.proto-bar__toggle:hover, .proto-bar__toggle[aria-expanded="true"] { border-color: var(--text-3); }
+.proto-bar__chev { color: var(--text-3); transition: transform 0.15s; }
+.proto-bar__toggle[aria-expanded="true"] .proto-bar__chev { transform: rotate(180deg); }
+.proto-bar__time { position: absolute; top: calc(100% + 8px); right: 0; width: 300px; padding: 14px; background: var(--surface-2); border: 1px solid var(--surface-3); border-radius: var(--radius); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6); }
+.proto-bar__help { margin: 0 0 12px; color: var(--text-2); line-height: 18px; }
+.proto-bar__help strong { display: block; margin-bottom: 2px; color: var(--white); font-size: 14px; font-weight: 600; }
+.proto-bar__label { display: block; margin-bottom: 4px; font-weight: 500; }
+.proto-bar__time input { width: 100%; min-height: 40px; padding: 6px 10px; margin-bottom: 8px; background: var(--surface); border: 1px solid var(--text-3); border-radius: 6px; font-size: 14px; }
+.proto-bar__row { display: flex; gap: 6px; }
+.proto-bar__row button { flex: 1; min-height: 36px; padding: 0 6px; background: var(--surface-3); border: 0; border-radius: 6px; font-size: 13px; font-weight: 500; white-space: nowrap; cursor: pointer; }
+.proto-bar__row button:hover { background: var(--text-3); color: #111; }
+
+@media (max-width: 1040px) {
+  .proto-bar__nav, .proto-bar__badge { display: none; }
+  .proto-bar__compact { display: flex; }
+}
+@media (max-width: 600px) {
+  .proto-bar { gap: 6px; padding: 4px 8px; }
+  .proto-bar__home { margin-left: 0; padding: 0 10px; }
+  .proto-bar__name, .proto-bar__when, .proto-bar__chev { display: none; }
+  .proto-bar__toggle { justify-content: center; width: 40px; padding: 0; }
+  .proto-bar__clock { position: static; }
+  .proto-bar__time { left: 8px; right: 8px; width: auto; top: calc(100% + 4px); }
+  .proto-bar__time input { font-size: 16px; }
 }

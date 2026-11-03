@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png">
+  <title>Questions – Billboard prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/answers.css">
+  <link rel="stylesheet" href="css/billboard.css">
+</head>
+<body>
+  <main class="ask" id="ask"></main>
+
+  <script src="../../assets/vendor/lucide.min.js"></script>
+  <script src="../../assets/js/app.js"></script>
+  <script src="../../assets/js/answers.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/proto-bar.js"></script>
+  <script>
+    // "current" is the position of the option the prototype uses now, or null if it doesn't apply.
+    US.setupAnswers({
+      root: document.getElementById("ask"),
+      feature: "billboard",
+      featureName: "Billboard",
+      questions: [
+        {
+          "title": "Taking down a live ad",
+          "ask": "A live campaign can't be stopped, but unlawful content has to be removed. How does a live ad come down if it breaks the rules?",
+          "current": 0,
+          "options": [
+            "There's no way to take it down",
+            "Admin can take it down from the panel",
+            "The dev team takes it down on request"
+          ]
+        },
+        {
+          "title": "Changing a scheduled campaign",
+          "ask": "Can admin change a campaign before its start date, for example if the creative is wrong or the brand pulls out?",
+          "current": 0,
+          "options": [
+            "No, it can't be changed",
+            "Yes, it can be edited",
+            "Yes, it can be edited or deleted"
+          ]
+        },
+        {
+          "title": "Where enquiries go",
+          "ask": "Where should enquiries from the advertise page go?",
+          "current": null,
+          "options": [
+            "A sales email",
+            "A list in the admin panel",
+            "Both"
+          ]
+        },
+        {
+          "title": "\"Become an Advertiser\" on Profile",
+          "ask": "What should happen to \"Become an Advertiser\" on the Profile tab?",
+          "current": null,
+          "options": [
+            "Remove it",
+            "Link it to /advertise",
+            "Leave it as coming soon"
+          ]
+        },
+        {
+          "title": "Empty slots",
+          "ask": "If no Prime Billboard is live, what happens to the Prime Banner?",
+          "current": 0,
+          "options": [
+            "It moves to the top",
+            "It stays in its usual place",
+            "It doesn't show"
+          ]
+        },
+        {
+          "title": "Normal Time and Prime Time",
+          "ask": "How do Normal Time and Prime Time billboards share the top of the feed?",
+          "current": 0,
+          "options": [
+            "Prime Time in prime hours, Normal Time otherwise and when no Prime Time ad is live",
+            "Normal Time never shows in prime hours",
+            "Both can show at once"
+          ]
+        },
+        {
+          "title": "Category filters",
+          "ask": "Do ads stay on filtered Discover views?",
+          "current": 0,
+          "options": [
+            "Yes, all of them",
+            "Only Standard Banners",
+            "No, the main feed only"
+          ]
+        },
+        {
+          "title": "Creative format",
+          "ask": "What can a creative be, and where does a click open?",
+          "current": 0,
+          "options": [
+            "Images, opening an external browser",
+            "Images, opening an in-app browser",
+            "Images or video, opening an external browser",
+            "Images or video, opening an in-app browser"
+          ]
+        },
+        {
+          "title": "Time zone",
+          "ask": "Which time zone sets when a campaign starts and ends, for a global audience?",
+          "current": 0,
+          "options": [
+            "Each viewer's device time",
+            "Sydney time",
+            "UTC"
+          ]
+        },
+        {
+          "title": "Measuring",
+          "ask": "What should count as an impression?",
+          "current": null,
+          "options": [
+            "Every time an ad is shown",
+            "Once per viewer per day",
+            "Report both"
+          ]
+        },
+        {
+          "title": "Cost on the report",
+          "ask": "Which cost should the report show?",
+          "current": 0,
+          "options": [
+            "The list price",
+            "The invoiced price, if sales gives a discount",
+            "No cost on the report"
+          ]
+        },
+        {
+          "title": "Counting posts",
+          "ask": "The brief says \"about every 15 posts\". What counts as a post?",
+          "current": 0,
+          "options": [
+            "Videos and shorts",
+            "Videos only"
+          ]
+        },
+        {
+          "title": "Added to Create campaign",
+          "ask": "The prototype adds an advertiser name and a checkbox confirming payment and assets. Which should stay?",
+          "current": 0,
+          "options": [
+            "Keep both",
+            "Only the advertiser name",
+            "Only the checkbox",
+            "Neither"
+          ]
+        }
+      ],
+    });
+  </script>
+</body>
+</html>

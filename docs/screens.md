@@ -1,6 +1,6 @@
 # App screens
 
-Every screen and state in the Figma reference, and whether it's rebuilt in `app/`. The reference images are named the same way, in folders with these names. A screen is only rebuilt when it matches its reference and its controls work or say they aren't built. Update this list as screens are rebuilt.
+Every screen and state in the Figma reference, and whether it's rebuilt in `app/`. The reference images, where someone has them, use these names and folders. A screen is only rebuilt when it matches its reference and its controls work or say they aren't built. Update this list as screens are rebuilt.
 
 The list covers what was exported. These aren't in the exports, so ask for references before building them: admin panel, ID check for becoming a creator, Go live, Analytics, Monetization and payout setup, Change password, Blocked users, Child Safety Standards, and the Shorts "report submitted" state.
 

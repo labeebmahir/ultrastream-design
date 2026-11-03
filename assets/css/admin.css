@@ -9,7 +9,7 @@
 .head { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 8px; }
 .head h1 { font-size: 26px; }
 .sub { color: var(--text-2); margin: 0 0 24px; }
-.crumb { display: inline-block; color: var(--text-2); text-decoration: none; font-size: 14px; margin-bottom: 10px; }
+.crumb { color: var(--text-2); text-decoration: none; font-size: 14px; margin-bottom: 4px; }
 
 .group { margin-bottom: 30px; }
 .group__title { display: flex; align-items: center; gap: 8px; font-size: 17px; margin-bottom: 10px; }
@@ -33,7 +33,7 @@ tr.is-new td { background: var(--orange-dim); }
 .panel h2 { font-size: 16px; margin-bottom: 14px; }
 .options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .option { position: relative; display: block; padding: 12px; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; }
-.option input { position: absolute; opacity: 0; }
+.option input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
 .option:has(input:checked) { border-color: var(--orange); background: var(--orange-dim); }
 .option:has(input:focus-visible) { outline: 2px solid var(--orange); outline-offset: 2px; }
 .option__name { display: block; font-weight: 600; font-size: 14px; }
@@ -74,6 +74,28 @@ tr.is-new td { background: var(--orange-dim); }
   .summary { position: static; }
 }
 @media (max-width: 560px) {
-  .options, .options--3, .stats { grid-template-columns: minmax(0, 1fr); }
+  .options, .stats { grid-template-columns: minmax(0, 1fr); }
+  .option { padding: 10px; }
   .sheet { padding: 20px; }
+}
+
+/* Empty slot in the Create campaign preview */
+.preview-slot { display: flex; align-items: center; justify-content: center; margin: 10px 12px; border: 1px dashed var(--text-3); border-radius: var(--radius); color: var(--text-2); font-size: 13px; text-align: center; }
+.preview-slot--billboard { aspect-ratio: 16 / 9; }
+.preview-slot--prime-banner { aspect-ratio: 3 / 1; }
+.preview-slot--standard { aspect-ratio: 4 / 1; }
+
+/* Tables become labelled cards when every column can't fit */
+@media (max-width: 1180px) {
+  .table-wrap { overflow: visible; border: 0; border-radius: 0; }
+  .table-wrap table, .table-wrap tbody { display: block; }
+  .table-wrap thead { display: none; }
+  .table-wrap tr { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 8px 12px; padding: 14px; margin-bottom: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+  .table-wrap tr.is-new { background: var(--orange-dim); border-color: var(--border-orange); }
+  .table-wrap td { display: block; padding: 0; border: 0; background: none !important; }
+  .table-wrap td[data-label] { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 12px; text-align: right; }
+  .table-wrap td[data-label]::before { content: attr(data-label); color: var(--text-3); text-align: left; }
+  .table-wrap td.cell-empty { display: none; }
+  .table-wrap td.cell-action { grid-column: 1 / -1; }
+  .table-wrap .cell-action .btn { width: 100%; min-height: 40px; }
 }

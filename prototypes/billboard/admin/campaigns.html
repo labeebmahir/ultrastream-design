@@ -4,10 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <link rel="icon" href="data:,">
+  <link rel="icon" type="image/png" href="../../../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../../../assets/img/apple-touch-icon.png">
   <title>Campaigns – UltraStream admin prototype</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../../assets/css/base.css">
   <link rel="stylesheet" href="../../../assets/css/admin.css">
   <link rel="stylesheet" href="../css/billboard.css">
@@ -55,25 +56,26 @@
     function row(c, key) {
       const m = US.metrics(c);
       const results = key === "scheduled"
-        ? `<td class="num">–</td><td class="num">–</td><td class="num">–</td>`
-        : `<td class="num">${US.fmtNum(m.impressions)}</td><td class="num">${US.fmtNum(m.clicks)}</td><td class="num">${US.fmtPct(m.ctr)}</td>`;
+        ? `<td class="num cell-empty">–</td><td class="num cell-empty">–</td><td class="num cell-empty">–</td>`
+        : `<td class="num" data-label="Impressions">${US.fmtNum(m.impressions)}</td><td class="num" data-label="Clicks">${US.fmtNum(m.clicks)}</td><td class="num" data-label="CTR">${US.fmtPct(m.ctr)}</td>`;
       const last = key === "ended"
-        ? `<a class="btn btn--sm" href="report.html?id=${c.id}">Report</a>`
+        ? `<a class="btn btn--sm" href="report.html?id=${c.id}">View report</a>`
         : `<span class="cell-sub">${key === "live" ? endsIn(c) : startsIn(c)}</span>`;
       return `<tr class="${c.id === newId ? "is-new" : ""}">
         <td><img class="thumb" src="${US.creativeSrc(c)}" alt=""></td>
         <td><div class="cell-strong">${US.esc(c.advertiser)}</div><div class="cell-sub">${US.esc(US.packageName(c))}</div></td>
-        <td style="white-space:nowrap">${US.period(c)}</td>
-        <td class="num">${US.fmtMoney(US.cost(c))}</td>
+        <td data-label="Period">${US.period(c)}</td>
+        <td class="num" data-label="Cost">${US.fmtMoney(US.cost(c))}</td>
         ${results}
-        <td style="white-space:nowrap">${last}</td>
+        <td class="cell-action">${last}</td>
       </tr>`;
     }
 
     function render() {
-      const sorted = [...US.campaigns()].sort((a, b) => b.start.localeCompare(a.start));
+      // Soonest to start, soonest to end, then most recently ended.
+      const order = { scheduled: (a, b) => a.start.localeCompare(b.start), live: (a, b) => US.endDate(a) - US.endDate(b), ended: (a, b) => US.endDate(b) - US.endDate(a) };
       document.getElementById("groups").innerHTML = GROUPS.map(({ key, title, empty }) => {
-        const list = sorted.filter((c) => US.status(c) === key);
+        const list = US.campaigns().filter((c) => US.status(c) === key).sort(order[key]);
         return `<section class="group">
           <h2 class="group__title"><span class="dot dot--${key}"></span>${title} <span class="tag">${list.length}</span></h2>
           ${list.length ? `<div class="table-wrap"><table>
@@ -86,6 +88,7 @@
 
     render();
     document.addEventListener("us:change", render);
+    document.querySelector("tr.is-new")?.scrollIntoView({ block: "center" });
     if (newId && US.campaign(newId)) US.toast(`Campaign scheduled for ${US.fmtDate(US.toDate(US.campaign(newId).start))}`);
   </script>
 </body>

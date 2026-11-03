@@ -26,6 +26,10 @@ const source = files.filter((f) => /\.(html|js|css)$/.test(f) && !f.includes("/v
 const handDrawn = source.filter((f) => /<svg class="icon"|[←→↗]/.test(readFileSync(f, "utf8")));
 check("icons: no hand-drawn icons or text arrows", handDrawn.length === 0, handDrawn.map(rel).join(" | "));
 
+// Favicon: every page links the real icon. The links check above confirms the file exists.
+const noIcon = pages.filter((f) => !readFileSync(f, "utf8").includes('assets/img/favicon.png"'));
+check("favicon: every page has one", noIcon.length === 0, noIcon.map(rel).join(" | "));
+
 // Scripts: classic only, because ES modules break when a page is opened from disk.
 const modules = pages.filter((f) => /<script[^>]*type="module"/.test(readFileSync(f, "utf8")));
 check("scripts: no ES modules", modules.length === 0, modules.map(rel).join(" | "));
@@ -50,7 +54,7 @@ if (newHex.length) console.log(`WARN  hex colours outside the palette: ${newHex.
 // Pages: load each one in a real browser, on desktop and at phone size.
 const { server, url } = startServer();
 const browser = await launchBrowser();
-const sizes = [["desktop", { width: 1440, height: 900 }], ["phone", { width: 390, height: 844 }]];
+const sizes = [["desktop", { width: 1440, height: 900 }], ["laptop", { width: 1024, height: 768 }], ["tablet", { width: 768, height: 1024 }], ["phone", { width: 390, height: 844 }], ["small phone", { width: 320, height: 640 }]];
 for (const [label, viewport] of sizes) {
   const context = await browser.newContext({ viewport });
   const problems = [];
@@ -70,6 +74,17 @@ for (const [label, viewport] of sizes) {
   check(`pages (${label}): ${pages.length} load with no errors or sideways scrolling`, problems.length === 0, problems.slice(0, 8).join(" | "));
   await context.close();
 }
+
+// Font: the app and design system use Geist.
+await (async () => {
+  const c = await browser.newContext();
+  const p = await c.newPage();
+  await p.goto(url + "app/discover.html", { waitUntil: "networkidle" });
+  const family = await p.evaluate(() => getComputedStyle(document.body).fontFamily);
+  const loaded = await p.evaluate(() => document.fonts.check('14px "Geist"'));
+  check("type: Geist is the app font", family.includes("Geist"), `${family}, loaded: ${loaded}`);
+  await c.close();
+})();
 
 // Dropdowns: tests can't see the browser's pop-up list, so check its colours directly.
 const context = await browser.newContext();
