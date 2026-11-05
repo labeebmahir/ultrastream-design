@@ -89,15 +89,20 @@
         const dates = added
           ? `${US.period(c)}<span class="cell-sub">${added} paused day${added === 1 ? "" : "s"} added${status === "paused" ? " so far" : ""}. Originally ended ${originalLast}.</span>`
           : US.period(c);
+        const w = US.windowOf(c);
+        const local = US.localWindow(w.from, w.to, US.toDate(c.start));
         return `<section class="panel" id="details">
-          <h2>Campaign</h2>
+          <h2>Campaign <span class="tag tag--placeholder">Placeholder rates</span></h2>
           ${dl([
             ["Status", US.statusBadge(status)],
-            ["Package", US.esc(US.packageName(c))],
+            ["Slot", US.esc(t.name)],
             ["Placement", US.esc(t.where)],
             ["Dates", dates],
+            ["Daily window", `${US.fmtWindow(c)}<span class="cell-sub">${US.fmtNum(US.minutesPerDay(c))} min a day${local ? `, ${US.esc(local)}` : ""}</span>`],
+            ["Airtime booked", US.fmtMins(US.airtimeBooked(c))],
+            ["Rate", US.fmtRate(c.type)],
             ["Link", `<a class="link-cell" href="${US.esc(c.url)}" target="_blank" rel="noopener">${US.esc(c.url.replace(/^https:\/\//, ""))}</a>`],
-            ["Cost", `${US.fmtMoney(US.cost(c))}<span class="cell-sub">Placeholder price</span>`],
+            ["Cost", `${US.fmtMoney(US.cost(c))}<span class="cell-sub">${US.costLine(c)}</span>`],
           ])}
         </section>`;
       }
@@ -158,7 +163,7 @@
         }
         document.title = `${c.advertiser} – UltraStream admin prototype`;
         const status = US.status(c);
-        box.innerHTML = head(US.esc(c.advertiser), `${US.statusBadge(status)} <span>${US.esc(US.packageName(c))}</span>`, actionsFor(c, status))
+        box.innerHTML = head(US.esc(c.advertiser), `${US.statusBadge(status)} <span>${US.esc(US.slotLine(c))}</span>`, actionsFor(c, status))
           + `<div class="detail-grid">
               <div>${detailsHTML(c, status)}${paymentHTML(c)}${pausesHTML(c, status)}</div>
               <div>${creativeHTML(c)}</div>

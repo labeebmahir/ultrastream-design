@@ -1,25 +1,25 @@
-// The advertise page: package chips, a simple drawing of the Discover feed with the chosen slot in colour, and the
-// enquiry form. The chosen package (US.Enquiry.current) stays in step with the form's package field both ways.
+// The advertise page: ad slot chips, a simple drawing of the Discover feed with the chosen slot in colour, and the
+// enquiry form. The chosen slot (US.Enquiry.current) stays in step with the form's slot field both ways.
 (function () {
   const E = (US.Enquiry = {});
   const $ = (id) => document.getElementById(id);
   const pad = (n) => String(n).padStart(2, "0");
 
   E.ORDER = ["billboard", "billboard-prime", "featured", "standard"];
-  E.HOURS = `${pad(US.PRIME_HOURS.start)}:00–${pad(US.PRIME_HOURS.end)}:00`;
+  E.HOURS = US.primeLabel();
   E.name = (key) => US.AD_TYPES[key].name;
   E.keyOf = (value) => E.ORDER.find((k) => E.name(k) === value) || null;
 
-  // One line on where each package sits. Billboard and Billboard Prime Time share the top slot.
+  // One line on where each slot sits. Billboard and Billboard Prime Time share the top of the feed.
   E.LINES = {
-    "billboard": "The first thing people see in the Discover feed, outside prime hours.",
-    "billboard-prime": "The same top spot, during prime hours,",
-    "featured": "Directly below the Billboard, the second thing in the feed. Shown all day.",
+    "billboard": "The first thing people see in the Discover feed, outside prime time.",
+    "billboard-prime": "The same top spot, during prime time:",
+    "featured": "Directly below the Billboard, the second thing in the feed, at any hour.",
     "standard": `Between videos and shorts, repeating about every ${US.STANDARD_EVERY} items as people scroll.`,
   };
 
   E.lineHTML = (key) => {
-    if (!key) return "Choose a package to see where it appears.";
+    if (!key) return "Choose an ad slot to see where it appears.";
     const hours = key === "billboard-prime" ? ` <span class="nowrap">${E.HOURS}.</span> <span class="tag tag--placeholder">Placeholder hours</span>` : "";
     return US.esc(E.LINES[key]) + hours;
   };
@@ -38,7 +38,7 @@
         <div class="sp__feed">
           <div class="sp__slot sp__slot--top" data-slot="top">
             ${label("billboard", "Top of the feed")}
-            ${label("billboard-prime", '<span class="sp__tag"><i class="icon" data-lucide="clock"></i>Prime hours</span>')}
+            ${label("billboard-prime", `<span class="sp__tag"><i class="icon" data-lucide="clock"></i>Prime time ${E.HOURS}</span>`)}
           </div>
           <div class="sp__slot sp__slot--featured" data-slot="featured">${label("featured", "Below the Billboard")}</div>
           ${item}
@@ -55,13 +55,13 @@
     </div>`;
   };
 
-  // Choosing a package. Unless the form made the choice, it also sets the form's package field.
+  // Choosing a slot. Unless the form made the choice, it also sets the form's slot field.
   E.current = null;
   E.select = (key, options = {}) => {
     E.current = key;
     if (!options.fromForm && $("type")) {
       $("type").value = key ? E.name(key) : "";
-      // Lets the form clear its package error after a failed send.
+      // Lets the form clear its slot error after a failed send.
       $("type").dispatchEvent(new Event("input", { bubbles: true }));
     }
     $("feed-sketch").firstElementChild.dataset.on = key || "";

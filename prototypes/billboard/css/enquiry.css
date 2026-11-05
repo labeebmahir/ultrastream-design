@@ -1,5 +1,5 @@
 /* The advertise page. Public website: keeps the ultrastream.one look (Space Grotesk and Inter, its orange), not the app's.
-   One screen on laptops: headline and form on the left, package chips and a simple feed drawing (.sp) on the right. */
+   One screen on laptops: headline and form on the left, ad slot chips and a simple feed drawing (.sp) on the right. */
 :root { --orange: #ff5c00; --orange-hover: #e05200; --input: rgba(255, 255, 255, 0.15); --font-display: "Space Grotesk", system-ui, sans-serif; --font-body: "Inter", system-ui, sans-serif;
   --on: var(--orange); --on-fill: color-mix(in srgb, var(--orange) 26%, var(--black)); --block: var(--surface-3); --nav-h: 56px; }
 
@@ -20,6 +20,8 @@
 .eq-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px 16px; }
 .eq-grid > .field { grid-column: span 2; margin: 0; }
 .eq-grid > .eq-full { grid-column: 1 / -1; }
+/* Time of day and the message share the last row, so the form stays the same height */
+.eq-grid > .eq-time { align-self: start; }
 .eq-dates { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .eq-dates label { min-width: 0; }
 .eq-grid .input { min-height: 42px; }

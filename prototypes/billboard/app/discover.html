@@ -42,8 +42,9 @@
       <h1>Discover feed</h1>
       <p id="review-time"></p>
       <div class="review__actions">
-        <button class="btn btn--sm" type="button" id="jump-normal">Set to 11:00, outside prime hours</button>
-        <button class="btn btn--sm" type="button" id="jump-prime">Set to 19:00, in prime hours</button>
+        <button class="btn btn--sm" type="button" id="jump-normal">Set to 10:00 UTC, outside prime time</button>
+        <button class="btn btn--sm" type="button" id="jump-prime">Set to 14:00 UTC, in prime time</button>
+        <button class="btn btn--sm" type="button" id="jump-empty">Set to 03:00 UTC, nothing booked</button>
       </div>
       <h2>Showing now</h2>
       <div id="review-slots"></div>
@@ -51,9 +52,11 @@
       <h2>Rules to check</h2>
       <ul>
         <li>Every ad has a “Sponsored” label.</li>
+        <li>Each slot shows one advertiser at a time: the campaign whose daily window covers this minute. Nothing rotates.</li>
+        <li>A slot with nothing on air collapses, so the next one moves up.</li>
         <li>Only live campaigns show. A paused campaign doesn't show until admin resumes it.</li>
         <li>Ads appear in this feed only. Open any video to see that it has none, or <a href="watch.html?live=1">open a live stream</a>.</li>
-        <li>Prime hours are a placeholder: 18:00–22:00.</li>
+        <li>Prime time is the same moment for every viewer: <span id="prime-hours"></span>, placeholder hours.</li>
       </ul>
     </aside>
   </div>

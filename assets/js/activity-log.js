@@ -4,6 +4,21 @@
 // type is one of: prototype, app, components, tooling, fix.
 window.ACTIVITY = [
   {
+    version: "0.13.0",
+    date: "2026-11-05",
+    type: "prototype",
+    title: "Billboard: airtime booked by the minute",
+    asked: "Sell airtime by the minute, with one advertiser per slot at a time, one prime time window for everyone and prices in US dollars.",
+    made: [
+      "Create campaign books a slot for a date range and a daily window in UTC. The cost is minutes a day × days × the slot's per-minute rate, shown with placeholder rates in US dollars.",
+      "Billboard windows sit outside prime time and Billboard Prime Time windows inside it. A window that crosses prime time is blocked, with a one-click fix to the part that fits.",
+      "Each slot has one advertiser at a time. A day timeline shows what's already booked and marks prime time, and an overlapping window is blocked, with the nearest free window offered instead.",
+      "Prime time is one window in UTC for every viewer. Discover shows the one campaign on air at the demo time, and an empty slot collapses.",
+      "The report and its PDF add airtime delivered and the cost per 1,000 impressions. The enquiry page explains booking hours of the day, and the questions page has 22 questions.",
+    ],
+    links: [["Billboard", "prototypes/billboard/index.html"], ["Create campaign", "prototypes/billboard/admin/campaign-new.html"]],
+  },
+  {
     version: "0.12.0",
     date: "2026-11-05",
     type: "prototype",

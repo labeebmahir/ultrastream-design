@@ -17,23 +17,23 @@
   <main class="page">
     <a class="page__back back-link has-icon" href="../../index.html"><i class="icon icon--sm" data-lucide="arrow-left"></i>All prototypes</a>
     <h1 class="text-h2 page__title">Billboard</h1>
-    <p class="page__lede">Follow a campaign from enquiry to report. Brands never use the app: sales handles the brand, admin creates the campaign with its payment record, and the system publishes and stops it. Admin can pause a live campaign.</p>
+    <p class="page__lede">Follow a campaign from enquiry to report. Airtime is sold by the minute: a campaign holds one ad slot for a daily window, every day across its dates, with one advertiser per slot at a time. Brands never use the app: sales handles the brand, admin creates the campaign with its payment record, and the system publishes and stops it. Admin can pause a live campaign.</p>
 
     <a class="item step" href="web/advertise.html">
       <span class="step__n">1</span>
-      <span class="item__body"><span class="item__title">Advertiser enquiry page</span><span class="item__text">A brand sees where each of the four packages appears in the Discover feed and asks about advertising at ultrastream.one/advertise.</span></span>
+      <span class="item__body"><span class="item__title">Advertiser enquiry page</span><span class="item__text">A brand sees where each of the four ad slots appears in the Discover feed and asks about booking airtime at ultrastream.one/advertise.</span></span>
       <span class="tag">Desktop</span>
       <i class="icon icon--sm item__arrow" data-lucide="arrow-right"></i>
     </a>
     <a class="item step" href="admin/campaign-new.html">
       <span class="step__n">2</span>
-      <span class="item__body"><span class="item__title">Admin: Create campaign</span><span class="item__text">Once paid, admin records the payment and adds the creative, link, package and start date. The campaign is scheduled straight away.</span></span>
+      <span class="item__body"><span class="item__title">Admin: Create campaign</span><span class="item__text">Once paid, admin records the payment, picks the slot, dates and daily window in UTC, and adds the creative and link. The cost is minutes a day × days × the slot's rate. A timeline shows what's already booked, and a window that's taken can't be saved.</span></span>
       <span class="tag">Desktop</span>
       <i class="icon icon--sm item__arrow" data-lucide="arrow-right"></i>
     </a>
     <a class="item step" href="app/discover.html">
       <span class="step__n">3</span>
-      <span class="item__body"><span class="item__title">The four packages in Discover</span><span class="item__text">Billboard, Billboard Prime Time, Featured Banner and Standard Banner. Paused campaigns don't show.</span></span>
+      <span class="item__body"><span class="item__title">The four ad slots in Discover</span><span class="item__text">Billboard, Billboard Prime Time, Featured Banner and Standard Banner. Each shows the one campaign on air at that minute. Prime time is one window in UTC for every viewer.</span></span>
       <span class="tag">Phone</span>
       <i class="icon icon--sm item__arrow" data-lucide="arrow-right"></i>
     </a>
@@ -45,19 +45,21 @@
     </a>
     <a class="item step" href="admin/report.html?id=c7">
       <span class="step__n">5</span>
-      <span class="item__body"><span class="item__title">End-of-campaign report</span><span class="item__text">In the admin panel, with a PDF to send the brand: dates the ad ran with pauses, impressions, unique reach, clicks, click-through rate, impressions by country and the ad in the app.</span></span>
+      <span class="item__body"><span class="item__title">End-of-campaign report</span><span class="item__text">In the admin panel, with a PDF to send the brand: airtime delivered, cost per 1,000 impressions, dates the ad ran with pauses, impressions, unique reach, clicks, click-through rate, impressions by country and the ad in the app.</span></span>
       <span class="tag">Desktop</span>
       <i class="icon icon--sm item__arrow" data-lucide="arrow-right"></i>
     </a>
     <a class="item step" href="questions.html">
       <span class="step__n">?</span>
       <span class="item__body"><span class="item__title">Questions to decide</span><span class="item__text">What needs an answer before this is built. Answer them here and export your answers.</span></span>
-      <span class="tag">19 to answer</span>
+      <span class="tag">22 to answer</span>
       <i class="icon icon--sm item__arrow" data-lucide="arrow-right"></i>
     </a>
 
     <h2 class="text-h4 page__section">Each state</h2>
     <ul>
+      <li>Create campaign with <a href="admin/campaign-new.html?state=overlap">a window that's already booked</a>, and with <a href="admin/campaign-new.html?state=prime">a Billboard window that runs into prime time</a>.</li>
+      <li>Discover <a href="app/discover.html?state=normal">outside prime time</a>, <a href="app/discover.html?state=prime">in prime time</a>, and <a href="app/discover.html?state=empty">with nothing on air</a>, so the slots collapse.</li>
       <li><a href="admin/campaign.html?id=c5">Scheduled</a>, with its payment record.</li>
       <li><a href="admin/campaign.html?id=c1">Live</a>, with Pause.</li>
       <li><a href="admin/campaign.html?id=c7">Ended after a two-day pause</a>, and <a href="admin/report.html?id=c7">its report</a>.</li>
@@ -65,17 +67,17 @@
 
     <h2 class="text-h4 page__section">Try the whole flow</h2>
     <ul>
-      <li>Create a campaign that starts tomorrow. Once the payment record is filled in, it's listed under Scheduled.</li>
+      <li>Create a campaign that starts tomorrow. Pick a slot, dates and a daily window. If the window is taken, use the nearest free one. Once the payment record is filled in, it's listed under Scheduled.</li>
       <li>Select View on its row to see its details and payment record.</li>
-      <li>Use <strong>Demo time</strong> at the top of the page to move forward a day. It goes live and appears in Discover.</li>
+      <li>Use <strong>Demo time</strong> at the top of the page to move forward a day and into its window. It goes live and appears in Discover.</li>
       <li>Pause it from the campaign list, move forward a day or two, then resume it. While it's paused it isn't in Discover, and the paused days are added to its end date.</li>
-      <li>Move forward until the package ends. It moves to Ended and its PDF report becomes available.</li>
+      <li>Move forward past its last day. It moves to Ended and its PDF report becomes available.</li>
       <li>Press <strong>Reset</strong> to start again. Your changes stay in your own browser.</li>
     </ul>
 
     <h2 class="text-h4 page__section">What's real and what isn't</h2>
     <ul>
-      <li>Prices, durations, prime-time hours, payment methods and creative specs are placeholders. So are the sample payment records.</li>
+      <li>Rates in US dollars, prime time hours (13:00–17:00 UTC), payment methods and creative specs are placeholders. So are the sample payment records.</li>
       <li>Advertisers and results are made up. Results are simulated, plus any views and clicks you make here. Countries on the report are placeholders.</li>
       <li>The report shows a mock of the ad in the feed where a real report would have a screenshot.</li>
       <li>The Discover feed and video screen follow the Figma design. Figma has no admin side, so the admin layout is a proposal.</li>

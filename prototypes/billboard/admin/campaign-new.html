@@ -88,14 +88,39 @@
           </section>
 
           <section class="panel">
-            <h2>Package <span class="tag tag--placeholder">Placeholder prices and durations</span></h2>
-            <div class="field">
-              <span class="field__label" id="type-label">Package</span>
+            <h2>Ad slot <span class="tag tag--placeholder">Placeholder rates</span></h2>
+            <p class="panel__intro">Airtime is sold by the minute. The cost is minutes a day × days × the slot's rate.</p>
+            <div class="field" style="margin-bottom:0">
+              <span class="field__label" id="type-label">Slot</span>
               <div class="options" id="types" role="radiogroup" aria-labelledby="type-label"></div>
             </div>
-            <div class="field" style="margin-bottom:0">
-              <span class="field__label" id="dur-label">Duration</span>
-              <div class="options options--3" id="durations" role="radiogroup" aria-labelledby="dur-label"></div>
+          </section>
+
+          <section class="panel" id="schedule">
+            <h2>Dates and daily window <span class="tag tag--placeholder">Placeholder prime time hours</span></h2>
+            <p class="panel__intro">All times are UTC. The ad shows every day from the start date to the last day, during its daily window. One advertiser per slot at a time.</p>
+            <div class="sched-grid">
+              <div class="field" id="f-dates">
+                <div class="pair">
+                  <label><span class="field__label">Start date</span><input class="input" id="start" type="date"></label>
+                  <label><span class="field__label">Last day</span><input class="input" id="end" type="date"></label>
+                </div>
+                <span class="field__error">Choose a start date after today, and a last day on or after it.</span>
+              </div>
+              <div class="field" id="f-window">
+                <div class="pair">
+                  <label><span class="field__label">From (UTC)</span><select class="input" id="win-from"></select></label>
+                  <label><span class="field__label">To (UTC)</span><select class="input" id="win-to"></select></label>
+                </div>
+              </div>
+            </div>
+            <p class="window-hint" id="window-hint"></p>
+            <div class="window-error" id="window-error" role="alert" hidden></div>
+            <div class="avail" id="avail">
+              <p class="avail__head"><strong id="avail-title">Availability</strong> <span id="avail-sub"></span></p>
+              <div id="timeline"></div>
+              <ul class="tl-legend" id="legend"></ul>
+              <p class="avail__list" id="avail-list"></p>
             </div>
           </section>
 
@@ -119,22 +144,13 @@
             </label>
           </section>
 
-          <section class="panel">
-            <h2>Schedule</h2>
-            <label class="field" id="f-start" style="margin-bottom:0">
-              <span class="field__label">Start date</span>
-              <input class="input" id="start" type="date" style="max-width:220px">
-              <span class="field__hint">Tomorrow at the earliest. The ad publishes automatically at the start of this date and stops when the package ends. If it's paused, the paused days are added to the end.</span>
-              <span class="field__error">Choose a start date after today.</span>
-            </label>
-          </section>
         </div>
 
         <aside class="panel summary">
           <h2>How it will look</h2>
           <div class="preview-phone" id="preview"></div>
           <dl id="summary"></dl>
-          <p class="note" id="overlap" hidden></p>
+          <p class="panel__foot summary__foot">Placeholder rates in US dollars. The campaign publishes at 00:00 UTC on its start date. If it's paused, the paused days are added to the end.</p>
           <div class="actions">
             <button class="btn btn--primary" type="submit" id="submit">Schedule campaign</button>
             <a class="btn" href="campaigns.html">Cancel</a>

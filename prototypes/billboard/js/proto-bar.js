@@ -4,14 +4,14 @@
     name: "Billboard",
     feature: "billboard",
     clock: true,
-    answersVersion: 4, // matches version in questions.html
+    answersVersion: 5, // matches version in questions.html
     steps: [
       { label: "Enquiry", href: "web/advertise.html" },
       { label: "Create", href: "admin/campaign-new.html" },
       { label: "Discover", href: "app/discover.html", also: ["app/watch.html"] },
       { label: "Campaigns", href: "admin/campaigns.html", also: ["admin/campaign.html"] },
       { label: "Report", href: "admin/report.html?id=c7" },
-      { label: "Questions", href: "questions.html", numbered: false, count: 19 },
+      { label: "Questions", href: "questions.html", numbered: false, count: 22 },
     ],
   };
 
@@ -65,8 +65,8 @@
         <i class="icon icon--sm proto-bar__chev" data-lucide="chevron-down"></i>
       </button>
       <div class="proto-bar__time" id="demo-panel" hidden>
-        <p class="proto-bar__help"><strong>Demo time</strong> Move the clock to see campaigns go from scheduled to live to ended, and paused days added to the end.</p>
-        <label for="demo-now" class="proto-bar__label">Date and time</label>
+        <p class="proto-bar__help"><strong>Demo time, in UTC</strong> Move the clock to see campaigns go from scheduled to live to ended, each ad come on air in its daily window, and paused days added to the end.</p>
+        <label for="demo-now" class="proto-bar__label">Date and time (UTC)</label>
         <input id="demo-now" type="datetime-local">
         <div class="proto-bar__row">
           <button type="button" data-shift="1">+1 day</button>
@@ -96,7 +96,8 @@
   const when = bar.querySelector(".proto-bar__when");
   const sync = () => {
     input.value = US.nowString();
-    when.textContent = US.now().toLocaleString("en-AU", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" });
+    const now = US.now();
+    when.textContent = `${now.toLocaleDateString("en-AU", { timeZone: "UTC", day: "numeric", month: "short" })}, ${US.hhmm(US.minuteOfDay(now))} UTC`;
   };
   const setOpen = (open) => {
     panel.hidden = !open;

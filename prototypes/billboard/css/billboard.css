@@ -104,6 +104,69 @@ tr[data-href]:hover td { background: var(--surface-3); }
 .pay-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 16px; }
 @media (max-width: 560px) { .pay-grid { grid-template-columns: minmax(0, 1fr); } }
 
+/* Create campaign: slot rates, dates and daily window, and the slot's availability */
+.option__rate { display: block; margin-top: 6px; color: var(--text); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.sched-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 16px; }
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.pair label { display: block; min-width: 0; }
+.pair input[type="date"] { min-width: 0; }
+.sched-grid .field { margin-bottom: 0; }
+.field--invalid .pair .input { border-color: var(--red); }
+.window-hint { margin: 8px 0 0; color: var(--text-2); font-size: 13px; line-height: 18px; }
+.window-hint:empty { display: none; }
+.window-error { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-top: 12px; padding: 10px 12px; border: 1px solid color-mix(in srgb, var(--error) 45%, transparent); border-radius: var(--radius-sm); background: color-mix(in srgb, var(--error) 10%, transparent); color: var(--text); font-size: 13px; line-height: 18px; }
+.window-error[hidden] { display: none; }
+.window-error > span { flex: 1 1 320px; }
+.window-error > span::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 50%; background: var(--error); vertical-align: 1px; }
+#f-dates .field__error { margin-bottom: 0; }
+.avail { margin-top: 16px; }
+@media (max-width: 760px) { .sched-grid { grid-template-columns: minmax(0, 1fr); } }
+.summary dd .cell-sub { display: block; margin-top: 2px; font-weight: 400; line-height: 18px; }
+.summary dd #cost { font-size: 18px; font-weight: 700; }
+.summary__foot { margin: 0 0 16px; }
+
+.avail { padding: 14px; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); }
+.avail__head { display: flex; flex-wrap: wrap; gap: 2px 8px; margin: 0 0 12px; font-size: 14px; line-height: 20px; }
+.avail__head span { color: var(--text-2); }
+.avail__list { margin: 10px 0 0; color: var(--text-2); font-size: 13px; line-height: 18px; }
+.avail__list:empty { display: none; }
+/* The day as a bar from 00:00 to 24:00 UTC: prime time marked across it, booked windows on the top lane and this
+   campaign's window on the lane below, so a clash lines up. Hatched hours are closed to the chosen slot. */
+.tl__track { position: relative; height: 60px; overflow: hidden; background: var(--black); border: 1px solid var(--border); border-radius: 6px; }
+.tl__track > span { position: absolute; }
+.tl__prime { top: 0; bottom: 0; background: var(--orange-dim); border-left: 1px dashed var(--border-orange); border-right: 1px dashed var(--border-orange); }
+.tl__prime span { position: absolute; top: 2px; left: 0; right: 0; overflow: hidden; color: var(--orange); font-size: 10px; line-height: 14px; font-weight: 600; text-align: center; white-space: nowrap; }
+.tl__closed { top: 0; bottom: 0; background: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0 3px, transparent 3px 8px); }
+.tl__booked, .tl__mine { height: 18px; border-radius: 4px; }
+.tl__booked { top: 17px; display: flex; align-items: center; overflow: hidden; padding: 0 6px; background: var(--surface-3); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12); color: var(--text-2); font-size: 11px; line-height: 14px; white-space: nowrap; }
+.tl__booked span { overflow: hidden; text-overflow: ellipsis; }
+.tl__mine { top: 38px; background: color-mix(in srgb, var(--orange) 35%, transparent); box-shadow: inset 0 0 0 2px var(--orange); }
+.tl__mine.is-bad { background: color-mix(in srgb, var(--error) 35%, transparent); box-shadow: inset 0 0 0 2px var(--error); }
+.tl__ticks { position: relative; height: 16px; margin-top: 4px; color: var(--text-3); font-size: 11px; line-height: 16px; font-variant-numeric: tabular-nums; }
+.tl__tick { position: absolute; transform: translateX(-50%); }
+.tl__tick:first-child { transform: none; }
+.tl__tick:last-child { transform: translateX(-100%); }
+.tl-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 10px 0 0; padding: 0; list-style: none; color: var(--text-2); font-size: 12px; line-height: 16px; }
+.tl-legend li { display: inline-flex; align-items: center; gap: 6px; }
+.tl-key { display: inline-block; width: 16px; height: 10px; border-radius: 3px; }
+.tl-key--booked { background: var(--surface-3); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12); }
+.tl-key--mine { background: color-mix(in srgb, var(--orange) 35%, transparent); box-shadow: inset 0 0 0 2px var(--orange); }
+.tl-key--mine.is-bad { background: color-mix(in srgb, var(--error) 35%, transparent); box-shadow: inset 0 0 0 2px var(--error); }
+.tl-key--prime { background: var(--orange-dim); box-shadow: inset 0 0 0 1px var(--border-orange); }
+.tl-key--closed { background: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0 2px, transparent 2px 5px); box-shadow: inset 0 0 0 1px var(--border); }
+
+/* Airtime on the View page and report */
+.airtime td:first-child { color: var(--text-2); }
+.airtime tr.is-total td { color: var(--text); font-weight: 600; }
+#report-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 1023px) { #report-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* Dollar totals and long counts still fit two tiles across on small phones */
+@media (max-width: 420px) {
+  .admin-app .tile { min-width: 0; padding: 14px; }
+  .admin-app .tile__value { font-size: 22px; line-height: 28px; overflow-wrap: anywhere; }
+}
+.calc { margin: 12px 0 0; color: var(--text-2); font-size: 13px; line-height: 18px; }
+
 /* Campaign page and report: two columns of cards, like the panel's detail pages */
 .detail-grid { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 16px; align-items: start; }
 .detail-grid > div > .panel:last-child { margin-bottom: 0; }

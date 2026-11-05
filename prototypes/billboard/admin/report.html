@@ -63,9 +63,9 @@
   </script>
   <script>
     const id = new URLSearchParams(location.search).get("id");
-    const FOOTNOTE = "Prototype: placeholder prices, durations and countries, simulated results.";
+    const FOOTNOTE = "Prototype: placeholder rates in US dollars, placeholder prime time hours and countries, simulated results.";
     const SHOT_NOTE = "Mock of the ad in the Discover feed. A real report would use a screenshot taken while it was live.";
-    const pdfText = (s) => String(s).replace(/–/g, "-").replace(/·/g, "-");
+    const pdfText = (s) => String(s).replace(/–/g, "-").replace(/·/g, "-").replace(/×/g, "x").replace(/÷/g, "/");
 
     // Dates for display: a stretch that stops at midnight shows the day before as its last day.
     const lastMoment = (d) => new Date(d.getTime() - 60000);
@@ -82,8 +82,16 @@
       const period = `${US.fmtDate(US.liveFrom(c))} – ${US.fmtDate(US.lastDay(c))}`;
       const endNote = added
         ? `Originally due to end after ${US.fmtDate(US.addDays(US.originalEnd(c), -1))}. ${added} paused day${added === 1 ? " was" : "s were"} added, so the last day was ${US.fmtDate(US.lastDay(c))}.`
-        : `Ran without pauses until the end of the package, after ${US.fmtDate(US.lastDay(c))}.`;
-      return { m, added, runs, period, endNote, countries: US.countryImpressions(m.impressions) };
+        : `Ran without pauses until its last day, ${US.fmtDate(US.lastDay(c))}.`;
+      // Airtime delivered. The billboard rows are split by prime time; banners have one rate all day.
+      const billboard = US.AD_TYPES[c.type].group === "top";
+      const air = m.air;
+      const airRows = billboard
+        ? [["Outside prime time", US.fmtMins(air.normal)], ["In prime time", US.fmtMins(air.prime)], ["Total delivered", US.fmtMins(air.total)]]
+        : [["Total delivered, one rate all day", US.fmtMins(air.total)]];
+      airRows.push(["Booked", US.fmtMins(US.airtimeBooked(c))]);
+      const cpmNote = `Cost per 1,000 impressions (CPM): ${US.fmtMoney(US.cost(c))} ÷ ${US.fmtNum(m.impressions)} impressions × 1,000 = ${US.fmtMoney(m.cpm, true)}.`;
+      return { m, added, runs, period, endNote, airRows, cpmNote, countries: US.countryImpressions(m.impressions) };
     }
 
     const head = (sub, actions) => `<div class="head">
@@ -119,9 +127,11 @@
       const tile = (label, value, hint) => `<div class="tile"><span class="tile__label">${label}</span><span class="tile__value">${value}</span><span class="tile__hint">${hint}</span></div>`;
       const details = [
         ["Advertiser", US.esc(c.advertiser)],
-        ["Package", US.esc(US.packageName(c))],
+        ["Slot", US.esc(t.name)],
         ["Campaign period", r.period],
-        ["Package cost", `${US.fmtMoney(US.cost(c))}<span class="cell-sub">Placeholder price</span>`],
+        ["Daily window", US.fmtWindow(c)],
+        ["Rate", `${US.fmtRate(c.type)}<span class="cell-sub">Placeholder rate</span>`],
+        ["Cost", `${US.fmtMoney(US.cost(c))}<span class="cell-sub">${US.costLine(c)}</span>`],
         ...(r.added ? [["Paused days added", String(r.added)]] : []),
       ];
       box.innerHTML = head(`${US.statusBadge(status)} <span>${US.esc(c.advertiser)} · End-of-campaign report</span>`,
@@ -131,12 +141,23 @@
           ${tile("Unique reach", US.fmtNum(m.reach), "People who saw it at least once")}
           ${tile("Clicks", US.fmtNum(m.clicks), "Taps through to the link")}
           ${tile("Click-through rate", US.fmtPct(m.ctr), "Clicks per impression")}
+          ${tile("Airtime delivered", US.fmtMins(m.air.total), "Minutes the ad was on air")}
+          ${tile("Cost per 1,000 impressions", US.fmtMoney(m.cpm, true), "CPM: cost ÷ impressions × 1,000")}
         </div>
         <div class="detail-grid">
           <div>
             <section class="panel" id="report-summary">
               <h2>Campaign</h2>
               <dl class="details">${details.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>
+            </section>
+            <section class="panel" id="report-airtime">
+              <h2>Airtime delivered</h2>
+              <p class="panel__intro">Minutes the ad was on air in its daily window, ${US.fmtWindow(c)}, while the campaign was live.</p>
+              <div class="data-table airtime"><table>
+                <thead><tr><th>Airtime</th><th class="num">Minutes</th></tr></thead>
+                <tbody>${r.airRows.map(([k, v]) => `<tr${/^Total/.test(k) ? ' class="is-total"' : ""}><td>${k}</td><td class="num">${v}</td></tr>`).join("")}</tbody>
+              </table></div>
+              <p class="calc" id="report-cpm">${r.cpmNote}</p>
             </section>
             <section class="panel" id="report-dates">
               <h2>Dates the ad ran</h2>
@@ -206,7 +227,7 @@
       doc.setFont("helvetica", "normal").setFontSize(13).setTextColor(...muted).text("End-of-campaign report", left, 152);
 
       let y = 196;
-      const rows = [["Campaign period", r.period], ["Package", US.packageName(c)], ["Package cost", US.fmtMoney(US.cost(c))]];
+      const rows = [["Campaign period", r.period], ["Slot", US.AD_TYPES[c.type].name], ["Daily window", US.fmtWindow(c)], ["Cost", `${US.fmtMoney(US.cost(c))} (${US.costLine(c)})`]];
       if (r.added) rows.push(["Paused days added", String(r.added)]);
       rows.forEach(([k, v]) => {
         doc.setDrawColor(228).line(left, y - 18, right, y - 18);
@@ -217,12 +238,15 @@
 
       y += 8;
       const gap = 10;
-      const w = (right - left - gap * 3) / 4;
-      [[US.fmtNum(m.impressions), "Impressions"], [US.fmtNum(m.reach), "Unique reach"], [US.fmtNum(m.clicks), "Clicks"], [US.fmtPct(m.ctr), "Click-through rate"]].forEach(([num, label], i) => {
-        const x = left + i * (w + gap);
-        doc.setFillColor(244).roundedRect(x, y, w, 76, 6, 6, "F");
-        doc.setFont("helvetica", "bold").setFontSize(17).setTextColor(...ink).text(num, x + 12, y + 36);
-        doc.setFont("helvetica", "normal").setFontSize(10).setTextColor(...muted).text(label, x + 12, y + 56);
+      // Six tiles, three to a row.
+      const w = (right - left - gap * 2) / 3;
+      const tiles = [[US.fmtNum(m.impressions), "Impressions"], [US.fmtNum(m.reach), "Unique reach"], [US.fmtNum(m.clicks), "Clicks"], [US.fmtPct(m.ctr), "Click-through rate"], [US.fmtMins(m.air.total), "Airtime delivered"], [US.fmtMoney(m.cpm, true), "Cost per 1,000 impressions (CPM)"]];
+      tiles.forEach(([num, label], i) => {
+        const x = left + (i % 3) * (w + gap);
+        const ty = y + Math.floor(i / 3) * (68 + gap);
+        doc.setFillColor(244).roundedRect(x, ty, w, 68, 6, 6, "F");
+        doc.setFont("helvetica", "bold").setFontSize(17).setTextColor(...ink).text(num, x + 12, ty + 32);
+        doc.setFont("helvetica", "normal").setFontSize(10).setTextColor(...muted).text(label, x + 12, ty + 52);
       });
 
       // A small table: a heading, a note, then rows. cols gives each column's x and alignment.
@@ -242,12 +266,13 @@
         return ty;
       };
 
-      table("Dates the ad ran", r.endNote, ["Status", "Dates", "Length"], r.runs.map((s) => [s.label, s.when, s.length]), y + 116, [[left, "left"], [left + 150, "left"], [right, "right"]]);
+      table("Dates the ad ran", r.endNote, ["Status", "Dates", "Length"], r.runs.map((s) => [s.label, s.when, s.length]), y + 2 * 68 + gap + 40, [[left, "left"], [left + 150, "left"], [right, "right"]]);
       doc.setFontSize(10).setTextColor(...muted).text(FOOTNOTE, left, 800);
 
-      // Page 2: countries and the ad in the app.
+      // Page 2: airtime, countries and the ad in the app.
       doc.addPage();
-      y = table("Impressions by country", "Placeholder countries and numbers.", ["Country", "Impressions", "Share"], r.countries.map((x) => [x.name, US.fmtNum(x.impressions), Math.round(x.share * 100) + "%"]), 72, [[left, "left"], [right - 90, "right"], [right, "right"]]);
+      y = table("Airtime delivered", `Minutes on air in the daily window, ${US.fmtWindow(c)}. ${r.cpmNote}`, ["Airtime", "Minutes"], r.airRows, 72, [[left, "left"], [right, "right"]]);
+      y = table("Impressions by country", "Placeholder countries and numbers.", ["Country", "Impressions", "Share"], r.countries.map((x) => [x.name, US.fmtNum(x.impressions), Math.round(x.share * 100) + "%"]), y + 20, [[left, "left"], [right - 90, "right"], [right, "right"]]);
 
       y += 20;
       doc.setFont("helvetica", "bold").setFontSize(14).setTextColor(...ink).text("The ad live in the app", left, y);

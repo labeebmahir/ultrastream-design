@@ -20,7 +20,7 @@
       <div class="enq__intro">
         <p class="eyebrow">Advertise on UltraStream</p>
         <h1>Put your brand in the Discover feed</h1>
-        <p class="lede">Reach adults browsing videos, shorts and live streams. Tell us about your brand and our sales team will reply with availability and a quote.</p>
+        <p class="lede">Reach adults browsing videos, shorts and live streams. Book the hours of the day you want, on the days you want. Tell us about your brand and our sales team will reply with availability and a quote.</p>
       </div>
 
       <div id="panel">
@@ -47,16 +47,16 @@
               <span class="field__error">Enter a phone number.</span>
             </label>
             <label class="field" id="f-type">
-              <span class="field__label">Package of interest</span>
+              <span class="field__label">Ad slot</span>
               <select class="input" id="type">
-                <option value="">Choose a package</option>
+                <option value="">Choose an ad slot</option>
                 <option>Billboard</option>
                 <option>Billboard Prime Time</option>
                 <option>Featured Banner</option>
                 <option>Standard Banner</option>
                 <option>Not sure yet</option>
               </select>
-              <span class="field__error">Choose a package.</span>
+              <span class="field__error">Choose an ad slot.</span>
             </label>
             <div class="field" id="f-dates">
               <div class="eq-dates">
@@ -65,7 +65,16 @@
               </div>
               <span class="field__error">Choose a start date from today onwards, and an end date after it.</span>
             </div>
-            <label class="field eq-full">
+            <label class="field eq-time">
+              <span class="field__label">Preferred time of day <span class="opt">(optional)</span></span>
+              <select class="input" id="time">
+                <option>Any time</option>
+                <option>Prime time</option>
+                <option>Outside prime time</option>
+                <option>Particular hours, in my message</option>
+              </select>
+            </label>
+            <label class="field eq-message">
               <span class="field__label">Message <span class="opt">(optional)</span></span>
               <textarea class="input" id="message" rows="2"></textarea>
             </label>
@@ -79,8 +88,8 @@
     </div>
 
     <aside class="where" aria-label="Where your ad appears">
-      <p class="chips-label">See where each package appears</p>
-      <div class="chips-row" id="chips" role="group" aria-label="Show a package in the feed">
+      <p class="chips-label">See where each ad slot appears</p>
+      <div class="chips-row" id="chips" role="group" aria-label="Show an ad slot in the feed">
         <button class="pchip" type="button" data-pkg="billboard" aria-pressed="false">Billboard</button>
         <button class="pchip" type="button" data-pkg="billboard-prime" aria-pressed="false">Billboard Prime Time</button>
         <button class="pchip" type="button" data-pkg="featured" aria-pressed="false">Featured Banner</button>

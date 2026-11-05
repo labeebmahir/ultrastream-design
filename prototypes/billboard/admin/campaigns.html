@@ -40,7 +40,7 @@
       <div class="head">
         <div class="head__title">
           <span class="head__mark"><img src="../../../assets/img/logo-icon.png" alt=""></span>
-          <div><h1>Ad campaigns</h1><p class="sub">Campaigns publish on their start date and stop when their package ends. Pausing a live campaign adds the paused days to its end date.</p></div>
+          <div><h1>Ad campaigns</h1><p class="sub">Each campaign holds one ad slot for a daily window, from its start date to its last day, in UTC. Pausing a live campaign adds the paused days to its end date.</p></div>
         </div>
         <div class="head__actions"><a class="btn btn--primary has-icon" href="campaign-new.html"><i class="icon icon--sm" data-lucide="plus"></i>Create campaign</a></div>
       </div>
@@ -110,7 +110,7 @@
       const pauseNote = pauses.length ? `<div class="cell-sub">Paused ${pauses.length === 1 ? "once" : pauses.length + " times"}, ${added} day${added === 1 ? "" : "s"} added</div>` : "";
       return `<tr class="${c.id === newId ? "is-new" : ""}" data-campaign="${c.id}" data-href="campaign.html?id=${c.id}">
         <td><img class="thumb" src="${US.creativeSrc(c)}" alt=""></td>
-        <td><a class="cell-strong cell-link" href="campaign.html?id=${c.id}">${US.esc(c.advertiser)}</a><div class="cell-sub">${US.esc(US.packageName(c))}</div></td>
+        <td><a class="cell-strong cell-link" href="campaign.html?id=${c.id}">${US.esc(c.advertiser)}</a><div class="cell-sub">${US.esc(US.slotLine(c))}</div></td>
         <td data-label="Period"><div>${US.period(c)}${pauseNote}</div></td>
         <td class="num" data-label="Cost">${US.fmtMoney(US.cost(c))}</td>
         ${results}
@@ -128,7 +128,7 @@
         tile("#group-scheduled", "Scheduled", count("scheduled"), "Paid, waiting for their start date") +
         tile("#group-live", "Live", count("live"), paused ? `Showing in Discover now. ${paused} paused` : "Showing in Discover now") +
         tile("#group-ended", "Ended", count("ended"), "Reports ready") +
-        `<div class="tile"><span class="tile__label">Booked value</span><span class="tile__value">${US.fmtMoney(booked)}</span><span class="tile__hint">All campaigns, placeholder prices</span></div>`;
+        `<div class="tile"><span class="tile__label">Booked value</span><span class="tile__value">${US.fmtMoney(booked)}</span><span class="tile__hint">All campaigns, placeholder rates</span></div>`;
     }
 
     function render() {
@@ -140,7 +140,7 @@
         return `<section class="group" id="group-${key}">
           <h2 class="group__title"><span class="badge badge--${key}">${title}</span><span class="tag">${list.length}</span></h2>
           ${list.length ? `<div class="table-wrap"><table>
-            <thead><tr><th>Creative</th><th>Advertiser and package</th><th>Period</th><th class="num">Cost</th><th class="num">Impressions</th><th class="num">Clicks</th><th class="num">CTR</th><th></th></tr></thead>
+            <thead><tr><th>Creative</th><th>Advertiser and slot</th><th>Period</th><th class="num">Cost</th><th class="num">Impressions</th><th class="num">Clicks</th><th class="num">CTR</th><th></th></tr></thead>
             <tbody>${list.map(row).join("")}</tbody>
           </table></div>` : `<div class="empty">${empty}</div>`}
         </section>`;

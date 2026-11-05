@@ -24,12 +24,12 @@
   <script src="js/proto-bar.js"></script>
   <script>
     // "current" is the position of the option the prototype uses now, or null if it doesn't apply.
-    // version 4: the list changed, so answers saved against the earlier list aren't carried over. Matches proto-bar.js.
+    // version 5: the list changed, so answers saved against the earlier list aren't carried over. Matches proto-bar.js.
     US.setupAnswers({
       root: document.getElementById("ask"),
       feature: "billboard",
       featureName: "Billboard",
-      version: 4,
+      version: 5,
       questions: [
         {
           "title": "Taking down a live ad",
@@ -58,8 +58,8 @@
           "current": 0,
           "options": [
             "Paused days added to the end date",
-            "Extra impressions",
-            "Both"
+            "The missed airtime booked at another free time",
+            "A credit for the missed airtime"
           ]
         },
         {
@@ -83,38 +83,67 @@
           ]
         },
         {
-          "title": "Prime Time time zone",
-          "ask": "Which time zone should prime hours use for Billboard Prime Time?",
+          "title": "Prime time window",
+          "ask": "Prime time is one 4-hour window, the same moment for every viewer. Which window should it be, in UTC?",
           "current": 0,
           "options": [
-            "Each viewer's own time",
-            "The same time zone as campaign start and end",
-            "UTC"
+            "13:00–17:00 UTC",
+            "12:00–16:00 UTC",
+            "14:00–18:00 UTC"
           ]
         },
         {
-          "title": "Time zone",
-          "ask": "Which time zone sets when a campaign starts and ends, for a global audience?",
+          "title": "Time zone for bookings",
+          "ask": "Which time zone do campaign dates and daily windows use?",
           "current": 0,
           "options": [
-            "Each viewer's device time",
-            "Sydney time",
-            "UTC"
+            "UTC",
+            "The sales team's local time",
+            "The advertiser's local time"
           ]
         },
         {
-          "title": "Billboard and Billboard Prime Time",
-          "ask": "How do Billboard and Billboard Prime Time share the top of the feed?",
+          "title": "Windows that cross prime time",
+          "ask": "A Billboard window sits outside prime time and a Billboard Prime Time window inside it. What happens when a window runs across both?",
           "current": 0,
           "options": [
-            "Prime Time in prime hours, Billboard otherwise and when no Prime Time ad is live",
-            "Billboard never shows in prime hours",
-            "Both can show at once"
+            "It's blocked, with a quick fix to the part that fits",
+            "It's split into two lines, each at its own rate"
+          ]
+        },
+        {
+          "title": "Minimum booking length",
+          "ask": "What is the shortest daily window a brand can book?",
+          "current": 0,
+          "options": [
+            "15 minutes",
+            "30 minutes",
+            "1 hour"
+          ]
+        },
+        {
+          "title": "Choosing a window",
+          "ask": "How are booking windows chosen?",
+          "current": 1,
+          "options": [
+            "Any start and end time",
+            "15-minute steps",
+            "Whole hours"
+          ]
+        },
+        {
+          "title": "Price per minute or per thousand views",
+          "ask": "Brands usually compare ad prices per thousand views (CPM). Should we quote per minute of airtime only, also show the equivalent CPM, or sell per thousand views instead?",
+          "current": 1,
+          "options": [
+            "Per minute of airtime only",
+            "Per minute, also showing the equivalent CPM",
+            "Per thousand views instead"
           ]
         },
         {
           "title": "Empty slots",
-          "ask": "If no Billboard or Billboard Prime Time is live, what happens to the Featured Banner?",
+          "ask": "If no Billboard or Billboard Prime Time is on air at that minute, what happens to the Featured Banner?",
           "current": 0,
           "options": [
             "It moves to the top",
