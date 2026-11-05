@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <title>My Feed – UltraStream design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="css/feeds.css">
+</head>
+<body data-screen="my-feed">
+  <div class="stage">
+    <main class="phone" aria-label="My Feed">
+      <header class="topbar" data-topbar></header>
+      <div class="chips feeds-chips--flush" id="chips" role="group" aria-label="Filter by category"></div>
+      <div class="feed" id="feed"></div>
+      <nav class="tabbar" data-tabbar="my-feed"></nav>
+    </main>
+  </div>
+
+  <script src="../assets/vendor/lucide.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="js/feeds.js"></script>
+</body>
+</html>

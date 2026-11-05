@@ -8,26 +8,46 @@
   <link rel="apple-touch-icon" href="../../../assets/img/apple-touch-icon.png">
   <title>Campaigns – UltraStream admin prototype</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../../assets/css/base.css">
   <link rel="stylesheet" href="../../../assets/css/admin.css">
   <link rel="stylesheet" href="../css/billboard.css">
 </head>
-<body>
+<body class="admin-app">
   <div class="admin">
-    <aside class="side">
-      <span class="logo">Ultra<span>Stream</span></span>
-      <a class="side__link side__link--on" href="campaigns.html">Campaigns</a>
-      <div class="side__other">Existing admin sections go here</div>
+    <aside class="side" id="admin-nav" aria-label="Admin">
+      <div class="side__brand"><span class="side__mark"><img src="../../../assets/img/logo-icon.png" alt=""></span><span><strong>UltraStream</strong><small>Admin</small></span></div>
+      <nav class="side__nav">
+        <a class="side__link" href="#" data-todo><i class="icon icon--sm" data-lucide="layout-dashboard"></i>Dashboard</a>
+        <a class="side__link" href="#" data-todo><i class="icon icon--sm" data-lucide="users"></i>Users</a>
+        <a class="side__link" href="#" data-todo><i class="icon icon--sm" data-lucide="flag"></i>Reports</a>
+        <a class="side__link side__link--on" href="campaigns.html" aria-current="page"><i class="icon icon--sm" data-lucide="megaphone"></i>Ad campaigns<span class="side__new">New</span></a>
+        <a class="side__link" href="#" data-todo><i class="icon icon--sm" data-lucide="smartphone"></i>App version</a>
+      </nav>
+      <div class="side__user">
+        <strong>Sample admin</strong>
+        <span>admin@example.com</span>
+        <span class="side__role">Admin</span>
+        <button class="side__logout" type="button" data-todo><i class="icon icon--sm" data-lucide="log-out"></i>Log out</button>
+      </div>
     </aside>
+    <div class="admin__body">
+      <header class="admin-top">
+        <button class="admin-top__menu" type="button" aria-label="Open menu" aria-controls="admin-nav" aria-expanded="false" data-menu><i class="icon" data-lucide="menu"></i></button>
+        <span>Trust &amp; safety · Users &amp; reports</span>
+      </header>
     <main class="main">
       <div class="head">
-        <h1>Campaigns</h1>
-        <a class="btn btn--primary" href="campaign-new.html">Create campaign</a>
+        <div class="head__title">
+          <span class="head__mark"><img src="../../../assets/img/logo-icon.png" alt=""></span>
+          <div><h1>Ad campaigns</h1><p class="sub">Campaigns publish on their start date and stop when their package ends. Pausing a live campaign adds the paused days to its end date.</p></div>
+        </div>
+        <div class="head__actions"><a class="btn btn--primary has-icon" href="campaign-new.html"><i class="icon icon--sm" data-lucide="plus"></i>Create campaign</a></div>
       </div>
-      <p class="sub">Campaigns publish on their start date and stop when their package ends. A live campaign can't be stopped early.</p>
+      <div class="tiles" id="tiles"></div>
       <div id="groups"></div>
     </main>
+    </div>
   </div>
 
   <script src="../../../assets/vendor/lucide.min.js"></script>
@@ -35,12 +55,26 @@
   <script src="../js/data.js"></script>
   <script src="../js/store.js"></script>
   <script src="../js/proto-bar.js"></script>
+  <script src="../js/admin.js"></script>
+  <script>
+    US.setupNotBuilt();
+    // Below 1024px the sidebar opens as a drawer.
+    (function () {
+      const shell = document.querySelector(".admin");
+      const button = document.querySelector("[data-menu]");
+      const setOpen = (open) => { shell.classList.toggle("admin--nav-open", open); button.setAttribute("aria-expanded", open); };
+      button.addEventListener("click", () => setOpen(!shell.classList.contains("admin--nav-open")));
+      shell.addEventListener("click", (e) => { if (e.target === shell) setOpen(false); });
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape") setOpen(false); });
+    })();
+  </script>
   <script>
     const newId = new URLSearchParams(location.search).get("new");
+    // Paused sits with Live, so each campaign keeps its place in the flow.
     const GROUPS = [
-      { key: "scheduled", title: "Scheduled", empty: "No scheduled campaigns." },
-      { key: "live", title: "Live", empty: "No live campaigns." },
-      { key: "ended", title: "Ended", empty: "No ended campaigns yet." },
+      { key: "scheduled", title: "Scheduled", statuses: ["scheduled"], empty: "No scheduled campaigns." },
+      { key: "live", title: "Live", statuses: ["live", "paused"], empty: "No live campaigns." },
+      { key: "ended", title: "Ended", statuses: ["ended"], empty: "No ended campaigns yet." },
     ];
 
     function startsIn(c) {
@@ -53,43 +87,85 @@
       return days <= 1 ? "Last day" : `${days} days left`;
     }
 
-    function row(c, key) {
+    // Every row has View, which opens the campaign with its payment record and pause log.
+    function actionCell(c, status) {
+      const view = `<a class="btn btn--sm has-icon" href="campaign.html?id=${c.id}" data-view><i class="icon icon--sm" data-lucide="eye"></i>View</a>`;
+      const parts = {
+        scheduled: `<span class="cell-sub">${startsIn(c)}</span>`,
+        live: `<span class="cell-sub">${endsIn(c)}</span><button class="btn btn--sm has-icon" type="button" data-pause="${c.id}"><i class="icon icon--sm" data-lucide="pause"></i>Pause</button>`,
+        paused: `${US.statusBadge("paused")}<button class="btn btn--sm has-icon" type="button" data-resume="${c.id}"><i class="icon icon--sm" data-lucide="play"></i>Resume</button>`,
+        ended: `<a class="btn btn--sm" href="report.html?id=${c.id}">View report</a>`,
+      };
+      return `<div class="row-action">${parts[status]}${view}</div>`;
+    }
+
+    function row(c) {
+      const status = US.status(c);
       const m = US.metrics(c);
-      const results = key === "scheduled"
+      const results = status === "scheduled"
         ? `<td class="num cell-empty">–</td><td class="num cell-empty">–</td><td class="num cell-empty">–</td>`
         : `<td class="num" data-label="Impressions">${US.fmtNum(m.impressions)}</td><td class="num" data-label="Clicks">${US.fmtNum(m.clicks)}</td><td class="num" data-label="CTR">${US.fmtPct(m.ctr)}</td>`;
-      const last = key === "ended"
-        ? `<a class="btn btn--sm" href="report.html?id=${c.id}">View report</a>`
-        : `<span class="cell-sub">${key === "live" ? endsIn(c) : startsIn(c)}</span>`;
-      return `<tr class="${c.id === newId ? "is-new" : ""}">
+      const pauses = US.pausesOf(c);
+      const added = US.addedDays(c);
+      const pauseNote = pauses.length ? `<div class="cell-sub">Paused ${pauses.length === 1 ? "once" : pauses.length + " times"}, ${added} day${added === 1 ? "" : "s"} added</div>` : "";
+      return `<tr class="${c.id === newId ? "is-new" : ""}" data-campaign="${c.id}" data-href="campaign.html?id=${c.id}">
         <td><img class="thumb" src="${US.creativeSrc(c)}" alt=""></td>
-        <td><div class="cell-strong">${US.esc(c.advertiser)}</div><div class="cell-sub">${US.esc(US.packageName(c))}</div></td>
-        <td data-label="Period">${US.period(c)}</td>
+        <td><a class="cell-strong cell-link" href="campaign.html?id=${c.id}">${US.esc(c.advertiser)}</a><div class="cell-sub">${US.esc(US.packageName(c))}</div></td>
+        <td data-label="Period"><div>${US.period(c)}${pauseNote}</div></td>
         <td class="num" data-label="Cost">${US.fmtMoney(US.cost(c))}</td>
         ${results}
-        <td class="cell-action">${last}</td>
+        <td class="cell-action">${actionCell(c, status)}</td>
       </tr>`;
     }
 
+    function renderTiles() {
+      const all = US.campaigns();
+      const count = (...keys) => all.filter((c) => keys.includes(US.status(c))).length;
+      const booked = all.reduce((sum, c) => sum + US.cost(c), 0);
+      const paused = count("paused");
+      const tile = (href, label, value, hint) => `<a class="tile" href="${href}"><span class="tile__label">${label}</span><span class="tile__value">${value}</span><span class="tile__hint">${hint}</span></a>`;
+      document.getElementById("tiles").innerHTML =
+        tile("#group-scheduled", "Scheduled", count("scheduled"), "Paid, waiting for their start date") +
+        tile("#group-live", "Live", count("live"), paused ? `Showing in Discover now. ${paused} paused` : "Showing in Discover now") +
+        tile("#group-ended", "Ended", count("ended"), "Reports ready") +
+        `<div class="tile"><span class="tile__label">Booked value</span><span class="tile__value">${US.fmtMoney(booked)}</span><span class="tile__hint">All campaigns, placeholder prices</span></div>`;
+    }
+
     function render() {
+      renderTiles();
       // Soonest to start, soonest to end, then most recently ended.
       const order = { scheduled: (a, b) => a.start.localeCompare(b.start), live: (a, b) => US.endDate(a) - US.endDate(b), ended: (a, b) => US.endDate(b) - US.endDate(a) };
-      document.getElementById("groups").innerHTML = GROUPS.map(({ key, title, empty }) => {
-        const list = US.campaigns().filter((c) => US.status(c) === key).sort(order[key]);
-        return `<section class="group">
-          <h2 class="group__title"><span class="dot dot--${key}"></span>${title} <span class="tag">${list.length}</span></h2>
+      document.getElementById("groups").innerHTML = GROUPS.map(({ key, title, statuses, empty }) => {
+        const list = US.campaigns().filter((c) => statuses.includes(US.status(c))).sort(order[key]);
+        return `<section class="group" id="group-${key}">
+          <h2 class="group__title"><span class="badge badge--${key}">${title}</span><span class="tag">${list.length}</span></h2>
           ${list.length ? `<div class="table-wrap"><table>
             <thead><tr><th>Creative</th><th>Advertiser and package</th><th>Period</th><th class="num">Cost</th><th class="num">Impressions</th><th class="num">Clicks</th><th class="num">CTR</th><th></th></tr></thead>
-            <tbody>${list.map((c) => row(c, key)).join("")}</tbody>
+            <tbody>${list.map(row).join("")}</tbody>
           </table></div>` : `<div class="empty">${empty}</div>`}
         </section>`;
       }).join("");
     }
 
+    // A click anywhere on a row opens the campaign, except on its own buttons and links.
+    document.getElementById("groups").addEventListener("click", (e) => {
+      if (e.target.closest("a, button")) return;
+      const tr = e.target.closest("tr[data-href]");
+      if (tr && !getSelection().toString()) location.href = tr.dataset.href;
+    });
+
     render();
     document.addEventListener("us:change", render);
     document.querySelector("tr.is-new")?.scrollIntoView({ block: "center" });
-    if (newId && US.campaign(newId)) US.toast(`Campaign scheduled for ${US.fmtDate(US.toDate(US.campaign(newId).start))}`);
+    const created = newId && US.campaign(newId);
+    if (created) {
+      US.toast(`${created.advertiser} is scheduled to start on ${US.fmtDate(US.toDate(created.start))}`);
+      try {
+        history.replaceState(null, "", "campaigns.html");
+      } catch (e) {
+        // Some browsers block this on pages opened from disk. The message then shows again on reload.
+      }
+    }
   </script>
 </body>
 </html>

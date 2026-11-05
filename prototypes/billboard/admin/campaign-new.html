@@ -8,28 +8,48 @@
   <link rel="apple-touch-icon" href="../../../assets/img/apple-touch-icon.png">
   <title>Create campaign – UltraStream admin prototype</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../../assets/css/base.css">
   <link rel="stylesheet" href="../../../assets/css/admin.css">
   <link rel="stylesheet" href="../css/billboard.css">
 </head>
-<body>
+<body class="admin-app">
   <div class="admin">
-    <aside class="side">
-      <span class="logo">Ultra<span>Stream</span></span>
-      <a class="side__link side__link--on" href="campaigns.html">Campaigns</a>
-      <div class="side__other">Existing admin sections go here</div>
+    <aside class="side" id="admin-nav" aria-label="Admin">
+      <div class="side__brand"><span class="side__mark"><img src="../../../assets/img/logo-icon.png" alt=""></span><span><strong>UltraStream</strong><small>Admin</small></span></div>
+      <nav class="side__nav">
+        <a class="side__link" href="#" data-todo><i class="icon icon--sm" data-lucide="layout-dashboard"></i>Dashboard</a>
+        <a class="side__link" href="#" data-todo><i class="icon icon--sm" data-lucide="users"></i>Users</a>
+        <a class="side__link" href="#" data-todo><i class="icon icon--sm" data-lucide="flag"></i>Reports</a>
+        <a class="side__link side__link--on" href="campaigns.html" aria-current="page"><i class="icon icon--sm" data-lucide="megaphone"></i>Ad campaigns<span class="side__new">New</span></a>
+        <a class="side__link" href="#" data-todo><i class="icon icon--sm" data-lucide="smartphone"></i>App version</a>
+      </nav>
+      <div class="side__user">
+        <strong>Sample admin</strong>
+        <span>admin@example.com</span>
+        <span class="side__role">Admin</span>
+        <button class="side__logout" type="button" data-todo><i class="icon icon--sm" data-lucide="log-out"></i>Log out</button>
+      </div>
     </aside>
+    <div class="admin__body">
+      <header class="admin-top">
+        <button class="admin-top__menu" type="button" aria-label="Open menu" aria-controls="admin-nav" aria-expanded="false" data-menu><i class="icon" data-lucide="menu"></i></button>
+        <span>Trust &amp; safety · Users &amp; reports</span>
+      </header>
     <main class="main">
-      <a class="crumb has-icon" href="campaigns.html"><i class="icon icon--sm" data-lucide="arrow-left"></i>Campaigns</a>
-      <div class="head"><h1>Create campaign</h1></div>
-      <p class="sub">Create a campaign once sales has confirmed payment and received the brand's assets.</p>
+      <div class="head">
+        <div class="head__title">
+          <span class="head__mark"><img src="../../../assets/img/logo-icon.png" alt=""></span>
+          <div><h1>Create campaign</h1><p class="sub">Create a campaign once the brand has paid and sent their assets. It's scheduled as soon as you save it.</p></div>
+        </div>
+        <div class="head__actions"><a class="btn" href="campaigns.html">Back to campaigns</a></div>
+      </div>
 
       <form id="form" class="form-grid" novalidate>
         <div>
           <section class="panel">
             <h2>Advertiser</h2>
-            <label class="field" id="f-advertiser">
+            <label class="field" id="f-advertiser" style="margin-bottom:0">
               <span class="field__label">Advertiser name</span>
               <input class="input" id="advertiser" autocomplete="off">
               <span class="field__error">Enter the advertiser's name.</span>
@@ -37,9 +57,40 @@
           </section>
 
           <section class="panel">
-            <h2>Package <span class="tag tag--placeholder">Placeholder names, prices and durations</span></h2>
+            <h2>Payment record <span class="tag tag--placeholder">Placeholder payment methods</span></h2>
+            <p class="panel__intro">Needed before the campaign can be scheduled.</p>
+            <div class="pay-grid">
+              <label class="field" id="f-pay-by">
+                <span class="field__label">Confirmed by</span>
+                <input class="input" id="pay-by" list="pay-roles" autocomplete="off">
+                <datalist id="pay-roles"></datalist>
+                <span class="field__hint">A role such as Sales is enough.</span>
+                <span class="field__error">Enter who confirmed the payment.</span>
+              </label>
+              <label class="field" id="f-pay-date">
+                <span class="field__label">Date confirmed</span>
+                <input class="input" id="pay-date" type="date">
+                <span class="field__error">Choose the date payment was confirmed, today or earlier.</span>
+              </label>
+              <label class="field" id="f-pay-method">
+                <span class="field__label">Payment method</span>
+                <select class="input" id="pay-method"><option value="">Choose a method</option></select>
+                <span class="field__hint">Placeholder options until the method is decided.</span>
+                <span class="field__error">Choose how the brand paid.</span>
+              </label>
+              <label class="field" id="f-pay-ref">
+                <span class="field__label">Reference</span>
+                <input class="input" id="pay-ref" autocomplete="off">
+                <span class="field__hint">Invoice or payment reference.</span>
+                <span class="field__error">Enter the invoice or payment reference.</span>
+              </label>
+            </div>
+          </section>
+
+          <section class="panel">
+            <h2>Package <span class="tag tag--placeholder">Placeholder prices and durations</span></h2>
             <div class="field">
-              <span class="field__label" id="type-label">Ad type</span>
+              <span class="field__label" id="type-label">Package</span>
               <div class="options" id="types" role="radiogroup" aria-labelledby="type-label"></div>
             </div>
             <div class="field" style="margin-bottom:0">
@@ -70,19 +121,12 @@
 
           <section class="panel">
             <h2>Schedule</h2>
-            <label class="field" id="f-start">
+            <label class="field" id="f-start" style="margin-bottom:0">
               <span class="field__label">Start date</span>
               <input class="input" id="start" type="date" style="max-width:220px">
-              <span class="field__hint">Tomorrow at the earliest. The ad publishes automatically at the start of this date and stops when the package ends.</span>
+              <span class="field__hint">Tomorrow at the earliest. The ad publishes automatically at the start of this date and stops when the package ends. If it's paused, the paused days are added to the end.</span>
               <span class="field__error">Choose a start date after today.</span>
             </label>
-            <div class="field" id="f-confirm" style="margin-bottom:0">
-              <label class="check">
-                <input id="confirm" type="checkbox">
-                <span>Sales has confirmed payment and the assets are complete. I understand this campaign can't be stopped once it's live.</span>
-              </label>
-              <span class="field__error">Confirm this before scheduling.</span>
-            </div>
           </section>
         </div>
 
@@ -92,12 +136,13 @@
           <dl id="summary"></dl>
           <p class="note" id="overlap" hidden></p>
           <div class="actions">
-            <button class="btn btn--primary" type="submit">Schedule campaign</button>
+            <button class="btn btn--primary" type="submit" id="submit">Schedule campaign</button>
             <a class="btn" href="campaigns.html">Cancel</a>
           </div>
         </aside>
       </form>
     </main>
+    </div>
   </div>
 
   <script src="../../../assets/vendor/lucide.min.js"></script>
@@ -105,6 +150,19 @@
   <script src="../js/data.js"></script>
   <script src="../js/store.js"></script>
   <script src="../js/proto-bar.js"></script>
+  <script src="../js/admin.js"></script>
+  <script>
+    US.setupNotBuilt();
+    // Below 1024px the sidebar opens as a drawer.
+    (function () {
+      const shell = document.querySelector(".admin");
+      const button = document.querySelector("[data-menu]");
+      const setOpen = (open) => { shell.classList.toggle("admin--nav-open", open); button.setAttribute("aria-expanded", open); };
+      button.addEventListener("click", () => setOpen(!shell.classList.contains("admin--nav-open")));
+      shell.addEventListener("click", (e) => { if (e.target === shell) setOpen(false); });
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape") setOpen(false); });
+    })();
+  </script>
   <script src="../js/campaign-new.js"></script>
 </body>
 </html>

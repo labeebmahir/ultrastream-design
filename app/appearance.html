@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <title>Appearance – UltraStream design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="css/profile.css">
+</head>
+<!-- One state only: the app offers a single theme. -->
+<body data-screen="appearance">
+  <div class="stage">
+    <main class="phone" aria-label="Appearance">
+      <header class="app-header pr-header">
+        <a class="icon-btn" href="settings.html" aria-label="Back to Settings"><i class="icon" data-lucide="arrow-left"></i></a>
+        <h1 class="app-header__title">Appearance</h1>
+      </header>
+      <div class="screen-body">
+        <section class="pr-group" aria-labelledby="theme-title">
+          <h2 class="pr-group__title" id="theme-title">Theme</h2>
+          <div class="pr-group__card" role="radiogroup" aria-labelledby="theme-title">
+            <button class="pr-option" type="button" role="radio" aria-checked="true" id="light">
+              <span class="pr-option__left"><span class="pr-option__icon"><i class="icon" data-lucide="sun"></i></span>Light Mode</span>
+              <span class="pr-radio" aria-hidden="true"></span>
+            </button>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/vendor/lucide.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

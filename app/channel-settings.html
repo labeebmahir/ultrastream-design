@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <title>Channel Setting – UltraStream design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="css/studio.css">
+</head>
+<body data-page="settings">
+  <!-- Channel settings. States: default, delete, deleted. -->
+  <div class="stage">
+    <main class="phone" aria-label="Channel Setting">
+      <header class="app-header cs-header">
+        <a class="icon-btn" href="profile.html" data-back aria-label="Back"><i class="icon" data-lucide="arrow-left"></i></a>
+        <h1 class="app-header__title studio-title studio-title--lg">Channel Setting</h1>
+      </header>
+      <div class="studio-scroll cs-body">
+        <button class="cs-row" type="button" id="delete"><i class="icon" data-lucide="trash-2"></i>Delete Channel</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/vendor/lucide.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="js/studio.js"></script>
+</body>
+</html>

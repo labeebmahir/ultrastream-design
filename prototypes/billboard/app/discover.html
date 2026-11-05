@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="../../../assets/img/apple-touch-icon.png">
   <title>Discover feed – UltraStream prototype</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../../assets/css/base.css">
   <link rel="stylesheet" href="../../../assets/css/app.css">
   <link rel="stylesheet" href="../css/billboard.css">
@@ -42,8 +42,8 @@
       <h1>Discover feed</h1>
       <p id="review-time"></p>
       <div class="review__actions">
-        <button class="btn btn--sm" type="button" id="jump-normal">Set to normal time (11:00)</button>
-        <button class="btn btn--sm" type="button" id="jump-prime">Set to prime time (19:00)</button>
+        <button class="btn btn--sm" type="button" id="jump-normal">Set to 11:00, outside prime hours</button>
+        <button class="btn btn--sm" type="button" id="jump-prime">Set to 19:00, in prime hours</button>
       </div>
       <h2>Showing now</h2>
       <div id="review-slots"></div>
@@ -51,6 +51,7 @@
       <h2>Rules to check</h2>
       <ul>
         <li>Every ad has a “Sponsored” label.</li>
+        <li>Only live campaigns show. A paused campaign doesn't show until admin resumes it.</li>
         <li>Ads appear in this feed only. Open any video to see that it has none, or <a href="watch.html?live=1">open a live stream</a>.</li>
         <li>Prime hours are a placeholder: 18:00–22:00.</li>
       </ul>

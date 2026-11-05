@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <title>Reward activities – UltraStream design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="css/profile.css">
+</head>
+<!-- Creator by default. ?state= contributions | earned-empty | contributions-empty | details. ?as=viewer has no tabs, with ?state=empty | details. Tap a row for its details. -->
+<body data-screen="reward-activities">
+  <div class="stage">
+    <main class="phone" aria-label="Reward activities">
+      <header class="app-header pr-header">
+        <a class="icon-btn" href="profile.html?as=creator" id="reward-back" aria-label="Back to Profile"><i class="icon" data-lucide="arrow-left"></i></a>
+        <h1 class="app-header__title">Reward Activities</h1>
+      </header>
+      <div class="pr-tabs" id="reward-tabs" role="tablist" aria-label="Reward activities">
+        <button class="pr-tab" type="button" role="tab" data-tab="earned" aria-selected="true"><i class="icon" data-lucide="trending-up"></i>Earned</button>
+        <button class="pr-tab" type="button" role="tab" data-tab="contributions" aria-selected="false"><i class="icon" data-lucide="hand-coins"></i>Contributions</button>
+      </div>
+      <div class="pr-activities" id="activities"></div>
+    </main>
+  </div>
+
+  <script src="../assets/vendor/lucide.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

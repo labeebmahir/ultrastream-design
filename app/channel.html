@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <title>Channel – UltraStream design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="css/watch.css">
+</head>
+<body class="channel-page">
+  <div class="stage">
+    <main class="phone" aria-label="Channel">
+      <header class="channel-bar">
+        <a class="icon-btn" href="discover.html" data-back aria-label="Back"><i class="icon" data-lucide="arrow-left"></i></a>
+        <div class="channel-bar__actions">
+          <button class="icon-btn" type="button" id="reward" aria-label="Reward creator"><i class="icon" data-lucide="hand-coins"></i></button>
+          <button class="icon-btn" type="button" id="share" aria-label="Share channel"><i class="icon" data-lucide="share"></i></button>
+        </div>
+      </header>
+      <section class="channel" id="channel">
+        <div class="channel__head">
+          <span class="avatar" id="avatar"></span>
+          <div class="channel__info">
+            <h1 class="channel__name" id="name"></h1>
+            <span class="channel__followers" id="followers"></span>
+          </div>
+          <button class="btn btn--primary" type="button" id="follow">Follow</button>
+        </div>
+        <div class="bio" id="bio" hidden></div>
+        <div class="tab-pills" role="tablist" aria-label="Content type">
+          <button class="tab-pill" type="button" role="tab" data-tab="videos" aria-selected="true">Videos</button>
+          <button class="tab-pill" type="button" role="tab" data-tab="shorts" aria-selected="false">Shorts</button>
+          <button class="tab-pill" type="button" role="tab" data-tab="live" aria-selected="false">Live</button>
+        </div>
+        <div class="channel-list" id="list" role="tabpanel"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="../assets/vendor/lucide.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="js/watch.js"></script>
+  <script src="js/channel.js"></script>
+</body>
+</html>

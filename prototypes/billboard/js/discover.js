@@ -2,22 +2,11 @@
 (function () {
   const feed = document.getElementById("feed");
   let category = null;
-  let stream = null;
-  let nextBanner = US.STANDARD_EVERY;
-  let bannerIndex = 0;
+  let more = null;
   const BATCH = 8;
 
   function appendBatch() {
-    const { standard } = US.feedAds();
-    let html = "";
-    for (let i = 0; i < BATCH; i++) {
-      html += stream.next();
-      if (stream.count >= nextBanner) {
-        nextBanner += US.STANDARD_EVERY;
-        if (standard.length) html += US.adHTML(standard[bannerIndex++ % standard.length]);
-      }
-    }
-    sentinel.insertAdjacentHTML("beforebegin", html);
+    sentinel.insertAdjacentHTML("beforebegin", more(BATCH, US.feedAds().standard));
     watchAds();
   }
 
@@ -43,12 +32,10 @@
   }, { root: feed, rootMargin: "600px" });
 
   function renderFeed() {
-    stream = US.createFeedStream(category);
-    nextBanner = US.STANDARD_EVERY;
-    bannerIndex = 0;
+    more = US.adFeed(category);
     feed.scrollTop = 0;
-    const { billboard, primeBanner } = US.feedAds();
-    feed.innerHTML = (billboard ? US.adHTML(billboard) : "") + (primeBanner ? US.adHTML(primeBanner) : "");
+    const { billboard, featured } = US.feedAds();
+    feed.innerHTML = (billboard ? US.adHTML(billboard) : "") + (featured ? US.adHTML(featured) : "");
     feed.append(sentinel);
     appendBatch();
     renderReview();
@@ -56,15 +43,17 @@
 
   function renderReview() {
     const now = US.now();
-    const { billboard, primeBanner, standard } = US.feedAds();
+    const { billboard, featured, standard } = US.feedAds();
     const prime = US.isPrimeTime(now);
+    const paused = US.pausedNow(now);
     document.getElementById("review-time").textContent =
-      `${now.toLocaleString("en-AU", { dateStyle: "medium", timeStyle: "short" })} is ${prime ? "prime time" : "normal time"}.`;
+      `${now.toLocaleString("en-AU", { dateStyle: "medium", timeStyle: "short" })} is ${prime ? "in prime hours" : "outside prime hours"}.`;
     const slot = (label, c) => `<div class="slot"><strong>${label}</strong><span>${c ? `${US.esc(c.advertiser)} · ${US.esc(US.AD_TYPES[c.type].name)}` : "Nothing live, so the slot collapses"}</span></div>`;
     document.getElementById("review-slots").innerHTML =
       slot("Top of feed", billboard) +
-      slot("After the billboard", primeBanner) +
-      `<div class="slot"><strong>About every ${US.STANDARD_EVERY} posts</strong><span>${standard.length ? standard.map((c) => US.esc(c.advertiser)).join(", ") : "Nothing live"}</span></div>`;
+      slot("Below the billboard", featured) +
+      `<div class="slot"><strong>About every ${US.STANDARD_EVERY} items</strong><span>${standard.length ? standard.map((c) => US.esc(c.advertiser)).join(", ") : "Nothing live"}</span></div>` +
+      (paused.length ? `<div class="slot" id="review-paused"><strong>Paused, not showing</strong><span>${paused.map((c) => US.esc(c.advertiser)).join(", ")}</span></div>` : "");
   }
 
   US.setupChips(document.getElementById("chips"), (cat) => {

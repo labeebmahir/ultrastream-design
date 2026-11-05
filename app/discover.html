@@ -8,33 +8,17 @@
   <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
   <title>Discover feed – UltraStream design</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/base.css">
   <link rel="stylesheet" href="../assets/css/app.css">
 </head>
 <body>
   <div class="stage">
     <main class="phone" aria-label="Discover feed">
-      <header class="topbar">
-        <img class="topbar__logo" src="../assets/img/logo-icon.png" alt="UltraStream">
-        <div class="topbar__actions">
-          <button class="icon-btn" type="button" aria-label="Notifications" data-todo>
-            <i class="icon" data-lucide="bell-dot"></i>
-          </button>
-          <button class="icon-btn" type="button" aria-label="Search" data-todo>
-            <i class="icon" data-lucide="search"></i>
-          </button>
-        </div>
-      </header>
+      <header class="topbar" data-topbar></header>
       <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
       <div class="feed" id="feed"></div>
-      <nav class="tabbar" aria-label="Main">
-        <button type="button" aria-current="page"><i class="icon" data-lucide="compass"></i>Discover</button>
-        <button type="button" data-todo><i class="icon" data-lucide="user-round-search"></i>My Feed</button>
-        <button type="button" data-todo><i class="icon" data-lucide="circle-plus"></i>Create</button>
-        <button type="button" data-todo><i class="icon" data-lucide="video"></i>Shorts</button>
-        <button type="button" data-todo><i class="icon" data-lucide="circle-user-round"></i>Profile</button>
-      </nav>
+      <nav class="tabbar" data-tabbar="discover"></nav>
     </main>
   </div>
 

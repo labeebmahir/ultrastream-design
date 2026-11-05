@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <title>Notifications – UltraStream design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="css/feeds.css">
+</head>
+<body data-screen="notifications">
+  <div class="stage">
+    <main class="phone" aria-label="Notifications">
+      <header class="feeds-notif-head">
+        <a class="icon-btn" href="discover.html" aria-label="Back"><i class="icon" data-lucide="chevron-left"></i></a>
+        <h1>Notifications</h1>
+        <button class="feeds-link-btn" id="mark-all" type="button">Mark all read</button>
+      </header>
+      <div class="chips" id="filters" role="group" aria-label="Filter notifications"></div>
+      <div class="feeds-notifs" id="list"></div>
+    </main>
+  </div>
+
+  <script src="../assets/vendor/lucide.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="js/feeds.js"></script>
+</body>
+</html>

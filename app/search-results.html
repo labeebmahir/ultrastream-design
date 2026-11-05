@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <title>Search results – UltraStream design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="css/feeds.css">
+</head>
+<body data-screen="search-results">
+  <div class="stage">
+    <main class="phone" aria-label="Search results">
+      <div class="feeds-search-head">
+        <a class="icon-btn" href="search.html" aria-label="Back"><i class="icon" data-lucide="chevron-left"></i></a>
+        <form class="feeds-searchbar" id="form" role="search">
+          <input id="q" type="search" placeholder="Search on UltraStream" aria-label="Search on UltraStream" autocomplete="off" enterkeyhint="search">
+          <button class="icon-btn feeds-searchbar__clear" id="clear" type="button" aria-label="Clear search" hidden><i class="icon" data-lucide="x"></i></button>
+          <span class="feeds-searchbar__spacer" id="clear-spacer"></span>
+        </form>
+      </div>
+      <div class="chips" id="filters" role="group" aria-label="Filter results"></div>
+      <div class="feeds-results" id="results"></div>
+    </main>
+  </div>
+
+  <script src="../assets/vendor/lucide.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="js/feeds.js"></script>
+</body>
+</html>

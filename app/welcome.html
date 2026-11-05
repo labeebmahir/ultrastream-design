@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <title>Welcome – UltraStream design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="css/onboarding.css">
+</head>
+<body data-screen="welcome">
+  <div class="stage">
+    <main class="phone auth" aria-label="Welcome">
+      <div class="welcome">
+        <section class="welcome__hero">
+          <div class="welcome__logo"><img src="../assets/img/logo-icon.png" alt="UltraStream"></div>
+          <p class="welcome__tagline">The next-gen streaming platform where creators earn and viewers engage</p>
+        </section>
+
+        <ul class="welcome__features" aria-label="What you can do">
+          <li><i class="icon" data-lucide="compass"></i>Discover</li>
+          <li><i class="icon" data-lucide="coins"></i>Rewards</li>
+          <li><i class="icon" data-lucide="users"></i>Connect</li>
+        </ul>
+
+        <div class="welcome__actions">
+          <a class="btn btn--primary btn--lg btn--block" href="sign-in.html">Log in</a>
+          <a class="btn btn--outline btn--lg btn--block" href="sign-up.html">Sign up</a>
+          <a class="welcome__skip" href="discover.html">Explore without an account</a>
+          <p class="welcome__terms">By continuing, you agree to our <button class="text-link" type="button" id="terms">Terms &amp; Conditions.</button></p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/vendor/lucide.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="js/onboarding.js"></script>
+</body>
+</html>

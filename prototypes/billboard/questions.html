@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png">
   <title>Questions – Billboard prototype</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../assets/css/base.css">
   <link rel="stylesheet" href="../../assets/css/answers.css">
   <link rel="stylesheet" href="css/billboard.css">
@@ -24,24 +24,57 @@
   <script src="js/proto-bar.js"></script>
   <script>
     // "current" is the position of the option the prototype uses now, or null if it doesn't apply.
+    // version 4: the list changed, so answers saved against the earlier list aren't carried over. Matches proto-bar.js.
     US.setupAnswers({
       root: document.getElementById("ask"),
       feature: "billboard",
       featureName: "Billboard",
+      version: 4,
       questions: [
         {
           "title": "Taking down a live ad",
-          "ask": "A live campaign can't be stopped, but unlawful content has to be removed. How does a live ad come down if it breaks the rules?",
+          "ask": "Admin can pause a live campaign. Is pausing enough to take down an ad that breaks the rules, or does admin also need a remove action?",
           "current": 0,
           "options": [
-            "There's no way to take it down",
-            "Admin can take it down from the panel",
-            "The dev team takes it down on request"
+            "Pausing is enough",
+            "Admin also needs a remove action",
+            "The dev team removes it on request"
+          ]
+        },
+        {
+          "title": "End early and swap creative",
+          "ask": "Are \"end early\" and \"swap creative\" needed in the first release?",
+          "current": 0,
+          "options": [
+            "Neither, pausing is enough for now",
+            "End early only",
+            "Swap creative only",
+            "Both"
+          ]
+        },
+        {
+          "title": "Make-good",
+          "ask": "What is a make-good after a pause?",
+          "current": 0,
+          "options": [
+            "Paused days added to the end date",
+            "Extra impressions",
+            "Both"
+          ]
+        },
+        {
+          "title": "Payment",
+          "ask": "How do brands pay, and who confirms that a payment has arrived?",
+          "current": null,
+          "options": [
+            "Bank transfer, confirmed by sales",
+            "Bank transfer, confirmed by finance",
+            "Bank transfer or card, confirmed by finance"
           ]
         },
         {
           "title": "Changing a scheduled campaign",
-          "ask": "Can admin change a campaign before its start date, for example if the creative is wrong or the brand pulls out?",
+          "ask": "Once a campaign is scheduled, can admin still change it before its start date, for example if the brand pulls out?",
           "current": 0,
           "options": [
             "No, it can't be changed",
@@ -50,43 +83,43 @@
           ]
         },
         {
-          "title": "Where enquiries go",
-          "ask": "Where should enquiries from the advertise page go?",
-          "current": null,
+          "title": "Prime Time time zone",
+          "ask": "Which time zone should prime hours use for Billboard Prime Time?",
+          "current": 0,
           "options": [
-            "A sales email",
-            "A list in the admin panel",
-            "Both"
+            "Each viewer's own time",
+            "The same time zone as campaign start and end",
+            "UTC"
           ]
         },
         {
-          "title": "\"Become an Advertiser\" on Profile",
-          "ask": "What should happen to \"Become an Advertiser\" on the Profile tab?",
-          "current": null,
+          "title": "Time zone",
+          "ask": "Which time zone sets when a campaign starts and ends, for a global audience?",
+          "current": 0,
           "options": [
-            "Remove it",
-            "Link it to /advertise",
-            "Leave it as coming soon"
+            "Each viewer's device time",
+            "Sydney time",
+            "UTC"
+          ]
+        },
+        {
+          "title": "Billboard and Billboard Prime Time",
+          "ask": "How do Billboard and Billboard Prime Time share the top of the feed?",
+          "current": 0,
+          "options": [
+            "Prime Time in prime hours, Billboard otherwise and when no Prime Time ad is live",
+            "Billboard never shows in prime hours",
+            "Both can show at once"
           ]
         },
         {
           "title": "Empty slots",
-          "ask": "If no Prime Billboard is live, what happens to the Prime Banner?",
+          "ask": "If no Billboard or Billboard Prime Time is live, what happens to the Featured Banner?",
           "current": 0,
           "options": [
             "It moves to the top",
             "It stays in its usual place",
             "It doesn't show"
-          ]
-        },
-        {
-          "title": "Normal Time and Prime Time",
-          "ask": "How do Normal Time and Prime Time billboards share the top of the feed?",
-          "current": 0,
-          "options": [
-            "Prime Time in prime hours, Normal Time otherwise and when no Prime Time ad is live",
-            "Normal Time never shows in prime hours",
-            "Both can show at once"
           ]
         },
         {
@@ -97,6 +130,15 @@
             "Yes, all of them",
             "Only Standard Banners",
             "No, the main feed only"
+          ]
+        },
+        {
+          "title": "Counting posts",
+          "ask": "The brief says \"about every 15 posts\". What counts as a post?",
+          "current": 0,
+          "options": [
+            "Videos and shorts",
+            "Videos only"
           ]
         },
         {
@@ -111,13 +153,12 @@
           ]
         },
         {
-          "title": "Time zone",
-          "ask": "Which time zone sets when a campaign starts and ends, for a global audience?",
-          "current": 0,
+          "title": "Choosing countries",
+          "ask": "Can brands choose which countries their ad shows in, or do they only see countries in the report?",
+          "current": 1,
           "options": [
-            "Each viewer's device time",
-            "Sydney time",
-            "UTC"
+            "Brands choose countries when they book",
+            "Countries only appear in the report"
           ]
         },
         {
@@ -141,23 +182,43 @@
           ]
         },
         {
-          "title": "Counting posts",
-          "ask": "The brief says \"about every 15 posts\". What counts as a post?",
-          "current": 0,
+          "title": "Where enquiries go",
+          "ask": "Where should enquiries from the advertise page go?",
+          "current": null,
           "options": [
-            "Videos and shorts",
-            "Videos only"
+            "A sales email",
+            "A list in the admin panel",
+            "Both"
           ]
         },
         {
-          "title": "Added to Create campaign",
-          "ask": "The prototype adds an advertiser name and a checkbox confirming payment and assets. Which should stay?",
+          "title": "Enquiry owner and reply time",
+          "ask": "Who owns each enquiry, and how quickly does the team reply?",
+          "current": null,
+          "options": [
+            "Sales, within one working day",
+            "Sales, within two working days",
+            "Marketing, within one working day"
+          ]
+        },
+        {
+          "title": "Rate card or media kit",
+          "ask": "Should the enquiry page link to a rate card or media kit?",
           "current": 0,
           "options": [
-            "Keep both",
-            "Only the advertiser name",
-            "Only the checkbox",
-            "Neither"
+            "No, sales sends it after an enquiry",
+            "Link a media kit, without prices",
+            "Link a rate card, with prices"
+          ]
+        },
+        {
+          "title": "\"Become an Advertiser\" on Profile",
+          "ask": "What should happen to \"Become an Advertiser\" on the Profile tab?",
+          "current": null,
+          "options": [
+            "Remove it",
+            "Link it to /advertise",
+            "Leave it as coming soon"
           ]
         }
       ],

@@ -2,7 +2,6 @@
 
 /* Prototype bar: review tooling, not part of the product */
 .proto-bar { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 6px 16px; background: var(--proto-bar-bg); border-bottom: 1px solid var(--border-orange); font-size: 13px; line-height: 16px; }
-.proto-bar .icon { stroke-width: 2; }
 .proto-bar__home { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 8px; margin-left: -8px; border-radius: 6px; color: var(--white); text-decoration: none; font-weight: 600; white-space: nowrap; }
 .proto-bar__home:hover, .proto-bar__home[aria-current] { background: rgba(255, 255, 255, 0.08); }
 .proto-bar__badge { flex: none; padding: 2px 7px; border: 1px solid var(--border-orange); border-radius: 100px; color: var(--orange); font-size: 11px; line-height: 14px; font-weight: 600; }
@@ -58,7 +57,8 @@ html { scroll-padding-top: calc(var(--bar-h) + 12px); }
 .ad__cta { display: inline-flex; align-items: center; gap: 2px; margin-left: auto; color: var(--orange); font-weight: 500; white-space: nowrap; }
 .sponsored { flex: none; padding: 1px 6px; border: 1px solid var(--text-3); border-radius: 4px; color: var(--text-2); font-size: 11px; font-weight: 600; }
 .ad--billboard .ad__media { aspect-ratio: 16 / 9; }
-.ad--prime-banner .ad__media { aspect-ratio: 3 / 1; }
+.ad--featured .ad__media { aspect-ratio: 3 / 1; }
+.preview-slot--featured { aspect-ratio: 3 / 1; }
 .ad--standard .ad__media { aspect-ratio: 4 / 1; }
 
 /* Review panel, desktop only */
@@ -73,3 +73,72 @@ html { scroll-padding-top: calc(var(--bar-h) + 12px); }
 .review ul { margin: 0; padding-left: 18px; color: var(--text-2); font-size: 14px; }
 .review li { margin-bottom: 4px; }
 @media (max-width: 860px) { .review { display: none; } }
+
+/* Admin additions: statuses, the campaign page, payment record, pauses, the confirm dialog and the report.
+   Tones follow the panel's own badges. */
+.badge .icon { width: 12px; height: 12px; margin-right: 4px; }
+.badge--paused { background: rgba(255, 255, 255, 0.08); color: var(--text); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16); }
+.admin-app .btn:disabled { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
+.head .sub .badge { margin-right: 6px; }
+
+.cell-link { color: var(--text); text-decoration: none; }
+.cell-link:hover { text-decoration: underline; }
+/* Rows open the campaign, as the panel's clickable table rows do */
+tr[data-href] { cursor: pointer; }
+tr[data-href]:hover td { background: var(--surface-3); }
+@media (max-width: 1180px) { .table-wrap tr[data-href]:hover { background: var(--surface-3); } }
+.row-action { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px 12px; }
+.row-action .cell-sub { white-space: nowrap; }
+@media (min-width: 1181px) {
+  .row-action { flex-wrap: nowrap; }
+  td[data-label="Period"] > div { white-space: nowrap; }
+}
+/* On cards: the status note and each button share one row in equal columns */
+@media (max-width: 1180px) {
+  .table-wrap .row-action { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); align-items: center; gap: 8px; }
+  .table-wrap .row-action .btn { width: 100%; padding: 0 8px; }
+  .table-wrap .row-action .badge { justify-self: start; }
+}
+
+.panel__intro { margin: 0 0 16px; color: var(--text-2); font-size: 14px; line-height: 20px; }
+.pay-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 16px; }
+@media (max-width: 560px) { .pay-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* Campaign page and report: two columns of cards, like the panel's detail pages */
+.detail-grid { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 16px; align-items: start; }
+.detail-grid > div > .panel:last-child { margin-bottom: 0; }
+@media (max-width: 1023px) { .detail-grid { grid-template-columns: minmax(0, 1fr); } }
+.panel h2 { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.panel h2 .tag { font-weight: 500; }
+.panel__foot { margin: 12px 0 0; color: var(--text-3); font-size: 12px; line-height: 16px; }
+.details dd .cell-sub { display: block; margin-top: 2px; font-weight: 400; line-height: 18px; }
+.data-table td { line-height: 18px; }
+#pauses .actions { margin-top: 16px; }
+.pause-total { margin: 12px 0 0; color: var(--text-2); font-size: 14px; line-height: 20px; }
+.link-cell { color: var(--text); word-break: break-all; }
+.preview-phone--panel { margin-bottom: 0; }
+
+/* A small table inside a card. Stays a table on phones: three short columns fit. */
+.data-table { overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius-sm); }
+.data-table th, .data-table td { padding: 10px 14px; }
+.data-table td.num, .data-table th.num { white-space: nowrap; }
+.data-table tr.is-paused td { color: var(--text-2); }
+@media (max-width: 560px) {
+  .data-table th, .data-table td { padding: 10px; font-size: 13px; }
+}
+.share { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+.share__bar { width: 64px; height: 6px; overflow: hidden; background: var(--surface-3); border-radius: 100px; }
+.share__bar span { display: block; height: 100%; background: var(--primary); border-radius: 100px; }
+@media (max-width: 560px) { .share__bar { display: none; } }
+
+/* Confirm dialog, like the panel's modal: 448px wide, Cancel and Confirm on the right */
+.modal { width: min(448px, calc(100vw - 32px)); max-width: none; padding: 24px; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6); }
+.modal::backdrop { background: rgba(9, 9, 9, 0.7); }
+.modal h2 { margin: 0 0 8px; font: 600 18px/28px var(--font-body); }
+.modal p { margin: 0 0 6px; color: var(--text-2); font-size: 14px; line-height: 20px; }
+.modal__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-top: 20px; }
+
+/* Report: the ad live in the app */
+.shot { margin: 0; }
+.shot .preview-phone { margin: 0; }
+.shot figcaption { margin-top: 12px; color: var(--text-3); font-size: 12px; line-height: 16px; }

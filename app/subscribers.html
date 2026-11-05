@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <title>All Subscribers – UltraStream design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="css/watch.css">
+</head>
+<body class="subscribers-page">
+  <div class="stage">
+    <main class="phone" aria-label="All Subscribers">
+      <header class="sub-header">
+        <div class="sub-header__left">
+          <a class="icon-btn sub-header__back" href="ultra-studio.html" data-back aria-label="Back"><i class="icon" data-lucide="arrow-left"></i></a>
+          <h1 class="list-header__title list-header__title--sm">All Subscribers</h1>
+        </div>
+        <div class="sub-header__right">
+          <a class="icon-btn" href="notifications.html" aria-label="Notifications"><i class="icon" data-lucide="bell-dot"></i></a>
+          <a class="icon-btn" href="search.html" aria-label="Search"><i class="icon" data-lucide="search"></i></a>
+        </div>
+      </header>
+      <div class="sub-stats" aria-label="Subscriber totals">
+        <span class="sub-stats__col"><span class="sub-stats__label">Total</span><span class="sub-stats__value" id="stat-total"></span></span>
+        <span class="sub-stats__col"><span class="sub-stats__label">Paid</span><span class="sub-stats__value" id="stat-paid"></span></span>
+        <span class="sub-stats__col"><span class="sub-stats__label">Free</span><span class="sub-stats__value" id="stat-free"></span></span>
+      </div>
+      <div class="chips sub-filters" role="group" aria-label="Filter subscribers">
+        <button class="chip" type="button" data-filter="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-filter="free" aria-pressed="false">Free</button>
+        <button class="chip" type="button" data-filter="paid" aria-pressed="false">Paid</button>
+      </div>
+      <div class="sub-list" id="subs"></div>
+    </main>
+  </div>
+
+  <script src="../assets/vendor/lucide.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="js/channel.js"></script>
+</body>
+</html>

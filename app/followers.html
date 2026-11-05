@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <title>Followers – UltraStream design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="css/watch.css">
+</head>
+<body class="followers-page">
+  <div class="stage">
+    <main class="phone" aria-label="Followers">
+      <header class="list-header">
+        <a class="icon-btn" href="profile.html" data-back aria-label="Back"><i class="icon" data-lucide="arrow-left"></i></a>
+        <h1 class="list-header__title">Followers</h1>
+      </header>
+      <div class="search-pill">
+        <input class="input" id="search" type="search" placeholder="Search followers..." aria-label="Search followers" autocomplete="off">
+      </div>
+      <div class="line-tabs" role="tablist" aria-label="Followers or following">
+        <button class="line-tab" type="button" role="tab" data-tab="followers" aria-selected="true">Followers</button>
+        <button class="line-tab" type="button" role="tab" data-tab="following" aria-selected="false">Following</button>
+      </div>
+      <div class="people-list" id="people" role="tabpanel"></div>
+    </main>
+  </div>
+
+  <script src="../assets/vendor/lucide.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="js/channel.js"></script>
+</body>
+</html>

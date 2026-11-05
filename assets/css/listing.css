@@ -1,6 +1,5 @@
-/* Simple list pages: the list of prototypes, prototype overviews and the app index. */
+/* Simple list pages: prototype overviews and the activity log. */
 .page { max-width: 760px; margin: 0 auto; padding: 48px 16px 72px; }
-.page__logo { display: inline-block; margin-bottom: 20px; }
 .page__back { margin-bottom: 8px; color: var(--text-2); text-decoration: none; }
 .page__back:hover { color: var(--white); }
 .page__title { margin: 0 0 8px; }
@@ -25,7 +24,6 @@
   .item { flex-wrap: wrap; }
   .item__body { flex: 1 1 calc(100% - 76px); }
   .item .tag { order: 3; margin-left: 44px; }
-  .item--plain .tag { margin-left: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   .item, .item__arrow { transition: none; }

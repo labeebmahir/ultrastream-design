@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <title>Profile – UltraStream design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="css/profile.css">
+</head>
+<!-- Viewer by default. ?as=creator shows the creator version. ?state=empty | loading, and ?as=creator&state=no-channel. -->
+<body data-screen="profile">
+  <div class="stage">
+    <main class="phone" aria-label="Profile">
+      <header class="pr-top">
+        <h1 class="pr-top__title">Profile</h1>
+        <a class="icon-btn" href="settings.html" data-keep-as aria-label="Settings"><i class="icon" data-lucide="settings-2"></i></a>
+      </header>
+      <div class="pr-scroll" id="profile"></div>
+      <nav class="tabbar" data-tabbar="profile"></nav>
+    </main>
+  </div>
+
+  <script src="../assets/vendor/lucide.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

@@ -1,7 +1,9 @@
 // One-at-a-time questions: tap an answer and move on, review, then export a file.
 // Nothing is sent anywhere. Answers stay in the person's own browser until they export them.
-US.setupAnswers = ({ root, feature, featureName, questions }) => {
-  const key = `us-answers-${feature}-v2`;
+// Answers are saved by question number, so raise version when the list of questions changes, and match it in the
+// prototype bar. Answers saved against the old list then stay out of the new one.
+US.setupAnswers = ({ root, feature, featureName, questions, version = 2 }) => {
+  const key = `us-answers-${feature}-v${version}`;
   const OTHER = "Something else";
   const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let state = { name: "", answers: {} };

@@ -10,19 +10,21 @@ Most people using this are designers and product people, so explain things plain
 2. **Use what exists.** Check `design-system/index.html` and `assets/css/` first. Add to them only when something is really new.
 3. **Colours come from `assets/css/palette.css`** through the tokens in `assets/css/base.css`. Don't add new hex values.
 4. **Icons are Lucide, round version where one exists** (`user-round-search`, not `user-search`): `<i class="icon" data-lucide="bell-dot"></i>`. Never draw icons by hand or use text arrows.
-5. **This repo may be public, and everything in it gets published, including code comments.** Never add internal documents, Confluence text or links, people's names, ticket details, business problems, open questions or game artwork from Figma. Internal knowledge stays in `.knowledge/`, which Git ignores. Code comments describe how something behaves. Product questions go only on the prototype's `questions.html`, in neutral wording with no business detail. The tests only catch obvious leaks, so read what you've written before handing over. If unsure, leave it out and ask.
+5. **This repo may be public, and everything in it gets published, including code comments.** React Native code on the components page may show how to use the app's components, but never the app's own source. Never add internal documents, Confluence text or links, people's names, ticket details, business problems, open questions or game artwork from Figma. Internal knowledge stays in `.knowledge/`, which Git ignores. Code comments describe how something behaves. Product questions go only on the prototype's `questions.html`, in neutral wording with no business detail. The tests only catch obvious leaks, so read what you've written before handing over. If unsure, leave it out and ask.
 6. **Don't commit or push unless the person asks.** They review and publish the work themselves, usually in GitHub Desktop.
 7. **Don't decide product questions.** Where the brief is silent, make a sensible choice so the prototype can work and make it easy to change. List them on the prototype's `questions.html`, with what the prototype does now. Reviewers answer there and export a file, which the person can bring back to you to apply. Give the person a short comment for the ticket, with the link, in chat. If there's no ticket yet, say one is needed.
 8. **Test before saying it's done** with `/check`. Look at screenshots as well: the tests can't judge how something looks.
+9. **Log every piece of work.** Add an entry at the top of `assets/js/activity-log.js`: the next version (new screens or features raise the middle number, fixes raise the last), today's date, what was asked in plain words and what was made. Keep it safe to publish under rule 5.
 
 ## Where things are
 
 | Path | What it is |
 |---|---|
-| `index.html` | List of all prototypes |
+| `index.html` | Home page: search, prototypes and where to go. Add new prototypes to `window.PROTOTYPES` in it |
+| `activity.html` | Activity log. Entries live in `assets/js/activity-log.js` |
 | `app/` | The current app, rebuilt screen by screen, with no unreleased features |
 | `prototypes/<feature>/` | One feature's prototype, with its own permanent link. `prototypes/billboard/` is the worked example, and `prototypes/_template/` is the starting point |
-| `design-system/` | Live page of tokens, components and icons |
+| `design-system/` | `index.html` for colour, type and icons. `components.html` for every app component with React Native and HTML code to copy; its entries live in `design-system/components/<area>.js` |
 | `assets/` | Shared by everything: `css/`, `js/app.js`, `img/`, `vendor/` |
 | `docs/product.md` | What the product is, its rules and its terms. Read before designing |
 | `docs/design.md` | How screens are built. Read before designing |
@@ -45,7 +47,7 @@ If someone just describes what they want without using a command, follow the mat
 ## Where the truth lives
 
 - **Product rules:** Confluence is the single source of truth, read through `.knowledge/`. Domain pages win over Figma where they disagree. If `.knowledge/` is missing, run `/confluence-updated` first. If that isn't possible, carry on from `docs/` and say the work hasn't been checked against Confluence. The product manager can give you the Confluence link and access.
-- **How the app looks:** `app/` is the reference, and new design starts from it. Figma is reference only, and most people won't have or need its exports. If `../figma-exports/` exists on this computer, use it for screens not yet rebuilt.
+- **How the app looks:** the live app's code wins. If the app or admin repo is cloned next to this one (`../Kruzer-com-au-ultraStream-app`, `../UltraStream-Admin`), read it to match screens exactly, but only read it: never run it, never copy its code, files or addresses into this repo, and never print secrets from it. `app/` is the reference for screens already rebuilt. Figma is reference only, and `../figma-exports/` may exist on some computers.
 - **Older Confluence comments and legal pages can lag the product.** Say so if you spot a conflict, and don't quietly pick one.
 
 ## Keep links working

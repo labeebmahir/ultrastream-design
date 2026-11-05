@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <title>Settings – UltraStream design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="css/profile.css">
+</head>
+<!-- ?state=logout opens the log out confirmation. -->
+<body data-screen="settings">
+  <div class="stage">
+    <main class="phone" aria-label="Settings">
+      <header class="app-header pr-header">
+        <a class="icon-btn" href="profile.html" data-keep-as aria-label="Back to Profile"><i class="icon" data-lucide="arrow-left"></i></a>
+        <h1 class="app-header__title">Settings</h1>
+      </header>
+      <div class="screen-body pr-settings">
+        <a class="list-row" href="edit-profile.html" data-keep-as><i class="icon" data-lucide="user-round"></i><span class="list-row__label">Edit profile</span><i class="icon" data-lucide="chevron-right"></i></a>
+        <a class="list-row" href="change-password.html" data-keep-as><i class="icon" data-lucide="lock"></i><span class="list-row__label">Change password</span><i class="icon" data-lucide="chevron-right"></i></a>
+        <button class="list-row pr-danger" type="button" id="logout"><i class="icon" data-lucide="log-out"></i><span class="list-row__label">Log out</span></button>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/vendor/lucide.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

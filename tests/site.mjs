@@ -75,14 +75,101 @@ for (const [label, viewport] of sizes) {
   await context.close();
 }
 
-// Font: the app and design system use Geist.
+// Font: the app uses the system font, like the live app.
 await (async () => {
   const c = await browser.newContext();
   const p = await c.newPage();
   await p.goto(url + "app/discover.html", { waitUntil: "networkidle" });
   const family = await p.evaluate(() => getComputedStyle(document.body).fontFamily);
-  const loaded = await p.evaluate(() => document.fonts.check('14px "Geist"'));
-  check("type: Geist is the app font", family.includes("Geist"), `${family}, loaded: ${loaded}`);
+  check("type: the app uses the system font", family.includes("-apple-system") && !family.includes("Geist"), family);
+  await c.close();
+})();
+
+// Rebuilt app screens: the screen viewer links back to the list and lists every screen, and stays off prototypes and frames.
+const appPages = pages.filter((f) => rel(f).startsWith("app/") && rel(f).split("/").length === 2 && !rel(f).endsWith("index.html"));
+const appFiles = appPages.map((f) => f.split("/").pop());
+const VIEWER = ".vw-header, .vw-bar, .vw-rail, .vw-panel";
+await (async () => {
+  const c = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  const p = await c.newPage();
+  const data = await (async () => { await p.goto(url + "app/index.html"); return p.evaluate(() => ({ screens: US.appScreens().map((s) => s.file), states: Object.keys(US.APP_STATES) })); })();
+  const notListed = appFiles.filter((f) => !data.screens.includes(f));
+  const noFile = data.screens.filter((f) => !appFiles.includes(f));
+  check("app: US.APP_SCREENS lists every screen in app/, and only those", notListed.length === 0 && noFile.length === 0, [...notListed, ...noFile].join(", "));
+  const noStates = data.screens.filter((f) => !data.states.includes(f));
+  const strayStates = data.states.filter((f) => !data.screens.includes(f));
+  check("app: US.APP_STATES has an entry for every screen, and only those", noStates.length === 0 && strayStates.length === 0, [...noStates, ...strayStates].join(", "));
+
+  const missing = [];
+  for (const f of appPages) {
+    await p.goto(url + rel(f));
+    if (!(await p.locator('.vw-bar a[href="index.html"]').count())) missing.push(rel(f));
+  }
+  check(`app: all ${appPages.length} screens link back to the list`, missing.length === 0, missing.join(" | "));
+  const listed = await p.locator(".vw-select--screen option").evaluateAll((o) => o.map((x) => x.value.replace("./", "").split("?")[0]));
+  const unlisted = appFiles.filter((f) => !listed.includes(f));
+  check("app: the screen picker lists every screen", unlisted.length === 0 && listed.length === appFiles.length, unlisted.join(", ") || `${listed.length} listed`);
+
+  await p.goto(url + "prototypes/billboard/app/discover.html");
+  check("app: prototypes don't get the screen viewer", (await p.locator(VIEWER).count()) === 0 && !(await p.evaluate(() => document.documentElement.classList.contains("has-viewer"))));
+  await p.goto(url + "app/index.html");
+  await p.locator(".sb-card iframe").first().scrollIntoViewIfNeeded();
+  await p.waitForFunction(() => document.querySelector(".sb-card iframe")?.contentDocument?.querySelector(".stage"));
+  check("app: previews in frames don't get the screen viewer", (await p.frameLocator(".sb-card iframe >> nth=0").locator(VIEWER).count()) === 0);
+  await c.close();
+})();
+
+// Screen viewer on desktop: screens on the left, states and previous and next on the right, arrow keys
+await (async () => {
+  const c = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  const p = await c.newPage();
+  await p.goto(url + "app/watch.html?id=v2&state=comments");
+  const states = await p.evaluate(() => US.APP_STATES["watch.html"].length);
+  check("viewer: the left rail lists every screen and marks this one", (await p.locator(".vw-rail__link").count()) === appFiles.length && (await p.locator('.vw-rail__link[aria-current="page"]').innerText()) === "Video");
+  check("viewer: the right panel shows the screen and marks its state", (await p.locator(".vw-panel__name").innerText()) === "Video" && (await p.locator(".vw-state").count()) === states && (await p.locator('.vw-state[aria-current="true"]').innerText()) === "Comments");
+  const box = await p.evaluate(() => {
+    const r = (s) => document.querySelector(s).getBoundingClientRect();
+    return { phone: r(".phone"), rail: r(".vw-rail"), panel: r(".vw-panel"), header: r(".vw-header") };
+  });
+  check("viewer: the phone sits clear of the header and both side panels", box.phone.left >= box.rail.right && box.phone.right <= box.panel.left && box.phone.top >= box.header.bottom && box.phone.bottom <= 900, JSON.stringify(box.phone));
+  check("viewer: the compact bar is hidden on desktop", !(await p.locator(".vw-bar").isVisible()));
+  await p.click('.vw-state:text-is("No comments")');
+  await p.waitForURL(/state=comments-empty/);
+  check("viewer: a state chip opens that state and keeps the video", /id=v2/.test(p.url()) && /state=comments-empty/.test(p.url()));
+  await p.evaluate(() => document.activeElement?.blur());
+  await p.keyboard.press("ArrowRight");
+  await p.waitForURL(/live\.html/);
+  check("viewer: the right arrow key goes to the next screen", p.url().includes("app/live.html"));
+  await p.keyboard.press("ArrowLeft");
+  await p.waitForURL(/watch\.html/);
+  check("viewer: the left arrow key goes to the previous screen, opened as the list does", /watch\.html\?id=v2$/.test(p.url()));
+  await p.goto(url + "app/watch.html?id=v2&state=comments");
+  await p.locator(".phone input, .phone textarea").first().focus();
+  await p.keyboard.press("ArrowRight");
+  await p.waitForTimeout(300);
+  check("viewer: arrow keys don't change screen while typing", p.url().includes("watch.html"));
+  await c.close();
+})();
+
+// Every listed state opens without errors, and the viewer marks it as the current one
+await (async () => {
+  const c = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  const p = await c.newPage();
+  await p.goto(url + "app/index.html");
+  const links = await p.evaluate(() => US.appScreens().flatMap((s) => s.states.map(([value, label]) => ({ href: US.appStateHref(s, value), label }))));
+  const problems = [];
+  let current = "";
+  p.on("pageerror", (e) => problems.push(`${current}: ${e.message}`));
+  p.on("response", (r) => { if (r.status() >= 400 && r.url().startsWith(url)) problems.push(`${current}: ${r.status()} ${r.url().replace(url, "")}`); });
+  for (const { href, label } of links) {
+    current = href;
+    await p.goto(url + "app/" + href, { waitUntil: "load" });
+    await p.waitForTimeout(80);
+    const marked = await p.locator('.vw-state[aria-current="true"]').innerText().catch(() => "");
+    if (links.filter((l) => l.href.split("?")[0] === href.split("?")[0]).length > 1 && marked !== label) problems.push(`${href}: marked "${marked}", not "${label}"`);
+    if (await p.locator("i[data-lucide]").count()) problems.push(`${href}: icon didn't render`);
+  }
+  check(`states: all ${links.length} listed states load without errors and are marked`, problems.length === 0, problems.slice(0, 8).join(" | "));
   await c.close();
 })();
 

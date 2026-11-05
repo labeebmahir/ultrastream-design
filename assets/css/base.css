@@ -1,31 +1,33 @@
 @import "palette.css";
 
-/* Named uses of the palette. Components come from the open-source shadcn/ui kit.
-   --black, --surface, --surface-2, --border, --text-3 and --destructive were sampled from the Figma exports and aren't in the palette.
+/* Named uses of the palette. Values match the live app's code, which wins over Figma where they differ.
    --proto-bar-bg is review tooling. #ff5c00 in .logo is the ultrastream.one website logo. */
 :root {
-  --black: #0a0a0a;
+  --black: #090909;
   --surface: #141414;
-  --surface-2: #1a1a1a;
+  --surface-2: #191919;
   --surface-3: var(--neutral-black-5);
   --white: var(--neutral-white-1);
   --text: var(--neutral-white-1);
   --text-2: var(--neutral-white-8);
-  --text-3: #848484;
+  --text-3: rgba(255, 255, 255, 0.5);
   --orange: var(--brand-orange-6);
-  --primary: linear-gradient(90deg, var(--brand-red-6), var(--brand-orange-dark-6));
-  --primary-hover: linear-gradient(90deg, var(--brand-red-7), var(--brand-orange-dark-7));
-  --destructive: #dc2626;
+  --primary: linear-gradient(90deg, var(--brand-red-6), var(--brand-orange-6));
+  --primary-hover: linear-gradient(90deg, var(--brand-red-7), var(--brand-orange-7));
+  --destructive: var(--brand-red-6);
+  /* The app's colors.primary: spinners, a switch that's on, success messages */
+  --accent: var(--brand-red-6);
+  --error: #e5484d;
   --orange-dim: rgba(255, 127, 0, 0.12);
   --border: #262626;
   --input: var(--neutral-white-1);
   --border-orange: rgba(255, 127, 0, 0.4);
   --green: #4ade80;
-  --red: #dc2626;
-  --radius: 12px;
-  --radius-sm: 8px;
-  --font-display: "Geist", system-ui, sans-serif;
-  --font-body: "Geist", system-ui, sans-serif;
+  --red: #e5484d;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Text", Roboto, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", Roboto, "Segoe UI", Helvetica, Arial, sans-serif;
   --font-mono: "SF Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
   --bar-h: 44px;
   --proto-bar-bg: #24140a;
@@ -44,7 +46,7 @@ img { display: block; max-width: 100%; }
 .logo { font: 700 18px "Space Grotesk", system-ui, sans-serif; color: var(--white); text-decoration: none; }
 .logo span { color: #ff5c00; }
 
-/* Type scale from the shadcn/ui kit in Figma */
+/* Type scale, in the system font the app uses */
 .text-h1 { font-size: 48px; line-height: 100%; letter-spacing: -1.25px; font-weight: 900; }
 .text-h2 { font-size: 30px; line-height: 36px; letter-spacing: -0.75px; font-weight: 600; }
 .text-h3 { font-size: 24px; line-height: 32px; letter-spacing: -0.6px; font-weight: 600; }
@@ -59,7 +61,7 @@ img { display: block; max-width: 100%; }
 .text-xs { font-size: 12px; line-height: 16px; }
 code, .text-code { font-family: var(--font-mono); font-size: 14px; line-height: 20px; font-weight: 600; }
 
-.icon { width: 24px; height: 24px; flex: none; stroke-width: 1.5; }
+.icon { width: 24px; height: 24px; flex: none; stroke-width: 2; }
 .icon--sm { width: 16px; height: 16px; }
 .icon--xs { width: 14px; height: 14px; }
 .has-icon { display: inline-flex; align-items: center; gap: 4px; min-height: 40px; }
@@ -90,4 +92,5 @@ textarea.input { min-height: 110px; resize: vertical; }
 .note { padding: 12px 14px; border: 1px solid var(--border-orange); border-radius: var(--radius-sm); background: var(--orange-dim); font-size: 14px; }
 
 body:has(.tabbar) .toast { bottom: 88px; }
-.toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 60; max-width: calc(100vw - 32px); padding: 10px 16px; background: var(--white); color: #111; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); }
+/* US.toast: a review note, styled like the screen viewer's compact bar. Review tooling, not part of the app */
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 60; width: max-content; max-width: calc(100vw - 32px); padding: 10px 16px; background: var(--proto-bar-bg); border: 1px solid var(--border-orange); color: var(--white); border-radius: var(--radius-sm); font-size: 14px; line-height: 20px; font-weight: 500; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); }

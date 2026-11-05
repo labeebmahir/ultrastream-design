@@ -8,16 +8,16 @@
   <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
   <title>Design system – UltraStream design</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/base.css">
   <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="../assets/css/site-header.css">
   <style>
     .page { max-width: 960px; margin: 0 auto; padding: 48px 16px 72px; }
-    .page h1 { font-size: 30px; margin: 14px 0 8px; }
+    .page h1 { font-size: 30px; margin: 0 0 8px; }
     .page > h2 { font-size: 20px; margin: 44px 0 6px; padding-top: 20px; border-top: 1px solid var(--border); }
     .page > h3 { font-size: 15px; margin: 22px 0 10px; color: var(--text-2); font-weight: 500; }
     .lede, .hint { color: var(--text-2); margin: 0 0 14px; }
-    .back { color: var(--text-2); text-decoration: none; font-size: 14px; }
     .scale { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; }
     .swatch { min-height: 56px; padding: 6px; border-radius: 6px; font-size: 11px; line-height: 1.3; word-break: break-all; }
     .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
@@ -31,17 +31,18 @@
   </style>
 </head>
 <body>
+  <header data-site-header data-root="../"></header>
   <main class="page">
-    <a class="back has-icon" href="../index.html"><i class="icon icon--sm" data-lucide="arrow-left"></i>All prototypes</a>
     <h1>Design system</h1>
     <p class="lede">The tokens, components and icons every screen is built from. Reuse these before adding anything new.</p>
+    <p class="note">Every component the app uses, with code to copy, is on the <a href="components.html">components page</a>.</p>
 
     <h2>Colour</h2>
     <p class="hint">From <code>assets/css/palette.css</code>. Step 6 is the base of each brand colour.</p>
     <div id="palette"></div>
 
     <h2>Type</h2>
-    <p class="hint">Geist, with SF Mono for code. From the shadcn/ui kit used in Figma.</p>
+    <p class="hint">The system font, as in the app: SF on iPhone and Roboto on Android. SF Mono for code. Screen sizes are in <code>docs/design.md</code>.</p>
     <div class="type-list">
       <p class="text-h1">h1 48 Black</p>
       <p class="text-h2">h2 30 Semibold</p>
@@ -82,6 +83,7 @@
       <label class="field"><span class="field__label">Bio <span class="opt">(optional)</span></span><textarea class="input"></textarea></label>
       <div class="row" style="justify-content:space-between"><span id="switch-label">Schedule for later</span><button class="switch" type="button" role="switch" aria-checked="true" aria-labelledby="switch-label" data-switch></button></div>
     </div>
+    <p class="hint"><code>.switch</code> is React Native's own switch: solid red when on, never the gradient.</p>
 
     <h2>Chips and tabs</h2>
     <h3><code>.chip</code> with <code>aria-pressed</code></h3>
@@ -98,7 +100,7 @@
     <div class="demo" id="cards"></div>
 
     <h2>States</h2>
-    <h3><code>.empty-state</code>, used for empty, error, offline and loading</h3>
+    <h3><code>.empty-state</code>, used for empty, error and offline</h3>
     <div class="demo demo-box">
       <div class="empty-state">
         <i class="icon empty-state__icon" data-lucide="clapperboard"></i>
@@ -106,6 +108,11 @@
         <p class="empty-state__text">Start scheduling videos, or shorts to share with your audience.</p>
         <button class="btn btn--primary" type="button">Schedule content</button>
       </div>
+    </div>
+    <h3>Loading: <code>US.spinnerHTML()</code>, a plain red ring like React Native's spinner, with no text</h3>
+    <div class="row">
+      <span class="spinner spinner--lg" role="img" aria-label="Loading, large"></span>
+      <span class="spinner" role="img" aria-label="Loading, small"></span>
     </div>
 
     <h2>Dialog</h2>
@@ -127,13 +134,27 @@
     </div>
 
     <h2>Labels and messages</h2>
-    <h3><code>.tag</code>, <code>.tag--placeholder</code>, <code>.thumb-pill</code>, <code>.note</code>, <code>US.toast("Text")</code></h3>
+    <h3><code>.tag</code>, <code>.tag--placeholder</code>, <code>.thumb-pill</code>, <code>.note</code></h3>
     <div class="row">
       <span class="tag">In review</span>
       <span class="tag tag--placeholder">Placeholder</span>
-      <button class="btn btn--sm" type="button" id="toast-demo">Show a toast</button>
     </div>
     <p class="note" style="margin-top:12px">A note for something reviewers need to know.</p>
+    <h3>The app's messages: <code>US.appToast(message, type)</code> for server errors, <code>US.alert(title, message, buttons)</code> for saved changes and form errors</h3>
+    <div class="demo">
+      <div class="app-toast" role="alert" style="position:static">
+        <i class="icon" data-lucide="circle-alert"></i>
+        <span class="app-toast__text">Failed to delete video. Please try again.</span>
+        <button class="app-toast__action" type="button">Dismiss</button>
+      </div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn btn--sm" type="button" id="alert-demo">Show a phone alert</button>
+    </div>
+    <h3><code>US.toast("Text")</code>, a review note. Review tooling, not part of the app</h3>
+    <div class="row">
+      <button class="btn btn--sm" type="button" id="toast-demo">Show a review note</button>
+    </div>
 
     <h2>Tab bar</h2>
     <h3><code>.tabbar</code>, with <code>aria-current</code> on the active tab. Tabs can be links or buttons</h3>
@@ -154,6 +175,8 @@
 
   <script src="../assets/vendor/lucide.min.js"></script>
   <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/activity-log.js"></script>
+  <script src="../assets/js/site-header.js"></script>
   <script>
     const SCALES = {
       "brand-red": 10, "brand-orange": 10, "brand-orange-dark": 10, "brand-gold": 10, "neutral-black": 6,
@@ -178,7 +201,8 @@
     const ICONS = ["compass", "user-round-search", "circle-plus", "video", "circle-user-round", "bell-dot", "search", "arrow-left", "thumbs-up", "thumbs-down", "message-circle", "hand-coins", "share", "flag", "radio", "eye", "x", "ellipsis-vertical", "clapperboard", "triangle-alert", "wifi-off", "loader-circle", "bell-off", "video-off", "history", "chevron-right"];
     document.getElementById("icons").innerHTML = ICONS.map((n) => `<div class="icon-cell"><i class="icon" data-lucide="${n}"></i>${n}</div>`).join("");
 
-    document.getElementById("toast-demo").addEventListener("click", () => US.toast("Saved"));
+    document.getElementById("toast-demo").addEventListener("click", () => US.toast("This screen isn't rebuilt yet."));
+    document.getElementById("alert-demo").addEventListener("click", () => US.alert("Success", "Username updated successfully"));
     document.querySelectorAll("[data-switch]").forEach((s) => s.addEventListener("click", () => {
       s.setAttribute("aria-checked", s.getAttribute("aria-checked") !== "true");
     }));

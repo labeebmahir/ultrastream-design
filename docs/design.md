@@ -1,6 +1,6 @@
 # How screens are built
 
-The app's components come from the open-source shadcn/ui kit for Figma, with UltraStream's colours and Lucide icons. This repo recreates those patterns in plain CSS. See them live in `design-system/index.html`.
+Values come from the live app's code, which wins over Figma where they differ. This repo recreates its look in plain CSS. See it live in `design-system/index.html`.
 
 ## Foundations
 
@@ -8,79 +8,100 @@ The app's components come from the open-source shadcn/ui kit for Figma, with Ult
 |---|---|
 | App screen size | 402 wide, framed on desktop and full screen on a phone (`.stage` and `.phone`) |
 | Page side margin | 16px |
-| Background | `--black` |
-| Raised boxes | `--surface-2`, 12px corners |
-| Buttons and inputs | 40px tall, 8px corners, 1px white border |
-| Chips and action-row buttons | 36px tall. `.btn--sm` is 32px, for tight spots only |
-| Thumbnails | 12px corners. Videos 16:9, shorts in the feed 298:364 |
-| Avatars | 40px in cards, 56px on the video page |
-| Font | Geist, with SF Mono for code |
+| Background | `--black` (#090909) |
+| Raised boxes | `--surface-2` (#191919), 16px corners (`.box`) |
+| Buttons | 48px tall (40 small, 56 large), 6px corners, red-to-orange gradient |
+| Inputs | Outlined white, 10px corners, label above |
+| Chips | 44px tall, 10px corners, 1.5px white border. Selected is white with bold black text |
+| Thumbnails | 16px corners. Videos 16:9, shorts 9:16 |
+| Avatars | 36px in feed cards, 40px in people cards, 56px on profiles. With no picture, which is every sample person, the app's AppAvatar is the red-to-orange gradient with a white Lucide `user` icon at 60% of the size, never a first letter (`US.avatarHTML`). Edit profile and Create channel draw their own 72px placeholder: grey with a person icon |
+| Switches | React Native's own switch: solid red (`--accent`) when on, never the gradient, with a white thumb (`.switch`) |
+| Font | The system font (SF on iPhone, Roboto on Android), as in the app |
 
 ## Type
 
-From the shadcn/ui kit in Figma, as classes in `assets/css/base.css`:
+The app uses the system font with these sizes:
 
-| Class | Size / line height | Weight | Use |
-|---|---|---|---|
-| `.text-h1` | 48 / 100% | Black | Very large page titles |
-| `.text-h2` | 30 / 36 | Semibold | Page titles on desktop |
-| `.text-h3` | 24 / 32 | Semibold | Section titles on desktop |
-| `.text-h4` | 20 / 28 | Semibold | Screen and dialog titles |
-| `.text-lead` | 20 / 28 | Regular | Introductions |
-| `.text-large` | 18 / 28 | Semibold | Emphasised lines |
-| `.text-p` | 16 / 24 | Regular | Paragraphs, card titles at Medium |
-| `.text-body`, `.text-body-medium` | 14 / 24 | Regular, Medium | Default text |
-| `.text-small` | 14 / 14 | Regular | Labels |
-| `.text-muted` | 14 / 20 | Regular | Help text, views and dates |
-| `.text-xs` | 12 / 16 | Regular | Fine print, tab labels |
+| Use | Size / line height | Weight |
+|---|---|---|
+| Screen titles | 20 / 28 to 24 / 32, by screen | Bold. Studio screens use 16 bold, with 24px side margins |
+| Section titles | 22 / 28 | Semibold |
+| Video page title | 20 / 26 | Bold |
+| Empty state and dialog titles | 22 / 28 | Bold |
+| Card titles | 16 / 24 | Medium |
+| Body text | 14 / 20 | Regular |
+| Card subtitles: creator, views, time | 12 / 16 | Regular, white at 50% |
+| Tab labels | 11 / 16 | Medium |
 
-The public website pages keep ultrastream.one's fonts, Space Grotesk and Inter.
+The `.text-*` classes in `assets/css/base.css` are for desktop pages. The public website pages keep ultrastream.one's fonts, Space Grotesk and Inter.
 
 ## Colour
 
 - Palette steps are in `assets/css/palette.css`. Step 6 is the base of each brand colour.
-- **Main action:** gradient from `brand/red-6` to `brand/orange-dark-6`, with white text (`.btn--primary`).
-- **Active tab, warning text:** `brand/orange-6`.
-- **Delete, errors:** `--destructive`.
-- **Selected tab or chip:** white fill, dark text.
-- **Secondary text:** `--text-3` for views and dates, `--text-2` for supporting copy.
-- **Gold:** `brand/gold-6` is in the palette for reward moments. Check the reference before using it.
+- **Main action:** gradient from `brand/red-6` (#D80A00) to `brand/orange-6` (#FF7F00), with white text (`.btn--primary`).
+- **Active tab:** `brand/orange-6`.
+- **Destructive actions, such as Log out and Delete:** `--destructive` (#D80A00). **Error messages:** `--error` (#E5484D).
+- **Selected chip or action pill:** white fill, black text.
+- **Secondary text:** `--text-3` (white at 50%).
+- **Gold:** `brand/gold-6` (#F4B545) appears in the points pill gradient. Check the code before using it elsewhere.
+- **Solid brand red** (`--accent`, the app's `colors.primary`): spinners, a switch that's on, success banners.
 
 ## Icons
 
-Lucide, round version where one exists. These are the ones the app uses:
+Lucide, by the names the app uses, at Lucide's normal stroke of 2 (set on `.icon`). Don't make icons thinner: the app draws them from Lucide's icon font, so thinner strokes look like a different set. The app also uses some MaterialCommunityIcons; use the closest Lucide icon instead and say which in your hand-over.
 
 | Use | Icon |
 |---|---|
-| Discover, My Feed, Create, Shorts, Profile | `compass`, `user-round-search`, `circle-plus`, `video`, `circle-user-round` |
+| Discover, My Feed, Create, Shorts, Profile | `compass`, `user-round-search`, `plus` in a ringed circle, `video`, `circle-user-round` |
 | Notifications, search | `bell-dot`, `search` |
-| Back | `arrow-left` |
+| Back | `arrow-left` on most screens; `chevron-left` in a bordered square over the video player |
 | Like, dislike, comments | `thumbs-up`, `thumbs-down`, `message-circle` |
-| Reward, share, report | `hand-coins`, `share`, `flag` |
+| Reward, share | `hand-coins`, `share` |
 | Live badge, view count | `radio`, `eye` |
+| Settings, edit channel | `settings-2`, `user-round-pen` |
 | Close, more | `x`, `ellipsis-vertical` |
 | Empty content, error, offline | `clapperboard`, `triangle-alert`, `wifi-off` |
-| Loading | `loader-circle` with `icon--spin` |
-| Notifications off, not available | `bell-off`, `video-off` |
+| Content not found | `party-popper` |
+| Loading | Not an icon: the app's spinner is a plain ring (`.spinner`, see below). Busy buttons use `loader-circle` with `icon--spin` |
 
-For anything else, pick the closest Lucide icon and list it in your hand-over.
+## App screens
+
+- **Main tabs:** add `<header class="topbar" data-topbar></header>` and `<nav class="tabbar" data-tabbar="discover"></nav>`. `assets/js/app.js` fills them in, with the tab named in `data-tabbar` marked as current. Tabs link to `discover.html`, `my-feed.html`, `create.html`, `shorts.html` and `profile.html`.
+- **Other screens:** use `.app-header` with a back arrow and title.
+- **Screen viewer:** every screen in `app/` opens inside a viewer, which is review tooling and not part of the app. At 1024 wide and up it shows the site header, every screen by area on the left, and on the right the screen's name, its states as links and previous and next; the left and right arrow keys move between screens. Narrower, it's one compact bar with back to the list, a screen picker and a state picker. `assets/js/app.js` loads it (`assets/js/viewer.js`, styled in `assets/css/viewer.css`) only for top-level pages in `app/`, never inside a frame or a prototype, and the screen itself is unchanged.
+- **Site header:** the repo's own pages (home, activity log, design system, components and the app index) share one header: `<header data-site-header data-root="../" data-current="app"></header>` with `assets/css/site-header.css` and `assets/js/site-header.js`. `data-root` is the path back to the repo's root, and `data-current` marks App, Components or Activity. Prototype pages don't use it: they have their prototype bar.
+- **Adding a screen:** add it to `US.APP_SCREENS` in `assets/js/app.js` as `[file, name]`, or `[file, name, start]` where `start` is the address it opens with, such as `"id=v2"`. Then list its states in `US.APP_STATES`, starting with the one it opens in: `["", "Feed"], ["empty", "Empty"]`. A bare word means `?state=<word>`; anything with `=` is used as it is, such as `"as=creator&state=new"`. List only states the screen's script really handles. The app index (`app/index.html`), the viewer and the home page search all read these two lists, and the tests open every state listed.
+- **Shared data:** `US.CONTENT` for videos and shorts, `US.CREATORS` for creators, and `US.avatarHTML(name)` for avatars. Nobody in the sample data has a picture, so every avatar shows the app's no-picture look.
+- **File names:** one HTML file per screen in `app/`, named after what it shows, such as `watch-history.html`. Area-only styles go in `app/css/<area>.css` and scripts in `app/js/<area>.js`. Add to the shared files only when something will be reused.
 
 ## Common patterns
 
-- **Screen header:** back arrow and title (`.app-header`), with an optional action on the right.
-- **Tabs inside a screen:** outlined chips, with the selected one filled white (`.chip` with `aria-pressed`).
-- **Empty, error, offline and loading states:** centred icon, title, one line of help and a main action (`.empty-state`). Most screens need these, so include them. Loading has no action unless its reference shows one.
-- **Short messages:** `US.toast("Text")`. Text only, with no buttons.
+- **Tabs inside a screen:** chips, with the selected one filled white (`.chip` with `aria-pressed`).
+- **Empty, error and offline states:** centred icon at 40px, a bold title, one line of help, and a full-width action where the app has one (`.empty-state`). Most screens need these, so include them.
+- **Loading states:** the app's spinner, like React Native's ActivityIndicator: a plain ring in the brand red, centred, with no text (`US.spinnerHTML()` for the large one, `US.spinnerHTML("")` for the small one). Only add a line such as "Searching..." where the app has one. Discover, My Feed and Notifications show skeletons instead. Busy buttons keep their own loader.
+- **Messages:** match what the app does at that moment, which is often nothing.
+  - Errors from the server, such as a failed delete or sign-in: `US.appToast("Text")`, the app's AppToast. A red banner 50px from the top with an icon and Dismiss; `US.appToast("Text", "success")` is brand red. Sign-in screens have their own copy, `OB.toast`.
+  - Saved changes and many form errors: `US.alert("Success", "Username updated successfully", [{ text: "OK", onPress }])`, the phone's own alert (React Native's `Alert.alert`). Kept plain because iOS and Android draw it. After a save, OK usually goes back.
+  - Things the app doesn't show, such as "This screen isn't rebuilt yet." or "This opens the phone's share sheet.": `US.toast("Text")`. It's a review note for reviewers, styled like the viewer's compact bar, and not part of the app. Never use it for an app message.
+- **Switches:** `.switch`, React Native's own: solid red when on, a white thumb. Off is the track colour the screen passes: dark by default, white with `.switch--light` on Go Live.
+- **Video cards:** `US.cardHTML(item)`, as AppVideoCard: thumbnail, then the 36px avatar with the title and "creator • views • age" beside it. The app's `layout` prop draws the same card, so there's one version. On Discover each row has 12px above and 16px below, and two shorts are 49% wide each.
 - **Settings-style lists:** `.list-row` inside `.screen-body`.
+- **Promo cards and stat tiles:** `.box`.
 - **Scrolling feeds:** `.feed` as the container. Use `.card` and `.short-row` in it, because they bring their own side margins. Don't put them in `.screen-body`.
-- **Confirmations:** a dialog with a close X, a title, one line of text, a main action and an outlined Cancel (`.dialog`). Deleting also uses the main gradient button here, as in Figma.
-- **Video page actions:** the row holds six actions and just fits at phone size, so it can't take another. Put a new action somewhere else, and flag the placement as a question.
-- **Forms:** label above, white-bordered input, error or warning text below. Check on submit, then update as the person fixes things.
-- **Bottom tabs:** on the five main screens only. Copy them from `app/discover.html`.
+- **Confirmations:** a dialog with a close X, a bold title, one line of text, a gradient confirm button and a white-outlined Cancel, both 52px tall with 16px corners (`.dialog`).
+- **Bottom sheets:** comments, rewards and sign-in prompts slide up from the bottom (`.sheet-backdrop` and `.sheet-panel`).
+- **Video page actions:** a horizontal row of pills that scrolls sideways: like, dislike, comments, Reward, then share as an icon.
+- **Area helpers:** each area has its own dialog and sheet helpers in `app/js/`. Reuse one from a neighbouring screen before writing another.
+- **Component library:** `design-system/components.html` shows every component with its name in the app's code, React Native code for developers and HTML for this repo. Start there. When you add or change a component, update its entry in `design-system/components/<area>.js`, including `rn`. React Native code shows how to use the app's components (`rnKind: "usage"`), or, where the app has no shared component, a short snippet from React Native parts and the theme (`rnKind: "pattern"`, with `rnWhere`). Never copy the app's source, styles, logic, addresses or keys into it. A new data file must also be added to the script list in `components.html` and `index.html`.
+- **Forms:** label above, white-bordered input, error text below in `--error`. Check on submit, then update as the person fixes things.
+
+## Welcome
+
+The welcome screen is a fixed row of three icons (Discover, Rewards, Connect), not a carousel.
 
 ## Discover feed layout
 
-Two full-width videos, then two shorts side by side, repeating (`US.createFeedStream` in `assets/js/app.js`).
+Videos are full width. Consecutive shorts sit two across. A Suggested Creators strip appears after the second row. The category chips start with "All". See `US.createFeedStream` in `assets/js/app.js`.
 
 ## Writing on screen
 

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <title>Edit profile – UltraStream design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="css/profile.css">
+</head>
+<!-- ?state= username-checking | username-available | username-taken | username-confirm | email-changed | email-confirm | email-code | photo | no-photo | delete | deleted -->
+<body data-screen="edit-profile">
+  <div class="stage">
+    <main class="phone" aria-label="Edit profile">
+      <header class="app-header pr-header">
+        <a class="icon-btn" href="settings.html" data-keep-as id="code-back" aria-label="Back"><i class="icon" data-lucide="arrow-left"></i></a>
+        <h1 class="app-header__title" id="edit-title">Edit Profile</h1>
+      </header>
+
+      <form class="screen-body pr-edit" id="edit-form" novalidate>
+        <div class="pr-avatar-row">
+          <span class="pr-avatar pr-avatar--72 pr-avatar--empty" id="avatar" role="img" aria-label="No profile photo"><i class="icon" data-lucide="user-round"></i></span>
+          <div class="pr-avatar-row__actions">
+            <button class="pr-outline" type="button" id="upload-photo"><i class="icon" data-lucide="camera"></i>Upload photo</button>
+            <button class="pr-outline pr-outline--danger" type="button" id="remove-photo">Remove</button>
+          </div>
+        </div>
+
+        <div class="pr-field">
+          <label class="pr-field__label" for="username">Username</label>
+          <input class="input pr-input" id="username" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="username" aria-describedby="username-helper">
+          <p class="pr-helper" id="username-helper" aria-live="polite"></p>
+          <button class="btn btn--primary pr-btn-sm" type="button" id="change-username" hidden>Change username</button>
+        </div>
+
+        <div class="pr-field">
+          <label class="pr-field__label" for="email">Email</label>
+          <input class="input pr-input" id="email" type="email" autocomplete="off" autocapitalize="none" placeholder="your@email.com">
+          <button class="btn btn--primary pr-btn-sm" type="button" id="change-email" hidden>Change email</button>
+        </div>
+      </form>
+
+      <section class="screen-body" id="email-code" hidden aria-labelledby="code-title">
+        <div class="pr-code">
+          <h2 class="pr-code__title" id="code-title">Check your email</h2>
+          <p class="pr-code__text">We sent a 6-digit code to <strong id="code-email"></strong>. Enter it below.</p>
+          <div class="pr-code__boxes" role="group" aria-label="6-digit code">
+            <input class="pr-code__box" inputmode="numeric" autocomplete="one-time-code" maxlength="1" aria-label="Digit 1">
+            <input class="pr-code__box" inputmode="numeric" maxlength="1" aria-label="Digit 2">
+            <input class="pr-code__box" inputmode="numeric" maxlength="1" aria-label="Digit 3">
+            <input class="pr-code__box" inputmode="numeric" maxlength="1" aria-label="Digit 4">
+            <input class="pr-code__box" inputmode="numeric" maxlength="1" aria-label="Digit 5">
+            <input class="pr-code__box" inputmode="numeric" maxlength="1" aria-label="Digit 6">
+          </div>
+          <p class="pr-code__text">Didn't receive it? <button class="pr-code__resend" type="button" id="resend">Resend in 59s</button></p>
+          <button class="btn btn--primary" type="button" id="verify" disabled>Verify email</button>
+          <p class="pr-code__text">Wrong email? <button class="pr-link" type="button" id="change-it">Change it</button></p>
+        </div>
+      </section>
+
+      <div class="pr-bottom" id="edit-bottom">
+        <button class="pr-outline pr-outline--danger" type="button" id="delete-account">Delete Account</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/vendor/lucide.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <title>Choose your handle – UltraStream design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="css/onboarding.css">
+</head>
+<body data-screen="chooseHandle">
+  <div class="stage">
+    <main class="phone auth" aria-label="Choose your handle">
+      <div class="auth__scroll">
+        <div class="auth__content">
+          <header class="auth-hero" style="margin-bottom: 16px">
+            <h1 class="auth-title">Choose your handle</h1>
+            <p class="auth-sub auth-muted">This is your public identity on UltraStream.</p>
+            <p class="auth-sub auth-sub--sm auth-muted" id="email-line" style="margin-top: 12px"></p>
+          </header>
+          <form class="auth-form auth-form--top" id="form" novalidate>
+            <label class="field">
+              <span class="field__label">Username</span>
+              <input class="input" id="handle" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="e.g. kingpin99">
+              <span class="field__error" hidden></span>
+            </label>
+            <button class="btn btn--primary" id="submit" type="submit">Continue</button>
+          </form>
+          <a class="back-link" href="sign-in.html"><i class="icon" data-lucide="arrow-left"></i>Go back</a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/vendor/lucide.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="js/onboarding.js"></script>
+</body>
+</html>

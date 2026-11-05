@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <title>Wallet – UltraStream design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="css/profile.css">
+</head>
+<!-- ?state= add | withdraw | withdraw-error. Amounts, prices and limits are placeholders, and nothing is charged or paid out. -->
+<body data-screen="wallet">
+  <div class="stage">
+    <main class="phone" aria-label="Wallet">
+      <header class="app-header pr-header">
+        <a class="icon-btn" href="discover.html" aria-label="Back"><i class="icon" data-lucide="arrow-left"></i></a>
+        <h1 class="app-header__title">Wallet</h1>
+      </header>
+      <div class="screen-body pr-wallet">
+        <section class="pr-balance" aria-labelledby="balance-title">
+          <div class="pr-balance__head" id="balance-title"><i class="icon" data-lucide="coins"></i>Available Balance</div>
+          <p class="pr-balance__amount"><span id="balance">1,250</span></p>
+          <div class="pr-balance__actions">
+            <button class="btn" type="button" id="add-coins"><i class="icon" data-lucide="download"></i>Add coins</button>
+            <button class="btn" type="button" id="withdraw"><i class="icon" data-lucide="upload"></i>Withdraw</button>
+          </div>
+        </section>
+
+        <div class="pr-stats">
+          <div class="pr-stat"><div class="pr-stat__head"><i class="icon" data-lucide="trending-up"></i>Earned</div><span class="pr-stat__value">+620</span><span class="pr-stat__note">This month</span></div>
+          <div class="pr-stat"><div class="pr-stat__head"><i class="icon" data-lucide="box"></i>Spent</div><span class="pr-stat__value">-125</span><span class="pr-stat__note">This month</span></div>
+        </div>
+
+        <h2 class="pr-h2">Buy Coins <span class="tag tag--placeholder">Placeholder prices</span></h2>
+        <div class="pr-packages" id="packages">
+          <button class="pr-package" type="button" data-pack="0"><i class="icon" data-lucide="coins"></i><span class="pr-package__amount">100</span><span class="pr-package__price">$0.99</span></button>
+          <button class="pr-package" type="button" data-pack="1"><i class="icon" data-lucide="coins"></i><span class="pr-package__amount">500</span><span class="pr-package__price">$4.99</span></button>
+          <button class="pr-package" type="button" data-pack="2"><i class="icon" data-lucide="coins"></i><span class="pr-package__amount">1000</span><span class="pr-package__price">$9.99</span></button>
+        </div>
+
+        <h2 class="pr-h2">Transaction History</h2>
+        <div class="pr-transactions">
+          <div class="pr-transaction"><span class="pr-transaction__icon"><i class="icon" data-lucide="coins"></i></span><span class="pr-transaction__info"><span class="pr-transaction__name">PixelForge</span><span class="pr-transaction__time">5 minutes ago</span></span><span class="pr-transaction__amount">-50</span></div>
+          <div class="pr-transaction"><span class="pr-transaction__icon"><i class="icon" data-lucide="coins"></i></span><span class="pr-transaction__info"><span class="pr-transaction__name">LoopHouse</span><span class="pr-transaction__time">2 hours ago</span></span><span class="pr-transaction__amount">-25</span></div>
+          <div class="pr-transaction"><span class="pr-transaction__icon"><i class="icon" data-lucide="coins"></i></span><span class="pr-transaction__info"><span class="pr-transaction__name">StreetPlate</span><span class="pr-transaction__time">Yesterday</span></span><span class="pr-transaction__amount">-50</span></div>
+          <div class="pr-transaction"><span class="pr-transaction__icon"><i class="icon" data-lucide="coins"></i></span><span class="pr-transaction__info"><span class="pr-transaction__name">Coins added</span><span class="pr-transaction__time">3 days ago</span></span><span class="pr-transaction__amount">+500</span></div>
+        </div>
+
+        <section class="pr-info">
+          <h2>Withdrawal Information</h2>
+          <p>Convert your coins into cash and withdraw to your connected wallet or bank account.</p>
+          <p>Minimum withdrawal: 1,000 coins ($10.00) <span class="tag tag--placeholder">Placeholder</span></p>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/vendor/lucide.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

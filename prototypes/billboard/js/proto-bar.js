@@ -4,13 +4,14 @@
     name: "Billboard",
     feature: "billboard",
     clock: true,
+    answersVersion: 4, // matches version in questions.html
     steps: [
       { label: "Enquiry", href: "web/advertise.html" },
       { label: "Create", href: "admin/campaign-new.html" },
       { label: "Discover", href: "app/discover.html", also: ["app/watch.html"] },
-      { label: "Campaigns", href: "admin/campaigns.html" },
+      { label: "Campaigns", href: "admin/campaigns.html", also: ["admin/campaign.html"] },
       { label: "Report", href: "admin/report.html?id=c7" },
-      { label: "Questions", href: "questions.html", numbered: false, count: 13 },
+      { label: "Questions", href: "questions.html", numbered: false, count: 19 },
     ],
   };
 
@@ -25,7 +26,7 @@
 
   function answered() {
     try {
-      const data = JSON.parse(localStorage.getItem(`us-answers-${CONFIG.feature}-v2`)) || {};
+      const data = JSON.parse(localStorage.getItem(`us-answers-${CONFIG.feature}-v${CONFIG.answersVersion || 2}`)) || {};
       return Object.values(data.answers || {}).filter((a) => a.choice || a.note?.trim()).length;
     } catch (e) {
       return 0;
@@ -64,7 +65,7 @@
         <i class="icon icon--sm proto-bar__chev" data-lucide="chevron-down"></i>
       </button>
       <div class="proto-bar__time" id="demo-panel" hidden>
-        <p class="proto-bar__help"><strong>Demo time</strong> Move the clock to see campaigns go from scheduled to live to ended.</p>
+        <p class="proto-bar__help"><strong>Demo time</strong> Move the clock to see campaigns go from scheduled to live to ended, and paused days added to the end.</p>
         <label for="demo-now" class="proto-bar__label">Date and time</label>
         <input id="demo-now" type="datetime-local">
         <div class="proto-bar__row">

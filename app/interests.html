@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <title>Interests – UltraStream design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="css/onboarding.css">
+</head>
+<body data-screen="interests">
+  <div class="stage">
+    <main class="phone auth" aria-label="Interests">
+      <header class="interests-head">
+        <h1 class="auth-title">Pick your interests</h1>
+        <p class="auth-sub">Select at least 3 topics to personalize your feed.</p>
+      </header>
+
+      <div class="interests-scroll">
+        <div class="interests-state" id="loading" role="status" aria-label="Loading" hidden><span class="spinner spinner--lg spinner--orange" aria-hidden="true"></span></div>
+        <div class="interests-state" id="failed" hidden>
+          <p class="onb-error" style="margin: 0">Failed to load interests.</p>
+          <button class="btn" id="retry" type="button">Retry</button>
+        </div>
+        <div class="interest-grid" id="grid" role="group" aria-label="Interests"></div>
+        <p class="onb-error" id="save-error" role="alert" hidden>Failed to save interests. Please try again.</p>
+      </div>
+
+      <footer class="onb-footer">
+        <button class="btn btn--primary btn--lg" id="continue" type="button" disabled>Continue</button>
+        <a class="back-link back-link--lg" href="experience.html"><i class="icon" data-lucide="arrow-left"></i>Go back</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="../assets/vendor/lucide.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="js/onboarding.js"></script>
+</body>
+</html>

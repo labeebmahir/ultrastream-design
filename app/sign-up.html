@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <title>Sign up – UltraStream design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="css/onboarding.css">
+</head>
+<body data-screen="signUp">
+  <div class="stage">
+    <main class="phone auth" aria-label="Sign up">
+      <div class="auth__scroll">
+
+        <!-- Step 1: email -->
+        <div class="auth__content auth__content--wide" data-step="1">
+          <header class="auth-hero">
+            <img class="auth-hero__logo" src="../assets/img/logo-icon.png" alt="UltraStream">
+            <h1 class="auth-title auth-title--md">Create your account</h1>
+            <p class="auth-sub">Start with your email address.</p>
+          </header>
+          <form class="auth-form" id="step1" novalidate>
+            <label class="field">
+              <span class="field__label">Email</span>
+              <input class="input" id="email" type="email" autocomplete="email" autocapitalize="none" spellcheck="false" placeholder="Please enter your email">
+              <span class="field__error" hidden></span>
+            </label>
+            <label class="check check--terms">
+              <input type="checkbox" id="terms">
+              <span>By proceeding, you agree to our <span class="text-link--red">Terms &amp; Conditions</span> here to continue.</span>
+            </label>
+            <p class="terms-error" id="terms-error" role="alert" hidden></p>
+            <button class="btn btn--primary btn--lg" type="submit">Continue</button>
+            <div class="auth-divider auth-divider--sm">or continue with</div>
+            <div class="auth-stack">
+              <button class="btn btn--social btn--social-lg" type="button" data-social="google"><span class="social-g" aria-hidden="true">G</span>Continue with Google</button>
+              <button class="btn btn--social btn--social-lg" type="button" data-social="apple" data-apple><i class="icon" data-lucide="apple"></i>Continue with Apple</button>
+            </div>
+            <p class="auth-footer auth-footer--top">Already have an account?&nbsp;<a class="text-link text-link--bold" href="sign-in.html">Login</a></p>
+          </form>
+          <button class="back-link" type="button" data-back><i class="icon" data-lucide="arrow-left"></i>Go back</button>
+        </div>
+
+        <!-- Step 2: emailed code -->
+        <div class="auth__content auth__content--wide" data-step="2" hidden>
+          <header class="auth-hero">
+            <h1 class="auth-title auth-title--sm">Check your email</h1>
+            <p class="auth-sub">We sent a 6-digit code to <strong id="sent-to"></strong>. Enter it below.</p>
+          </header>
+          <form class="auth-form" id="step2" novalidate>
+            <div class="otp" id="otp">
+              <div class="otp__boxes" role="group" aria-label="6-digit code">
+                <input class="otp__box" inputmode="numeric" autocomplete="one-time-code" maxlength="6" aria-label="Digit 1">
+                <input class="otp__box" inputmode="numeric" maxlength="6" aria-label="Digit 2">
+                <input class="otp__box" inputmode="numeric" maxlength="6" aria-label="Digit 3">
+                <input class="otp__box" inputmode="numeric" maxlength="6" aria-label="Digit 4">
+                <input class="otp__box" inputmode="numeric" maxlength="6" aria-label="Digit 5">
+                <input class="otp__box" inputmode="numeric" maxlength="6" aria-label="Digit 6">
+              </div>
+              <p class="otp__error" role="alert" hidden></p>
+            </div>
+            <p class="auth-footer">Didn't receive code?&nbsp;<button class="text-link text-link--orange" type="button" id="resend">Resend in 59s</button></p>
+            <button class="btn btn--primary btn--lg" type="submit">Verify email</button>
+          </form>
+          <p class="auth-footer auth-footer--top">Wrong email?&nbsp;<button class="text-link text-link--bold" type="button" id="change-email">Change it</button></p>
+        </div>
+
+        <!-- Step 3: password -->
+        <div class="auth__content auth__content--wide" data-step="3" hidden>
+          <header class="auth-hero">
+            <h1 class="auth-title">Set your password</h1>
+            <p class="auth-sub">Choose something strong and memorable.</p>
+          </header>
+          <form class="auth-form" id="step3" novalidate>
+            <label class="field">
+              <span class="field__label">Password</span>
+              <span class="input-wrap">
+                <input class="input" id="password" type="password" autocomplete="new-password" placeholder="At least 8 characters">
+                <button class="icon-btn input-wrap__btn" type="button" data-toggle-password aria-label="Show password"><i class="icon" data-lucide="eye"></i></button>
+              </span>
+              <span class="field__error" hidden></span>
+            </label>
+            <label class="field">
+              <span class="field__label">Confirm password</span>
+              <span class="input-wrap">
+                <input class="input" id="confirm" type="password" autocomplete="new-password" placeholder="Re-enter your password">
+                <button class="icon-btn input-wrap__btn" type="button" data-toggle-password aria-label="Show password"><i class="icon" data-lucide="eye"></i></button>
+              </span>
+              <span class="field__error" hidden></span>
+            </label>
+            <button class="btn btn--primary btn--lg" type="submit">Continue</button>
+          </form>
+          <button class="back-link" type="button" data-back><i class="icon" data-lucide="arrow-left"></i>Go back</button>
+        </div>
+
+        <!-- Step 4: handle -->
+        <div class="auth__content auth__content--wide" data-step="4" hidden>
+          <header class="auth-hero">
+            <h1 class="auth-title">Choose your handle</h1>
+            <p class="auth-sub">This will be your public identity.</p>
+          </header>
+          <form class="auth-form" id="step4" novalidate>
+            <label class="field">
+              <span class="field__label">Username</span>
+              <input class="input" id="handle" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="e.g. kingpin99">
+              <span class="field__error" hidden></span>
+              <span class="field__status" id="handle-status" role="status" hidden></span>
+            </label>
+            <button class="btn btn--primary btn--lg" id="confirm-handle" type="submit">Confirm</button>
+          </form>
+          <button class="back-link" type="button" data-back><i class="icon" data-lucide="arrow-left"></i>Go back</button>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/vendor/lucide.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="js/onboarding.js"></script>
+</body>
+</html>

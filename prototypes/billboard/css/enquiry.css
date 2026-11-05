@@ -1,0 +1,150 @@
+/* The advertise page. Public website: keeps the ultrastream.one look (Space Grotesk and Inter, its orange), not the app's.
+   One screen on laptops: headline and form on the left, package chips and a simple feed drawing (.sp) on the right. */
+:root { --orange: #ff5c00; --orange-hover: #e05200; --input: rgba(255, 255, 255, 0.15); --font-display: "Space Grotesk", system-ui, sans-serif; --font-body: "Inter", system-ui, sans-serif;
+  --on: var(--orange); --on-fill: color-mix(in srgb, var(--orange) 26%, var(--black)); --block: var(--surface-3); --nav-h: 56px; }
+
+.btn--primary { background: var(--orange); color: #111; font-weight: 600; }
+.btn--primary:hover { background: var(--orange-hover); }
+.site-nav { display: flex; align-items: center; height: var(--nav-h); max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+.eyebrow { margin: 0 0 8px; color: var(--orange); font-size: 14px; line-height: 20px; font-weight: 600; }
+.lede { margin: 0; color: var(--text-2); font-size: 16px; line-height: 24px; }
+.tag { font-family: var(--font-body); font-weight: 500; vertical-align: 1px; white-space: nowrap; }
+.nowrap { white-space: nowrap; }
+
+/* Layout */
+.enq { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 72px; align-items: center; max-width: 1200px; min-height: calc(100vh - var(--bar-h) - var(--nav-h)); margin: 0 auto; padding: 8px 32px 32px; }
+.enq h1 { margin-bottom: 12px; font-size: 40px; letter-spacing: -0.01em; }
+.enq .lede { max-width: 560px; margin-bottom: 28px; }
+
+/* The form */
+.eq-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px 16px; }
+.eq-grid > .field { grid-column: span 2; margin: 0; }
+.eq-grid > .eq-full { grid-column: 1 / -1; }
+.eq-dates { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.eq-dates label { min-width: 0; }
+.eq-grid .input { min-height: 42px; }
+.eq-grid input[type="date"] { min-width: 0; padding-right: 8px; }
+textarea.input { display: block; min-height: 66px; height: 66px; }
+.eq-submit { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; margin-top: 20px; }
+.eq-submit .btn { min-height: 48px; padding: 0 28px; font-size: 15px; }
+.eq-note { margin: 0; color: var(--text-3); font-size: 13px; line-height: 18px; }
+.field__error { margin-top: 4px; font-size: 12px; line-height: 16px; }
+.success { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 8px 0; }
+.success__icon { width: 32px; height: 32px; color: var(--orange); }
+.success h2 { font-size: 24px; }
+.success p { margin: 0 0 8px; color: var(--text-2); font-size: 15px; }
+
+/* Where your ad appears: chips above the drawing, and one line under it */
+.where { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.chips-label { margin: 0; color: var(--text-3); font-size: 13px; line-height: 18px; }
+.chips-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; width: 100%; max-width: 330px; margin-bottom: 6px; }
+.pchip { min-height: 36px; padding: 0 12px; background: transparent; border: 1px solid var(--input); border-radius: 999px; color: var(--text-2); font-size: 13px; font-weight: 500; white-space: nowrap; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: border-color 0.15s, background-color 0.15s, color 0.15s; }
+.pchip:hover { border-color: var(--text-3); color: var(--text); }
+.pchip[aria-pressed="true"] { background: var(--white); border-color: var(--white); color: #111; font-weight: 600; }
+.where__phone { width: min(256px, calc((100vh - var(--bar-h) - var(--nav-h) - 250px) * 9 / 19)); }
+.where__caption { min-height: 40px; max-width: 340px; margin: 0; color: var(--text-2); font-size: 14px; line-height: 20px; text-align: center; }
+
+/* The drawing. Everything inside is sized in cqw, so it scales with the phone's width. */
+.sp { container-type: inline-size; width: 100%; }
+.sp i { display: block; }
+.sp__screen { display: flex; flex-direction: column; gap: 3cqw; aspect-ratio: 9 / 19; padding: 5cqw 5cqw 0; overflow: hidden; background: var(--black); border: max(1px, 0.7cqw) solid var(--block); border-radius: 12cqw; font-family: var(--font-body); }
+.sp__top { display: flex; align-items: center; gap: 3cqw; flex: none; height: 8cqw; }
+.sp__logo { width: 18cqw; height: 5.5cqw; margin-right: auto; border-radius: 1.5cqw; background: var(--block); }
+.sp__dot { width: 5.5cqw; height: 5.5cqw; border-radius: 50%; background: var(--block); }
+.sp__chips { display: flex; gap: 2cqw; flex: none; overflow: hidden; }
+.sp__chips i { flex: none; height: 7cqw; border: max(1px, 0.5cqw) solid var(--block); border-radius: 2cqw; }
+.sp__chips i:nth-child(1) { width: 10cqw; background: var(--block); }
+.sp__chips i:nth-child(2) { width: 19cqw; }
+.sp__chips i:nth-child(3) { width: 15cqw; }
+.sp__chips i:nth-child(4) { width: 17cqw; }
+.sp__chips i:nth-child(5) { width: 18cqw; }
+.sp__feed { display: flex; flex-direction: column; gap: 3cqw; flex: 1; min-height: 0; overflow: hidden; padding-top: 1cqw; }
+.sp__feed > * { flex: none; }
+.sp__slot { position: relative; display: flex; align-items: center; border-radius: 3.5cqw; background: var(--block); transition: background-color 0.2s, box-shadow 0.2s; }
+.sp__slot--top { aspect-ratio: 16 / 9; }
+.sp__slot--featured { aspect-ratio: 3 / 1; }
+.sp__slot--standard { aspect-ratio: 4 / 1; }
+.sp__item { display: grid; grid-template-columns: 34cqw 1fr; gap: 3.5cqw; align-items: center; }
+.sp__thumb { aspect-ratio: 16 / 9; border-radius: 2.5cqw; background: var(--block); }
+.sp__lines i { height: 3cqw; border-radius: 1.5cqw; background: var(--block); }
+.sp__lines i + i { width: 60%; margin-top: 2.5cqw; }
+.sp__gap { display: flex; align-items: center; gap: 2.5cqw; height: 5cqw; color: var(--text-3); font-size: 4cqw; line-height: 1; white-space: nowrap; }
+.sp__gap::before, .sp__gap::after { content: ""; flex: 1; border-top: max(1px, 0.5cqw) dashed var(--block); }
+.sp__tabs { display: flex; justify-content: space-around; align-items: center; flex: none; height: 14cqw; margin: 0 -5cqw; padding-bottom: 2cqw; border-top: max(1px, 0.5cqw) solid var(--block); background: var(--black); }
+.sp__tabs i { width: 6cqw; height: 6cqw; border: max(1px, 0.6cqw) solid var(--block); border-radius: 50%; }
+
+/* The chosen slot: in colour, with its name */
+.sp__label { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; gap: 1cqw; padding: 0 5cqw; color: var(--white); text-align: left; }
+.sp__label b { font-size: 5.4cqw; line-height: 1.2; font-weight: 600; }
+.sp__label > span { color: var(--text-2); font-size: 4.2cqw; line-height: 1.25; }
+.sp__tag, .sp__again { display: inline-flex; align-items: center; gap: 1.5cqw; }
+.sp__label .sp__tag { align-self: flex-start; padding: 0.8cqw 2.4cqw; border-radius: 99px; background: var(--orange); color: #111; font-weight: 600; }
+.sp__tag .icon, .sp__again .icon { width: 4cqw; height: 4cqw; }
+.sp__again { color: var(--orange); font-size: 4cqw; font-weight: 600; }
+.sp__slot--standard .sp__label { gap: 0.5cqw; }
+.sp__slot--standard .sp__label b { font-size: 4.8cqw; }
+.sp__slot--standard .sp__label > span { font-size: 4cqw; }
+.sp[data-on="billboard"] .sp__slot--top, .sp[data-on="billboard-prime"] .sp__slot--top,
+.sp[data-on="featured"] .sp__slot--featured, .sp[data-on="standard"] .sp__slot--standard { background: var(--on-fill); box-shadow: inset 0 0 0 max(1.5px, 0.8cqw) var(--on); }
+.sp[data-on="billboard"] [data-for="billboard"], .sp[data-on="billboard-prime"] [data-for="billboard-prime"],
+.sp[data-on="featured"] [data-for="featured"], .sp[data-on="standard"] [data-for="standard"] { display: flex; }
+.sp[data-on="standard"] .sp__slot--again { box-shadow: inset 0 0 0 max(1px, 0.6cqw) var(--on); background: color-mix(in srgb, var(--orange) 12%, var(--black)); }
+.sp[data-on="standard"] .sp__gap { color: var(--orange); }
+/* Drawn too small to read, as on phones: the picture only, with the line beside it saying where the slot is */
+@container (max-width: 170px) {
+  .sp__label, .sp__gap span { display: none !important; }
+}
+
+/* Shorter laptop screens: tighter spacing so the page still fits on one screen */
+@media (min-width: 961px) and (max-height: 840px) {
+  .enq h1 { font-size: 36px; }
+  .enq .lede { margin-bottom: 22px; }
+  .eq-grid { row-gap: 12px; }
+  .eq-submit { margin-top: 16px; }
+}
+@media (min-width: 961px) and (max-width: 1180px) {
+  .enq { grid-template-columns: minmax(0, 1fr) 300px; gap: 40px; }
+  .enq h1 { font-size: 32px; }
+  .enq .lede { font-size: 15px; line-height: 22px; margin-bottom: 18px; }
+  .pchip { padding: 0 8px; font-size: 12px; }
+  .eq-grid { gap: 10px 12px; }
+  .eq-dates { gap: 12px; }
+  .eq-grid input[type="date"] { padding-left: 10px; padding-right: 6px; }
+  textarea.input { min-height: 58px; height: 58px; }
+}
+
+/* Tablets and phones: one column that scrolls, kept short, with the form close to the top */
+@media (max-width: 960px) {
+  :root { --nav-h: 52px; }
+  .site-nav { padding: 0 16px; }
+  .enq { grid-template-columns: minmax(0, 1fr); gap: 24px; min-height: 0; padding: 4px 16px 40px; }
+  .enq h1 { font-size: 30px; }
+  .enq .lede { margin-bottom: 0; }
+  .enq__main { display: contents; }
+  .enq__intro { order: 1; }
+  .where { order: 2; display: grid; grid-template-columns: 112px minmax(0, 1fr); grid-template-areas: "phone label" "phone chips" "phone caption"; grid-template-rows: auto auto 1fr; align-items: start; gap: 10px 16px; }
+  .chips-label { grid-area: label; }
+  .chips-row { grid-area: chips; grid-template-columns: minmax(0, 1fr); max-width: 260px; margin: 0; }
+  .pchip { justify-self: start; }
+  .where__phone { grid-area: phone; width: 112px; }
+  .where__caption { grid-area: caption; min-height: 0; text-align: left; }
+  #panel { order: 3; }
+}
+@media (max-width: 600px) {
+  .eq-grid { grid-template-columns: minmax(0, 1fr); }
+  .eq-grid > .field { grid-column: 1 / -1; }
+  .eq-submit .btn { width: 100%; }
+  .where { grid-template-columns: 96px minmax(0, 1fr); }
+  .where__phone { width: 96px; }
+  .chips-row { gap: 6px; }
+  .pchip { min-height: 34px; padding: 0 10px; font-size: 12px; }
+}
+@media (max-width: 359px) {
+  .eq-dates { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .where { grid-template-columns: 80px minmax(0, 1fr); }
+  .where__phone { width: 80px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pchip, .sp__slot { transition: none; }
+}

@@ -1,0 +1,217 @@
+/* Profile and settings screens. Sizes come from the live app's code. Prefixed pr- so they don't clash with other areas. */
+
+/* Screen titles: the app's profile screens use a 24px bold title (Watch History uses 22px) */
+.pr-header { padding: 8px 8px 12px; }
+.pr-header .app-header__title { font-size: 24px; line-height: 32px; }
+.pr-header--22 .app-header__title { font-size: 22px; line-height: 28px; }
+.pr-header__actions { display: flex; align-items: center; gap: 8px; }
+.pr-danger { color: var(--destructive); }
+
+/* Profile tab */
+.pr-top { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; flex: none; }
+.pr-top__title { margin: 0; font-size: 28px; line-height: 36px; font-weight: 700; }
+.pr-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 0 16px 32px; }
+.pr-user { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.pr-user__name { font-size: 16px; line-height: 24px; font-weight: 600; overflow-wrap: anywhere; }
+/* Avatars on these screens are the shared .avatar (AppAvatar), here also at 28px for reward activities.
+   Edit profile draws its own 72px one, as in the app: grey with a person icon, or the picked photo */
+.avatar--28 { width: 28px; height: 28px; }
+.pr-avatar { flex: none; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; overflow: hidden; }
+.pr-avatar--72 { width: 72px; height: 72px; }
+.pr-avatar--photo { background: linear-gradient(135deg, var(--brand-orange-4), var(--brand-red-8)); }
+.pr-avatar--empty { background: var(--surface-2); color: var(--text-3); }
+.pr-avatar--empty .icon { width: 48px; height: 48px; }
+
+.pr-cards { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+.pr-promo { display: block; border-radius: 6px; color: var(--white); text-decoration: none; }
+a.pr-promo:hover, .pr-channel:hover { background: var(--surface-3); }
+.pr-promo__head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.pr-promo__title { flex: 1; min-width: 0; margin: 0; font-size: 16px; line-height: 24px; font-weight: 600; }
+.pr-promo__soon { font-size: 13px; font-weight: 400; }
+.pr-promo__text { margin: 0; font-size: 11px; line-height: 16px; font-weight: 500; }
+.pr-promo[aria-disabled="true"] { cursor: default; }
+
+.pr-reward { display: block; padding: 16px; border-radius: 6px; background: var(--primary); color: var(--white); text-decoration: none; }
+.pr-reward__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.pr-reward__title { margin: 0; font-size: 16px; line-height: 24px; font-weight: 600; }
+.pr-reward__stats { display: flex; gap: 16px; }
+.pr-reward__stat { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.pr-reward__label { display: flex; align-items: center; gap: 6px; font-size: 14px; line-height: 20px; font-weight: 500; }
+.pr-reward__label .icon { width: 18px; height: 18px; }
+.pr-reward__value { font-size: 24px; line-height: 32px; font-weight: 700; }
+
+.pr-channel { display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 6px; background: var(--surface-2); text-decoration: none; }
+.pr-channel__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.pr-channel__name { font-size: 16px; line-height: 24px; font-weight: 600; }
+.pr-channel__handle { font-size: 12px; line-height: 16px; }
+.pr-channel__manage { margin-top: 2px; color: var(--text-3); font-size: 11px; line-height: 16px; font-weight: 500; }
+
+.pr-section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.pr-section-head__title { margin: 0; font-size: 22px; line-height: 28px; font-weight: 600; }
+.pr-section-head__link { font-size: 14px; line-height: 20px; font-weight: 500; text-decoration: none; }
+
+/* Watch history cards: the shared card, without the duration, with the app's dark history badges */
+.pr-history .card { margin: 0 0 24px; }
+.pr-history .card__row { padding-bottom: 8px; }
+.pr-history--list { padding: 0 16px; }
+.pr-badge { position: absolute; top: 8px; display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 6px; background: rgba(0, 0, 0, 0.72); color: var(--white); font-size: 11px; line-height: 16px; font-weight: 600; }
+.pr-badge .icon { width: 12px; height: 12px; }
+.pr-badge--left { left: 8px; }
+.pr-badge--right { right: 8px; }
+.pr-history-empty { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 40px 24px; border-radius: 16px; background: var(--surface-2); text-align: center; color: var(--text-3); }
+.pr-history-empty .icon { width: 48px; height: 48px; }
+.pr-history-empty__title { margin: 8px 0 0; font-size: 16px; line-height: 24px; font-weight: 600; }
+.pr-history-empty__text { margin: 0; font-size: 12px; line-height: 16px; opacity: 0.7; }
+.pr-loader { display: flex; justify-content: center; margin: 24px 0; }
+.pr-loading-text { margin: 4px 0 0; color: var(--white); font-size: 14px; line-height: 20px; }
+.pr-end { margin: 20px 16px; text-align: center; font-size: 12px; line-height: 16px; color: var(--white); opacity: 0.6; }
+
+/* Settings list: 16px semibold rows with 22px icons, as in the app */
+.pr-settings { gap: 4px; padding-top: 16px; }
+.pr-settings .list-row { min-height: 52px; font-size: 16px; line-height: 24px; font-weight: 600; gap: 16px; width: 100%; background: none; border: 0; padding: 0; text-align: left; cursor: pointer; color: var(--white); }
+.pr-settings .list-row .icon { width: 22px; height: 22px; }
+.pr-settings .list-row.pr-danger { color: var(--destructive); }
+
+/* Centred states, sized as the app draws them: 56px icon, 16px title, faded white text */
+.pr-empty .empty-state__icon { width: 56px; height: 56px; }
+.pr-empty .empty-state__title { font-size: 16px; line-height: 24px; font-weight: 600; }
+.pr-empty .empty-state__text { color: var(--white); opacity: 0.7; font-size: 12px; line-height: 16px; }
+.pr-empty__action { width: 100%; padding: 0 32px; margin-top: 20px; }
+.pr-empty__action .btn { width: 100%; }
+.pr-empty--reward { justify-content: flex-start; gap: 16px; padding: 48px 32px 32px; }
+.pr-empty--reward .empty-state__title { font-weight: 700; }
+.pr-empty--reward .empty-state__text { font-size: 14px; line-height: 22px; opacity: 0.85; color: var(--text-2); }
+.pr-empty--reward .btn { margin-top: 0; }
+
+/* Forms */
+.pr-form { display: flex; flex-direction: column; gap: 24px; }
+.pr-field { display: flex; flex-direction: column; gap: 12px; }
+.pr-field--tight { gap: 4px; }
+.pr-field__label { font-size: 14px; line-height: 20px; font-weight: 600; }
+.pr-field--tight .pr-field__label { margin-bottom: 2px; }
+.pr-input { min-height: 48px; padding: 0 16px; font-size: 15px; border-color: var(--neutral-white-7); }
+.pr-input:focus { outline: none; border-color: var(--white); }
+@media (max-width: 1024px) { .pr-input { font-size: 16px; } }
+.pr-input[aria-invalid="true"] { border-color: var(--error); }
+.pr-input-wrap { position: relative; }
+.pr-input-wrap .pr-input { padding-right: 52px; }
+.pr-input-wrap .icon-btn { position: absolute; top: 6px; right: 6px; }
+.pr-helper { margin: 0; font-size: 12px; line-height: 18px; color: var(--text-3); }
+.pr-field--tight .pr-helper { margin-left: 8px; }
+.pr-helper--warn { color: var(--brand-orange-dark-6); }
+.pr-helper--ok { color: var(--green); }
+.pr-helper--error { color: var(--error); }
+.phone .pr-btn-sm { min-height: 40px; border-radius: 10px; }
+.btn[disabled], .btn[aria-disabled="true"] { opacity: 0.4; cursor: not-allowed; }
+.pr-intro { margin: 0; color: var(--text-3); font-size: 14px; line-height: 20px; }
+
+/* Edit profile */
+.pr-edit { gap: 24px; padding-bottom: 32px; }
+.pr-avatar-row { display: flex; align-items: center; gap: 16px; margin-top: 12px; }
+.pr-avatar-row__actions { flex: 1; min-width: 0; display: flex; gap: 12px; }
+.pr-outline { flex: 1; min-width: 0; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; padding: 0 12px; border: 1px solid var(--white); border-radius: 10px; background: none; color: var(--white); font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.pr-outline .icon { width: 16px; height: 16px; }
+.pr-outline:hover { background: var(--surface-2); }
+.pr-outline--danger { border-color: var(--destructive); color: var(--destructive); }
+.pr-bottom { flex: none; padding: 0 16px 32px; }
+.pr-bottom .pr-outline { width: 100%; margin-top: 8px; }
+
+/* Email code step */
+.pr-code { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 48px 16px 32px; text-align: center; }
+.pr-code__title { margin: 0; font-size: 24px; line-height: 32px; font-weight: 700; }
+.pr-code__text { margin: 0; font-size: 14px; line-height: 20px; overflow-wrap: anywhere; }
+.pr-code__boxes { display: flex; margin: 24px 0 8px; }
+.pr-code__box { width: 40px; height: 48px; padding: 0; border: 1px solid var(--white); border-left-width: 0; background: transparent; text-align: center; font-size: 18px; font-weight: 600; }
+.pr-code__box:first-child { border-left-width: 1px; border-radius: 6px 0 0 6px; }
+.pr-code__box:last-child { border-radius: 0 6px 6px 0; }
+.pr-code__box:focus { outline: 2px solid var(--orange); outline-offset: -2px; }
+.pr-code__resend { color: var(--orange); background: none; border: 0; padding: 0; font-weight: 500; cursor: pointer; }
+.pr-code__resend[disabled] { cursor: default; }
+.pr-code .btn { width: 100%; }
+.pr-link { background: none; border: 0; padding: 0; color: var(--white); font-weight: 700; text-decoration: underline; cursor: pointer; }
+
+/* Sheet rows: photo picker */
+.pr-sheet-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding: 0 8px; }
+.pr-sheet-head h2 { margin: 0; font-size: 22px; line-height: 28px; font-weight: 700; }
+.pr-sheet-row { display: flex; align-items: center; gap: 16px; width: 100%; padding: 12px 8px; border: 0; border-radius: 12px; background: none; color: var(--white); font-size: 16px; line-height: 24px; font-weight: 600; text-align: left; cursor: pointer; }
+.pr-sheet-row:hover { background: var(--surface-3); }
+.pr-sheet-row__icon { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 12px; background: var(--surface-3); }
+.pr-sheet-row__label { flex: 1; }
+.pr-sheet-row--danger { color: var(--error); }
+.pr-sheet-divider { height: 1px; margin: 8px 0; background: var(--border); }
+
+/* Dialog extras */
+.pr-dialog-lines { display: flex; flex-direction: column; gap: 16px; margin: 12px 0 8px; padding: 0; list-style: none; }
+.pr-dialog-lines li { display: flex; align-items: center; gap: 16px; font-size: 16px; line-height: 24px; }
+
+/* Appearance */
+.pr-group { margin: 16px 0 24px; }
+.pr-group__title { margin: 0 0 12px; padding: 0 8px; font-size: 16px; line-height: 24px; font-weight: 700; }
+.pr-group__card { border: 1px solid var(--border); border-radius: 16px; background: var(--surface-2); overflow: hidden; }
+.pr-option { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 16px; border: 0; background: none; color: var(--white); text-align: left; cursor: pointer; }
+.pr-option__left { display: flex; align-items: center; gap: 12px; font-size: 16px; line-height: 24px; font-weight: 600; }
+.pr-option__icon { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: var(--brand-red-1); color: var(--destructive); }
+.pr-option__icon .icon { width: 20px; height: 20px; }
+.pr-radio { position: relative; flex: none; width: 20px; height: 20px; border: 2px solid var(--text-3); border-radius: 50%; }
+[aria-checked="true"] > .pr-radio { border-color: var(--destructive); }
+[aria-checked="true"] > .pr-radio::after { content: ""; position: absolute; inset: 3px; border-radius: 50%; background: var(--destructive); }
+
+/* Reward activities */
+.pr-tabs { display: flex; gap: 16px; padding: 0 16px 16px; flex: none; }
+.pr-tab { flex: 1; min-width: 0; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border: 1px solid var(--white); border-radius: 6px; background: transparent; color: var(--white); font-size: 14px; line-height: 20px; font-weight: 600; cursor: pointer; }
+.pr-tab .icon { width: 18px; height: 18px; }
+.pr-tab[aria-selected="true"] { background: var(--white); color: var(--neutral-black-6); }
+.pr-activities { display: flex; flex-direction: column; gap: 12px; flex: 1; min-height: 0; overflow-y: auto; padding: 0 16px 24px; }
+.pr-activity { display: flex; align-items: center; gap: 10px; width: 100%; padding: 14px; border: 0; border-radius: 6px; background: var(--surface-2); color: var(--white); text-align: left; cursor: pointer; }
+.pr-activity:hover { background: var(--surface-3); }
+.pr-activity__amount { flex: none; width: 88px; display: flex; flex-direction: column; gap: 4px; }
+.pr-activity__value { font-size: 16px; line-height: 24px; font-weight: 700; }
+.pr-activity__gift { display: flex; align-items: center; gap: 4px; font-size: 12px; line-height: 16px; color: var(--text-2); white-space: nowrap; }
+.pr-activity__user { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; }
+.pr-activity__name { min-width: 0; overflow: hidden; font-size: 12px; line-height: 16px; font-weight: 600; white-space: nowrap; text-overflow: ellipsis; }
+.pr-activity__time { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; min-width: 84px; font-size: 12px; line-height: 16px; }
+.pr-activity__date { font-weight: 500; white-space: nowrap; }
+.pr-activity__clock { color: var(--text-3); }
+.pr-activity > .icon { width: 22px; height: 22px; margin-left: 2px; }
+.pr-gift { flex: none; display: inline-block; width: 12px; height: 12px; border-radius: 50%; }
+.pr-gift--lg { width: 36px; height: 36px; }
+@media (max-width: 360px) { .pr-activity__amount { width: 72px; } .pr-activity__time { min-width: 72px; } }
+
+/* Wallet */
+.pr-wallet { gap: 16px; padding-top: 16px; }
+.pr-balance { padding: 24px; border: 3px solid var(--white); border-radius: 22px; }
+.pr-balance__head { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-size: 16px; line-height: 24px; font-weight: 600; }
+.pr-balance__head .icon { width: 20px; height: 20px; }
+.pr-balance__amount { margin: 0 0 24px; font-size: 36px; line-height: 44px; font-weight: 700; }
+.pr-balance__actions { display: flex; gap: 12px; }
+.phone .pr-balance__actions .btn { flex: 1; min-width: 0; border-radius: 16px; background: var(--white); color: var(--neutral-black-6); border-color: var(--white); }
+.pr-balance__actions .btn .icon { width: 18px; height: 18px; }
+.pr-stats { display: flex; gap: 16px; margin-bottom: 16px; }
+.pr-stat { flex: 1; min-width: 0; padding: 16px; border: 1px solid var(--white); border-radius: 22px; }
+.pr-stat__head { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-size: 14px; line-height: 20px; font-weight: 500; }
+.pr-stat__head .icon { width: 18px; height: 18px; }
+.pr-stat__value { display: block; margin-bottom: 4px; font-size: 24px; line-height: 32px; font-weight: 700; }
+.pr-stat__note { font-size: 11px; line-height: 16px; font-weight: 500; }
+.pr-h2 { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; margin: 0; font-size: 22px; line-height: 28px; font-weight: 700; }
+.pr-packages { flex: none; display: flex; gap: 12px; margin: 0 -16px; padding: 0 16px; overflow-x: auto; scrollbar-width: none; }
+.pr-packages::-webkit-scrollbar { display: none; }
+.pr-package { flex: none; display: flex; flex-direction: column; align-items: center; min-width: 112px; padding: 16px 24px; border: 1px solid var(--border); border-radius: 22px; background: none; color: var(--white); cursor: pointer; }
+.pr-package[aria-pressed="true"] { border-color: var(--orange); background: var(--orange-dim); }
+.pr-package .icon { margin-bottom: 12px; }
+.pr-package__amount { font-size: 22px; line-height: 28px; font-weight: 700; }
+.pr-package__price { font-size: 12px; line-height: 16px; font-weight: 500; }
+.pr-transactions { display: flex; flex-direction: column; gap: 12px; }
+.pr-transaction { display: flex; align-items: center; gap: 12px; padding: 16px; border: 1px solid var(--white); border-radius: 16px; }
+.pr-transaction__icon { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: var(--white); color: var(--neutral-black-4); }
+.pr-transaction__icon .icon { width: 20px; height: 20px; }
+.pr-transaction__info { flex: 1; min-width: 0; }
+.pr-transaction__name { display: block; font-size: 16px; line-height: 24px; font-weight: 600; }
+.pr-transaction__time { font-size: 11px; line-height: 16px; }
+.pr-transaction__amount { font-size: 16px; line-height: 24px; font-weight: 700; }
+.pr-info { padding: 24px; border-radius: 22px; background: var(--surface-2); }
+.pr-info h2 { margin: 0 0 12px; font-size: 16px; line-height: 24px; font-weight: 700; }
+.pr-info p { margin: 0 0 12px; font-size: 14px; line-height: 20px; }
+.pr-info p:last-child { margin: 0; }
+.pr-sheet-body { display: flex; flex-direction: column; gap: 16px; padding: 0 8px; }
+.pr-sheet-body .btn { width: 100%; }
+.pr-flush { padding: 0; }

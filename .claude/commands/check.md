@@ -27,4 +27,4 @@ Tests can't judge how something looks. Open the screenshots of whatever changed 
 
 ## 4. Report honestly
 
-Say what passed, what failed and what you couldn't check. Fix failures and run the tests again before saying the work is done. If a test is wrong rather than the page, explain why before changing it. Don't commit.
+Add an entry to the activity log (`assets/js/activity-log.js`) if this work doesn't have one yet. Say what passed, what failed and what you couldn't check. Fix failures and run the tests again before saying the work is done. If a test is wrong rather than the page, explain why before changing it. Don't commit.

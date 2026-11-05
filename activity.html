@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <title>Activity log – UltraStream design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/listing.css">
+  <link rel="stylesheet" href="assets/css/site-header.css">
+  <link rel="stylesheet" href="assets/css/home.css">
+</head>
+<body>
+  <header data-site-header data-root="" data-current="activity"></header>
+  <main class="page">
+    <h1 class="text-h2 page__title">Activity log</h1>
+    <p class="page__lede">What was asked for and what was made, newest first. New features raise the middle number of the version, and fixes raise the last.</p>
+
+    <div class="log-tools">
+      <label class="log-search"><i class="icon icon--sm" data-lucide="search"></i><input id="q" type="search" placeholder="Search the log" aria-label="Search the log"></label>
+      <div class="log-filters" id="filters" role="toolbar" aria-label="Filter by type"></div>
+    </div>
+
+    <ol class="log" id="log"></ol>
+    <p class="log-none" id="none" hidden>Nothing matches. Try another word.</p>
+
+    <h2 class="text-h4 page__section">Adding an entry</h2>
+    <p class="log-help">Claude adds an entry at the top of <code>assets/js/activity-log.js</code> after each piece of work: the next version, the date, what was asked and what was made.</p>
+  </main>
+
+  <script src="assets/vendor/lucide.min.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/activity-log.js"></script>
+  <script src="assets/js/site-header.js"></script>
+  <script src="assets/js/home.js"></script>
+  <script>
+    (() => {
+      const log = document.getElementById("log");
+      const filters = document.getElementById("filters");
+      const q = document.getElementById("q");
+      const none = document.getElementById("none");
+      const types = ["all", ...new Set(ACTIVITY.map((e) => e.type))];
+      let type = new URLSearchParams(location.search).get("type") || "all";
+      if (!types.includes(type)) type = "all";
+
+      log.innerHTML = ACTIVITY.map((e) => HOME.logEntryHTML(e)).join("");
+      filters.innerHTML = types.map((t) => `<button class="log-filter" type="button" data-type="${t}" aria-pressed="${t === type}">${t === "all" ? "All" : HOME.TYPE_LABELS[t] || t}<span>${t === "all" ? ACTIVITY.length : ACTIVITY.filter((e) => e.type === t).length}</span></button>`).join("");
+
+      const apply = () => {
+        const words = q.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+        let shown = 0;
+        log.querySelectorAll(".log-entry").forEach((li, i) => {
+          const e = ACTIVITY[i];
+          const text = [e.version, e.title, e.asked, ...e.made].join(" ").toLowerCase();
+          const ok = (type === "all" || e.type === type) && words.every((w) => text.includes(w));
+          li.hidden = !ok;
+          if (ok) shown++;
+        });
+        none.hidden = shown > 0;
+      };
+      filters.addEventListener("click", (ev) => {
+        const b = ev.target.closest(".log-filter");
+        if (!b) return;
+        type = b.dataset.type;
+        filters.querySelectorAll(".log-filter").forEach((x) => x.setAttribute("aria-pressed", x === b));
+        apply();
+      });
+      q.addEventListener("input", apply);
+      apply();
+      // Highlight the entry a version link points to, on load and when the link changes
+      const mark = () => {
+        log.querySelectorAll(".is-target").forEach((x) => x.classList.remove("is-target"));
+        const el = location.hash && document.getElementById(location.hash.slice(1));
+        if (el) { el.hidden = false; el.classList.add("is-target"); el.scrollIntoView({ block: "start" }); }
+      };
+      addEventListener("hashchange", mark);
+      mark();
+    })();
+  </script>
+</body>
+</html>

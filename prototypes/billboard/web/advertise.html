@@ -11,167 +11,91 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../../assets/css/base.css">
   <link rel="stylesheet" href="../css/billboard.css">
-  <style>
-    /* Public website: keeps the ultrastream.one look rather than the app's */
-    :root { --orange: #ff5c00; --orange-hover: #e05200; --input: rgba(255, 255, 255, 0.15); --font-display: "Space Grotesk", system-ui, sans-serif; --font-body: "Inter", system-ui, sans-serif; }
-    .btn--primary { background: var(--orange); color: #111; font-weight: 600; }
-    .btn--primary:hover { background: var(--orange-hover); }
-    .site-nav { display: flex; justify-content: space-between; align-items: center; max-width: 1120px; margin: 0 auto; padding: 22px 24px; }
-    .wrap { display: grid; grid-template-columns: minmax(0, 1fr) 480px; gap: 56px; max-width: 1120px; margin: 0 auto; padding: 24px 24px 72px; align-items: start; }
-    .eyebrow { color: var(--orange); font-weight: 600; font-size: 14px; margin: 0 0 12px; }
-    .pitch h1 { font-size: 46px; letter-spacing: -0.01em; margin-bottom: 16px; }
-    .pitch > p:not(.eyebrow) { color: var(--text-2); font-size: 17px; margin: 0 0 32px; max-width: 520px; }
-    .type { display: block; padding: 16px 0; border-top: 1px solid var(--border); text-decoration: none; }
-    .type:hover h2 { color: var(--orange); }
-    .hero-cta { display: none; margin-bottom: 32px; }
-    .type h2 { font-size: 16px; margin-bottom: 2px; }
-    .type p { margin: 0; color: var(--text-2); font-size: 14px; }
-    .how { margin-top: 32px; }
-    .how h2 { font-size: 18px; margin-bottom: 10px; }
-    .how ol { margin: 0; padding-left: 20px; color: var(--text-2); }
-    .how li { margin-bottom: 6px; }
-    .card-form { padding: 28px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; }
-    .card-form h2 { font-size: 22px; margin-bottom: 4px; }
-    .card-form > p { color: var(--text-2); margin: 0 0 20px; font-size: 14px; }
-    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .success h2 { margin-bottom: 8px; }
-    .success p { color: var(--text-2); }
-    footer { padding: 24px; text-align: center; color: var(--text-3); font-size: 13px; border-top: 1px solid var(--border); }
-    @media (max-width: 920px) {
-      .wrap { grid-template-columns: minmax(0, 1fr); gap: 32px; }
-      .pitch h1 { font-size: 34px; }
-      .card-form { padding: 20px; }
-      .hero-cta { display: inline-flex; }
-    }
-    @media (max-width: 420px) { .two { grid-template-columns: minmax(0, 1fr); gap: 0; } }
-  </style>
+  <link rel="stylesheet" href="../css/enquiry.css">
 </head>
 <body>
   <header class="site-nav"><span class="logo">Ultra<span>Stream</span></span></header>
-  <main class="wrap">
-    <section class="pitch">
-      <p class="eyebrow">Advertise on UltraStream</p>
-      <h1>Put your brand in the Discover feed</h1>
-      <p>Reach adults browsing videos, shorts and live streams. Ads sit in the feed and never interrupt a video or live stream.</p>
-      <a class="btn btn--primary hero-cta" href="#panel">Enquire now</a>
-
-      <a class="type" href="#panel" data-ad-type="Prime Billboard – Normal Time"><h2>Prime Billboard – Normal Time</h2><p>Top of the Discover feed.</p></a>
-      <a class="type" href="#panel" data-ad-type="Prime Billboard – Prime Time"><h2>Prime Billboard – Prime Time</h2><p>Top of the Discover feed, during prime-time hours.</p></a>
-      <a class="type" href="#panel" data-ad-type="Prime Banner"><h2>Prime Banner</h2><p>Directly after the Prime Billboard.</p></a>
-      <a class="type" href="#panel" data-ad-type="Standard Banner"><h2>Standard Banner</h2><p>Appears about every 15 posts as people scroll.</p></a>
-
-      <div class="how">
-        <h2>How it works</h2>
-        <ol>
-          <li>Send us an enquiry.</li>
-          <li>Our sales team sends an invoice, the ad guidelines and a list of what we need.</li>
-          <li>You pay and send your creative, link and dates.</li>
-          <li>Your ad runs for the length of your package, and we send you a report at the end.</li>
-        </ol>
+  <main class="enq">
+    <div class="enq__main">
+      <div class="enq__intro">
+        <p class="eyebrow">Advertise on UltraStream</p>
+        <h1>Put your brand in the Discover feed</h1>
+        <p class="lede">Reach adults browsing videos, shorts and live streams. Tell us about your brand and our sales team will reply with availability and a quote.</p>
       </div>
-    </section>
 
-    <section class="card-form" id="panel">
-      <h2>Enquire about advertising</h2>
-      <p>Our sales team will get back to you.</p>
-      <form id="form" novalidate>
-        <label class="field" id="f-company">
-          <span class="field__label">Company name</span>
-          <input class="input" id="company" autocomplete="organization">
-          <span class="field__error">Enter your company name.</span>
-        </label>
-        <label class="field" id="f-contact">
-          <span class="field__label">Contact name</span>
-          <input class="input" id="contact" autocomplete="name">
-          <span class="field__error">Enter your name.</span>
-        </label>
-        <label class="field" id="f-email">
-          <span class="field__label">Email</span>
-          <input class="input" id="email" type="email" autocomplete="email">
-          <span class="field__error">Enter a valid email address.</span>
-        </label>
-        <label class="field" id="f-phone">
-          <span class="field__label">Phone</span>
-          <input class="input" id="phone" type="tel" inputmode="tel" autocomplete="tel">
-          <span class="field__error">Enter a phone number.</span>
-        </label>
-        <label class="field" id="f-type">
-          <span class="field__label">Ad type of interest</span>
-          <select class="input" id="type">
-            <option value="">Choose an ad type</option>
-            <option>Prime Billboard – Normal Time</option>
-            <option>Prime Billboard – Prime Time</option>
-            <option>Prime Banner</option>
-            <option>Standard Banner</option>
-            <option>Not sure yet</option>
-          </select>
-          <span class="field__error">Choose an ad type.</span>
-        </label>
-        <div class="field" id="f-dates">
-          <span class="field__label">Preferred dates</span>
-          <div class="two">
-            <label><span class="field__hint" style="margin:0 0 4px">From</span><input class="input" id="from" type="date"></label>
-            <label><span class="field__hint" style="margin:0 0 4px">To (optional)</span><input class="input" id="to" type="date"></label>
+      <div id="panel">
+        <form id="form" novalidate>
+          <div class="eq-grid">
+            <label class="field" id="f-company">
+              <span class="field__label">Company name</span>
+              <input class="input" id="company" autocomplete="organization">
+              <span class="field__error">Enter your company name.</span>
+            </label>
+            <label class="field" id="f-contact">
+              <span class="field__label">Contact name</span>
+              <input class="input" id="contact" autocomplete="name">
+              <span class="field__error">Enter your name.</span>
+            </label>
+            <label class="field" id="f-email">
+              <span class="field__label">Email</span>
+              <input class="input" id="email" type="email" autocomplete="email">
+              <span class="field__error">Enter a valid email address.</span>
+            </label>
+            <label class="field" id="f-phone">
+              <span class="field__label">Phone</span>
+              <input class="input" id="phone" type="tel" inputmode="tel" autocomplete="tel">
+              <span class="field__error">Enter a phone number.</span>
+            </label>
+            <label class="field" id="f-type">
+              <span class="field__label">Package of interest</span>
+              <select class="input" id="type">
+                <option value="">Choose a package</option>
+                <option>Billboard</option>
+                <option>Billboard Prime Time</option>
+                <option>Featured Banner</option>
+                <option>Standard Banner</option>
+                <option>Not sure yet</option>
+              </select>
+              <span class="field__error">Choose a package.</span>
+            </label>
+            <div class="field" id="f-dates">
+              <div class="eq-dates">
+                <label><span class="field__label">Start date</span><input class="input" id="from" type="date"></label>
+                <label><span class="field__label">End date <span class="opt">(optional)</span></span><input class="input" id="to" type="date"></label>
+              </div>
+              <span class="field__error">Choose a start date from today onwards, and an end date after it.</span>
+            </div>
+            <label class="field eq-full">
+              <span class="field__label">Message <span class="opt">(optional)</span></span>
+              <textarea class="input" id="message" rows="2"></textarea>
+            </label>
           </div>
-          <span class="field__error">Choose a start date from today onwards, and an end date after it.</span>
-        </div>
-        <label class="field">
-          <span class="field__label">Message <span class="opt">(optional)</span></span>
-          <textarea class="input" id="message"></textarea>
-        </label>
-        <button class="btn btn--primary" type="submit" style="width:100%;min-height:48px">Send enquiry</button>
-      </form>
-    </section>
+          <div class="eq-submit">
+            <button class="btn btn--primary" type="submit">Send enquiry</button>
+            <p class="eq-note">Prototype: nothing you enter is sent or saved.</p>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <aside class="where" aria-label="Where your ad appears">
+      <p class="chips-label">See where each package appears</p>
+      <div class="chips-row" id="chips" role="group" aria-label="Show a package in the feed">
+        <button class="pchip" type="button" data-pkg="billboard" aria-pressed="false">Billboard</button>
+        <button class="pchip" type="button" data-pkg="billboard-prime" aria-pressed="false">Billboard Prime Time</button>
+        <button class="pchip" type="button" data-pkg="featured" aria-pressed="false">Featured Banner</button>
+        <button class="pchip" type="button" data-pkg="standard" aria-pressed="false">Standard Banner</button>
+      </div>
+      <div class="where__phone" id="feed-sketch"></div>
+      <p class="where__caption" id="caption" aria-live="polite"></p>
+    </aside>
   </main>
-  <footer>Prototype of ultrastream.one/advertise. Nothing entered here is sent or saved.</footer>
 
   <script src="../../../assets/vendor/lucide.min.js"></script>
   <script src="../../../assets/js/app.js"></script>
   <script src="../js/data.js"></script>
   <script src="../js/store.js"></script>
   <script src="../js/proto-bar.js"></script>
-  <script>
-    const val = (id) => document.getElementById(id).value.trim();
-    const mark = (id, bad) => { document.getElementById(id).classList.toggle("field--invalid", bad); return bad; };
-
-    let attempted = false;
-    const now = new Date();
-    const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
-    document.getElementById("from").min = today;
-    document.getElementById("to").min = today;
-    document.getElementById("from").addEventListener("change", (e) => { document.getElementById("to").min = e.target.value || today; });
-
-    // Tapping an ad type picks it in the form.
-    document.querySelectorAll("[data-ad-type]").forEach((link) => link.addEventListener("click", () => {
-      document.getElementById("type").value = link.dataset.adType;
-      if (attempted) validate();
-    }));
-
-    function validate() {
-      const errors = [
-        mark("f-company", !val("company")),
-        mark("f-contact", !val("contact")),
-        mark("f-email", !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val("email"))),
-        mark("f-phone", val("phone").replace(/\D/g, "").length < 6),
-        mark("f-type", !val("type")),
-        mark("f-dates", !val("from") || val("from") < today || (val("to") && val("to") < val("from"))),
-      ];
-      return !errors.some(Boolean);
-    }
-
-    document.getElementById("form").addEventListener("input", () => { if (attempted) validate(); });
-
-    document.getElementById("form").addEventListener("submit", (e) => {
-      e.preventDefault();
-      attempted = true;
-      if (!validate()) {
-        document.querySelector(".field--invalid").querySelector("input,select").focus();
-        return;
-      }
-      const company = val("company");
-      const panel = document.getElementById("panel");
-      panel.innerHTML = `<div class="success" role="status"><h2>Thanks, we've got your enquiry</h2><p>Our sales team will reply to ${US.esc(val("email"))} about advertising for ${US.esc(company)}.</p><button class="btn" type="button" onclick="location.reload()">Send another enquiry</button></div>`;
-    });
-  </script>
+  <script src="../js/enquiry.js"></script>
 </body>
 </html>

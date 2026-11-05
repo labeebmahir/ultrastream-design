@@ -1,0 +1,68 @@
+/* Screen viewer around rebuilt app screens (assets/js/viewer.js). Review tooling, not part of the app.
+   app.js adds .has-viewer to <html> only on top-level pages in app/, so nothing here touches prototypes or frames.
+   The bars have fixed heights, so --bar-h, which sizes the phone, is known before the viewer draws. */
+html.has-viewer { --bar-h: 48px; --vw-side: 264px; }
+.vw-header, .vw-rail, .vw-panel { display: none; }
+
+/* Tablet and phone: one compact bar, tinted like other review tools so it never reads as app UI */
+.vw-bar { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: 8px; height: 48px; padding: 0 12px; background: var(--proto-bar-bg); border-bottom: 1px solid var(--border-orange); font-size: 13px; line-height: 16px; }
+.vw-bar__back { display: inline-flex; flex: none; align-items: center; gap: 6px; min-height: 36px; padding: 0 8px; margin-left: -4px; border-radius: 8px; color: var(--white); font-weight: 600; text-decoration: none; white-space: nowrap; }
+.vw-bar__back:hover { background: rgba(255, 255, 255, 0.08); }
+.vw-select { flex: 1 1 0; min-width: 0; max-width: 220px; height: 36px; padding: 0 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--white); font-size: 16px; }
+.vw-select--screen { margin-left: auto; }
+.vw-select option, .vw-select optgroup { background: var(--surface-2); color: var(--white); }
+@media (max-width: 480px) {
+  .vw-bar { position: static; flex: none; gap: 6px; padding: 0 8px; }
+  .vw-bar__back { margin-left: 0; padding: 0 6px; }
+  .vw-bar__back span { display: none; }
+  .vw-select { max-width: none; }
+}
+
+/* Desktop: site header, screens on the left, this screen on the right, and the phone between them */
+@media (min-width: 1024px) {
+  html.has-viewer { --bar-h: 57px; }
+  .vw-bar { display: none; }
+  .vw-header { display: block; position: sticky; top: 0; z-index: 50; }
+  .vw-header .site-header__inner { max-width: none; padding: 0 20px; }
+  html.has-viewer .stage { margin: 0 var(--vw-side); }
+
+  .vw-rail, .vw-panel { position: fixed; top: var(--bar-h); bottom: 0; z-index: 40; display: block; width: var(--vw-side); overflow-y: auto; background: var(--black); scrollbar-width: thin; }
+  .vw-rail { left: 0; padding: 16px 12px 32px; border-right: 1px solid var(--border); }
+  .vw-panel { right: 0; border-left: 1px solid var(--border); }
+
+  .vw-rail__all { display: flex; align-items: center; gap: 8px; min-height: 34px; padding: 0 10px; border-radius: 8px; color: var(--text-2); font-size: 13px; text-decoration: none; }
+  .vw-rail__all:hover { background: var(--surface-2); color: var(--white); }
+  .vw-rail__group { margin-top: 18px; }
+  .vw-rail__area { margin: 0 0 4px; padding: 0 10px; color: var(--text-3); font-size: 11px; line-height: 16px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+  .vw-rail__link { display: block; padding: 5px 10px; border-radius: 8px; color: var(--text-2); font-size: 13px; line-height: 20px; text-decoration: none; transition: background-color 0.15s, color 0.15s; }
+  .vw-rail__link:hover { background: var(--surface-2); color: var(--white); }
+  .vw-rail__link[aria-current="page"] { background: var(--orange-dim); color: var(--orange); font-weight: 500; }
+
+  .vw-panel__body { display: flex; flex-direction: column; min-height: 100%; padding: 28px 24px 24px; }
+  .vw-panel__area { margin: 0; color: var(--text-3); font-size: 12px; line-height: 16px; }
+  .vw-panel__name { margin: 6px 0 4px; font-size: 22px; line-height: 28px; font-weight: 600; letter-spacing: -0.3px; }
+  .vw-panel__file { margin: 0; color: var(--text-3); font: 12px/16px var(--font-mono); }
+  .vw-panel__label { display: flex; justify-content: space-between; margin: 32px 0 10px; color: var(--text-3); font-size: 11px; line-height: 16px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+  .vw-panel__label span { font-weight: 500; letter-spacing: 0; }
+  .vw-states { display: flex; flex-wrap: wrap; gap: 6px; }
+  .vw-state { display: inline-flex; align-items: center; min-height: 30px; padding: 4px 10px; border: 1px solid var(--border); border-radius: 8px; color: var(--text-2); font-size: 13px; line-height: 18px; text-decoration: none; transition: border-color 0.15s, color 0.15s; }
+  .vw-state:hover { border-color: var(--text-3); color: var(--white); }
+  .vw-state[aria-current="true"] { background: var(--white); border-color: var(--white); color: #000; font-weight: 600; }
+
+  .vw-panel__foot { margin-top: auto; padding-top: 32px; }
+  .vw-steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .vw-step { display: flex; align-items: center; gap: 8px; min-width: 0; min-height: 56px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 10px; color: var(--text-3); text-decoration: none; transition: border-color 0.15s, color 0.15s; }
+  .vw-step:hover { border-color: var(--text-3); color: var(--white); }
+  .vw-step > span { display: flex; flex-direction: column; min-width: 0; }
+  .vw-step--next { justify-content: flex-end; text-align: right; }
+  .vw-step--off { border-style: dashed; opacity: 0.4; }
+  .vw-step__dir { font-size: 11px; line-height: 16px; }
+  .vw-step__name { overflow: hidden; color: var(--white); font-size: 13px; line-height: 18px; font-weight: 500; white-space: nowrap; text-overflow: ellipsis; }
+  .vw-panel__hint { margin: 10px 0 0; color: var(--text-3); font-size: 12px; line-height: 16px; }
+}
+@media (min-width: 1280px) {
+  html.has-viewer { --vw-side: 288px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vw-rail__link, .vw-state, .vw-step { transition: none; }
+}

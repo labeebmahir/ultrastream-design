@@ -7,39 +7,60 @@
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
   <title>UltraStream design</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/listing.css">
+  <link rel="stylesheet" href="assets/css/site-header.css">
+  <link rel="stylesheet" href="assets/css/home.css">
 </head>
-<body>
-  <main class="page">
-    <span class="logo page__logo">Ultra<span>Stream</span></span>
-    <h1 class="text-h2 page__title">Design prototypes</h1>
-    <p class="page__lede">Coded prototypes for UltraStream features. Each one has its own permanent link, which is the link to use on its ticket.</p>
+<body data-home>
+  <header data-site-header data-root=""></header>
 
-    <h2 class="text-h4 page__section">Prototypes</h2>
-    <a class="item item--plain" href="prototypes/billboard/index.html">
-      <span class="item__body"><span class="item__title">Billboard: first release</span><span class="item__text">Selling ad space in the Discover feed, from enquiry to end-of-campaign report.</span></span>
-      <span class="tag">In review</span>
-      <i class="icon icon--sm item__arrow" data-lucide="arrow-right"></i>
-    </a>
+  <main class="home">
+    <h1 class="home__title">UltraStream design</h1>
+    <p class="home__lede">The app and its new features, designed as working pages.</p>
 
-    <h2 class="text-h4 page__section">The app</h2>
-    <a class="item item--plain" href="app/index.html">
-      <span class="item__body"><span class="item__title">Rebuilt app</span><span class="item__text">The current app, rebuilt screen by screen. New prototypes start from this.</span></span>
-      <span class="tag">In progress</span>
-      <i class="icon icon--sm item__arrow" data-lucide="arrow-right"></i>
-    </a>
+    <div class="find">
+      <label class="find__box">
+        <i class="icon icon--sm" data-lucide="search"></i>
+        <input id="find" type="search" placeholder="Find a screen or component" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="find-results" aria-label="Find a screen, state, component or prototype">
+        <kbd>/</kbd>
+      </label>
+      <ul class="find__results" id="find-results" role="listbox" hidden></ul>
+    </div>
 
-    <h2 class="text-h4 page__section">Design system</h2>
-    <a class="item item--plain" href="design-system/index.html">
-      <span class="item__body"><span class="item__title">Tokens, components and icons</span><span class="item__text">What every screen is built from.</span></span>
-      <i class="icon icon--sm item__arrow" data-lucide="arrow-right"></i>
-    </a>
+    <section class="home__section" aria-labelledby="prototypes-title">
+      <h2 class="home__label" id="prototypes-title">Prototypes</h2>
+      <ul class="rows" id="prototype-list"></ul>
+    </section>
+
+    <section class="home__section" aria-labelledby="go-title">
+      <h2 class="home__label" id="go-title">Go to</h2>
+      <ul class="rows rows--compact">
+        <li><a class="row" href="app/index.html"><span class="row__title">Rebuilt app</span><span class="row__meta" data-meta="screens"></span><i class="icon icon--sm row__arrow" data-lucide="arrow-right"></i></a></li>
+        <li><a class="row" href="design-system/components.html"><span class="row__title">Components</span><span class="row__meta" data-meta="components"></span><i class="icon icon--sm row__arrow" data-lucide="arrow-right"></i></a></li>
+        <li><a class="row" href="design-system/index.html"><span class="row__title">Design system</span><span class="row__meta">Colour, type and icons</span><i class="icon icon--sm row__arrow" data-lucide="arrow-right"></i></a></li>
+        <li><a class="row" href="activity.html"><span class="row__title">Activity log</span><span class="row__meta" data-meta="activity"></span><i class="icon icon--sm row__arrow" data-lucide="arrow-right"></i></a></li>
+      </ul>
+    </section>
+
+    <p class="home__latest" id="latest"></p>
   </main>
 
   <script src="assets/vendor/lucide.min.js"></script>
   <script src="assets/js/app.js"></script>
+  <script src="design-system/components/core.js"></script>
+  <script src="design-system/components/onboarding.js"></script>
+  <script src="design-system/components/feeds.js"></script>
+  <script src="design-system/components/watch.js"></script>
+  <script src="design-system/components/profile.js"></script>
+  <script src="design-system/components/studio.js"></script>
+  <script src="assets/js/activity-log.js"></script>
+  <script src="assets/js/site-header.js"></script>
+  <script>
+    // Prototypes. Add one object per prototype, newest first.
+    window.PROTOTYPES = [
+      { title: "Billboard", text: "Selling ad space in the Discover feed, from enquiry to end-of-campaign report.", href: "prototypes/billboard/index.html", status: "In review" },
+    ];
+  </script>
+  <script src="assets/js/home.js"></script>
 </body>
 </html>

@@ -1,0 +1,29 @@
+/* Site header (assets/js/site-header.js): the logo, App, Components and Activity, and the latest version. */
+.site-header { position: relative; z-index: 30; display: block; background: var(--black); border-bottom: 1px solid var(--border); }
+.site-header__inner { display: flex; align-items: center; gap: 4px; max-width: 1240px; height: 56px; margin: 0 auto; padding: 0 16px; }
+.site-header__logo { display: inline-flex; align-items: center; gap: 10px; min-height: 40px; margin-right: auto; color: var(--white); text-decoration: none; }
+.site-header__logo img { width: 24px; height: 20px; object-fit: contain; }
+.site-header__word { font-size: 15px; line-height: 20px; font-weight: 600; letter-spacing: -0.2px; white-space: nowrap; }
+.site-header__word span { color: var(--text-3); font-weight: 500; }
+.site-header__nav { display: flex; gap: 2px; }
+.site-header__nav a { display: inline-flex; align-items: center; min-height: 32px; padding: 0 10px; border-radius: 8px; color: var(--text-2); font-size: 14px; line-height: 20px; text-decoration: none; transition: color 0.15s, background-color 0.15s; }
+.site-header__nav a:hover { color: var(--white); }
+.site-header__nav a[aria-current="page"] { background: var(--surface-2); color: var(--white); font-weight: 500; }
+.site-header__ver { margin-left: 10px; padding: 0 8px; border: 1px solid var(--border); border-radius: 999px; color: var(--text-3); font: 500 12px/22px var(--font-mono); text-decoration: none; transition: color 0.15s, border-color 0.15s; }
+.site-header__ver:hover { border-color: var(--text-3); color: var(--white); }
+
+@media (max-width: 560px) {
+  .site-header__word span { display: none; }
+}
+@media (max-width: 440px) {
+  .site-header__inner { gap: 0; padding: 0 12px; }
+  .site-header__word { display: none; }
+  .site-header__nav a { padding: 0 8px; font-size: 13px; }
+  .site-header__ver { margin-left: 6px; padding: 0 6px; font-size: 11px; }
+}
+@media (max-width: 360px) {
+  .site-header__ver { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-header__nav a, .site-header__ver { transition: none; }
+}

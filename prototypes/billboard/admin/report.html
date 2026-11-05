@@ -8,22 +8,38 @@
   <link rel="apple-touch-icon" href="../../../assets/img/apple-touch-icon.png">
   <title>Campaign report – UltraStream admin prototype</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../../assets/css/base.css">
   <link rel="stylesheet" href="../../../assets/css/admin.css">
   <link rel="stylesheet" href="../css/billboard.css">
 </head>
-<body>
+<body class="admin-app">
   <div class="admin">
-    <aside class="side">
-      <span class="logo">Ultra<span>Stream</span></span>
-      <a class="side__link side__link--on" href="campaigns.html">Campaigns</a>
-      <div class="side__other">Existing admin sections go here</div>
+    <aside class="side" id="admin-nav" aria-label="Admin">
+      <div class="side__brand"><span class="side__mark"><img src="../../../assets/img/logo-icon.png" alt=""></span><span><strong>UltraStream</strong><small>Admin</small></span></div>
+      <nav class="side__nav">
+        <a class="side__link" href="#" data-todo><i class="icon icon--sm" data-lucide="layout-dashboard"></i>Dashboard</a>
+        <a class="side__link" href="#" data-todo><i class="icon icon--sm" data-lucide="users"></i>Users</a>
+        <a class="side__link" href="#" data-todo><i class="icon icon--sm" data-lucide="flag"></i>Reports</a>
+        <a class="side__link side__link--on" href="campaigns.html" aria-current="page"><i class="icon icon--sm" data-lucide="megaphone"></i>Ad campaigns<span class="side__new">New</span></a>
+        <a class="side__link" href="#" data-todo><i class="icon icon--sm" data-lucide="smartphone"></i>App version</a>
+      </nav>
+      <div class="side__user">
+        <strong>Sample admin</strong>
+        <span>admin@example.com</span>
+        <span class="side__role">Admin</span>
+        <button class="side__logout" type="button" data-todo><i class="icon icon--sm" data-lucide="log-out"></i>Log out</button>
+      </div>
     </aside>
-    <main class="main report">
-      <a class="crumb has-icon" href="campaigns.html"><i class="icon icon--sm" data-lucide="arrow-left"></i>Campaigns</a>
+    <div class="admin__body">
+      <header class="admin-top">
+        <button class="admin-top__menu" type="button" aria-label="Open menu" aria-controls="admin-nav" aria-expanded="false" data-menu><i class="icon" data-lucide="menu"></i></button>
+        <span>Trust &amp; safety · Users &amp; reports</span>
+      </header>
+    <main class="main">
       <div id="content"></div>
     </main>
+    </div>
   </div>
 
   <script src="../vendor/jspdf.umd.min.js"></script>
@@ -32,45 +48,152 @@
   <script src="../js/data.js"></script>
   <script src="../js/store.js"></script>
   <script src="../js/proto-bar.js"></script>
+  <script src="../js/admin.js"></script>
+  <script>
+    US.setupNotBuilt();
+    // Below 1024px the sidebar opens as a drawer.
+    (function () {
+      const shell = document.querySelector(".admin");
+      const button = document.querySelector("[data-menu]");
+      const setOpen = (open) => { shell.classList.toggle("admin--nav-open", open); button.setAttribute("aria-expanded", open); };
+      button.addEventListener("click", () => setOpen(!shell.classList.contains("admin--nav-open")));
+      shell.addEventListener("click", (e) => { if (e.target === shell) setOpen(false); });
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape") setOpen(false); });
+    })();
+  </script>
   <script>
     const id = new URLSearchParams(location.search).get("id");
-    const FOOTNOTE = "Prototype: placeholder package and cost, simulated results.";
+    const FOOTNOTE = "Prototype: placeholder prices, durations and countries, simulated results.";
+    const SHOT_NOTE = "Mock of the ad in the Discover feed. A real report would use a screenshot taken while it was live.";
+    const pdfText = (s) => String(s).replace(/–/g, "-").replace(/·/g, "-");
 
+    // Dates for display: a stretch that stops at midnight shows the day before as its last day.
+    const lastMoment = (d) => new Date(d.getTime() - 60000);
+    const range = (from, to) => {
+      const a = US.fmtDate(from);
+      const b = US.fmtDate(lastMoment(to));
+      return a === b ? a : `${a} – ${b}`;
+    };
+
+    function reportData(c) {
+      const m = US.metrics(c);
+      const added = US.addedDays(c);
+      const runs = US.runSegments(c).map((s) => ({ label: s.kind === "live" ? "Showing in Discover" : "Paused", paused: s.kind === "paused", when: range(s.from, s.to), length: US.fmtDuration(s.to - s.from) }));
+      const period = `${US.fmtDate(US.liveFrom(c))} – ${US.fmtDate(US.lastDay(c))}`;
+      const endNote = added
+        ? `Originally due to end after ${US.fmtDate(US.addDays(US.originalEnd(c), -1))}. ${added} paused day${added === 1 ? " was" : "s were"} added, so the last day was ${US.fmtDate(US.lastDay(c))}.`
+        : `Ran without pauses until the end of the package, after ${US.fmtDate(US.lastDay(c))}.`;
+      return { m, added, runs, period, endNote, countries: US.countryImpressions(m.impressions) };
+    }
+
+    const head = (sub, actions) => `<div class="head">
+        <div class="head__title">
+          <span class="head__mark"><img src="../../../assets/img/logo-icon.png" alt=""></span>
+          <div><h1>Campaign report</h1>${sub ? `<p class="sub">${sub}</p>` : ""}</div>
+        </div>
+        <div class="head__actions">${actions}</div>
+      </div>`;
+    const backToList = `<a class="btn" href="campaigns.html">Back to campaigns</a>`;
+
+    // The page uses the admin panel's own cards, tiles and tables. The PDF is the brand-facing copy.
     function render() {
       const c = US.campaign(id);
       const box = document.getElementById("content");
       if (!c) {
-        box.innerHTML = `<div class="empty">This campaign wasn't found. Press Reset or go back to Campaigns.</div>`;
+        box.innerHTML = head("", backToList) + `<div class="empty">This campaign wasn't found. Press Reset or go back to Campaigns.</div>`;
         return;
       }
-      if (US.status(c) !== "ended") {
-        box.innerHTML = `<div class="empty">The report for ${US.esc(c.advertiser)} will be available when the campaign ends, after ${US.fmtDate(US.lastDay(c))}.</div>`;
+      const backToCampaign = `<a class="btn" href="campaign.html?id=${c.id}">Back to campaign</a>`;
+      const status = US.status(c);
+      if (status !== "ended") {
+        const why = `The report for ${US.esc(c.advertiser)} will be available when the campaign ends, after ${US.fmtDate(US.lastDay(c))}${status === "paused" ? ". It's paused, so that date moves later each day until it's resumed" : ""}.`;
+        box.innerHTML = head(US.esc(c.advertiser), backToCampaign) + `<div class="empty">${why}</div>`;
         return;
       }
-      const m = US.metrics(c);
-      box.innerHTML = `
-        <div class="head"><h1>Campaign report</h1><button class="btn btn--primary" type="button" id="download">Download PDF</button></div>
-        <p class="sub">This report can be shared with the brand.</p>
-        <article class="sheet">
-          <span class="logo">Ultra<span>Stream</span></span>
-          <h2>${US.esc(c.advertiser)}</h2>
-          <p class="sheet__sub">End-of-campaign report</p>
-          <table class="sheet__rows">
-            <tr><td>Campaign period</td><td>${US.period(c)}</td></tr>
-            <tr><td>Package</td><td>${US.esc(US.packageName(c))}</td></tr>
-            <tr><td>Package cost</td><td>${US.fmtMoney(US.cost(c))}</td></tr>
-          </table>
-          <div class="stats">
-            <div class="stat"><span class="stat__num">${US.fmtNum(m.impressions)}</span><span class="stat__label">Impressions</span></div>
-            <div class="stat"><span class="stat__num">${US.fmtNum(m.clicks)}</span><span class="stat__label">Clicks</span></div>
-            <div class="stat"><span class="stat__num">${US.fmtPct(m.ctr)}</span><span class="stat__label">Click-through rate</span></div>
+      const r = reportData(c);
+      const m = r.m;
+      const t = US.AD_TYPES[c.type];
+      const skeleton = '<div class="preview-skeleton"></div>';
+      const ad = US.adHTML(c, { preview: true });
+      const placed = { billboard: ad + skeleton + skeleton, featured: skeleton + ad + skeleton, standard: skeleton + skeleton + ad + skeleton }[t.format];
+      const tile = (label, value, hint) => `<div class="tile"><span class="tile__label">${label}</span><span class="tile__value">${value}</span><span class="tile__hint">${hint}</span></div>`;
+      const details = [
+        ["Advertiser", US.esc(c.advertiser)],
+        ["Package", US.esc(US.packageName(c))],
+        ["Campaign period", r.period],
+        ["Package cost", `${US.fmtMoney(US.cost(c))}<span class="cell-sub">Placeholder price</span>`],
+        ...(r.added ? [["Paused days added", String(r.added)]] : []),
+      ];
+      box.innerHTML = head(`${US.statusBadge(status)} <span>${US.esc(c.advertiser)} · End-of-campaign report</span>`,
+        `${backToCampaign}<button class="btn btn--primary has-icon" type="button" id="download"><i class="icon icon--sm" data-lucide="download"></i>Download PDF</button>`) + `
+        <div class="tiles" id="report-stats">
+          ${tile("Impressions", US.fmtNum(m.impressions), "Times the ad was shown")}
+          ${tile("Unique reach", US.fmtNum(m.reach), "People who saw it at least once")}
+          ${tile("Clicks", US.fmtNum(m.clicks), "Taps through to the link")}
+          ${tile("Click-through rate", US.fmtPct(m.ctr), "Clicks per impression")}
+        </div>
+        <div class="detail-grid">
+          <div>
+            <section class="panel" id="report-summary">
+              <h2>Campaign</h2>
+              <dl class="details">${details.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>
+            </section>
+            <section class="panel" id="report-dates">
+              <h2>Dates the ad ran</h2>
+              <p class="panel__intro">${r.endNote}</p>
+              <div class="data-table"><table>
+                <thead><tr><th>Status</th><th>Dates</th><th class="num">Length</th></tr></thead>
+                <tbody>${r.runs.map((s) => `<tr${s.paused ? ' class="is-paused"' : ""}><td>${US.statusBadge(s.paused ? "paused" : "live")}</td><td>${s.when}</td><td class="num">${s.length}</td></tr>`).join("")}</tbody>
+              </table></div>
+            </section>
+            <section class="panel" id="report-countries">
+              <h2>Impressions by country <span class="tag tag--placeholder">Placeholder countries</span></h2>
+              <div class="data-table"><table>
+                <thead><tr><th>Country</th><th class="num">Impressions</th><th class="num">Share</th></tr></thead>
+                <tbody>${r.countries.map((x) => `<tr><td>${x.name}</td><td class="num">${US.fmtNum(x.impressions)}</td><td class="num"><span class="share"><span class="share__bar"><span style="width:${Math.round(x.share * 100)}%"></span></span>${Math.round(x.share * 100)}%</span></td></tr>`).join("")}</tbody>
+              </table></div>
+            </section>
           </div>
-          <p class="sheet__foot">${FOOTNOTE}</p>
-        </article>`;
-      document.getElementById("download").addEventListener("click", () => downloadPdf(c, m));
+          <div>
+            <section class="panel" id="report-shot">
+              <h2>The ad live in the app</h2>
+              <figure class="shot">
+                <div class="preview-phone">${placed}</div>
+                <figcaption>${SHOT_NOTE}</figcaption>
+              </figure>
+            </section>
+          </div>
+        </div>
+        <p class="panel__foot">${FOOTNOTE}</p>`;
+      document.getElementById("download").addEventListener("click", () => downloadPdf(c, r));
     }
 
-    function downloadPdf(c, m) {
+    // jsPDF can't draw SVG, so the sample creative is turned into a PNG first. Resolves null if that fails.
+    function rasterize(c) {
+      const src = US.creativeSrc(c);
+      const sizes = { billboard: [1200, 675], featured: [1200, 400], standard: [1200, 300] };
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          const [w, h] = src.startsWith("data:image/svg") ? sizes[US.AD_TYPES[c.type].format] : [img.naturalWidth, img.naturalHeight];
+          const canvas = document.createElement("canvas");
+          canvas.width = w;
+          canvas.height = h;
+          try {
+            canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+            resolve({ data: canvas.toDataURL("image/png"), w, h });
+          } catch (e) {
+            resolve(null);
+          }
+        };
+        img.onerror = () => resolve(null);
+        img.src = src;
+      });
+    }
+
+    async function downloadPdf(c, r) {
+      const m = r.m;
+      const image = await rasterize(c);
       const doc = new window.jspdf.jsPDF({ unit: "pt", format: "a4" });
       const left = 56;
       const right = 539;
@@ -83,24 +206,75 @@
       doc.setFont("helvetica", "normal").setFontSize(13).setTextColor(...muted).text("End-of-campaign report", left, 152);
 
       let y = 196;
-      [["Campaign period", US.period(c)], ["Package", US.packageName(c)], ["Package cost", US.fmtMoney(US.cost(c))]].forEach(([k, v]) => {
+      const rows = [["Campaign period", r.period], ["Package", US.packageName(c)], ["Package cost", US.fmtMoney(US.cost(c))]];
+      if (r.added) rows.push(["Paused days added", String(r.added)]);
+      rows.forEach(([k, v]) => {
         doc.setDrawColor(228).line(left, y - 18, right, y - 18);
         doc.setFont("helvetica", "normal").setFontSize(12).setTextColor(...muted).text(k, left, y);
-        doc.setFont("helvetica", "bold").setTextColor(...ink).text(v.replace("–", "-").replace("·", "-"), right, y, { align: "right" });
+        doc.setFont("helvetica", "bold").setTextColor(...ink).text(pdfText(v), right, y, { align: "right" });
         y += 36;
       });
 
       y += 8;
-      const gap = 12;
-      const w = (right - left - gap * 2) / 3;
-      [[US.fmtNum(m.impressions), "Impressions"], [US.fmtNum(m.clicks), "Clicks"], [US.fmtPct(m.ctr), "Click-through rate"]].forEach(([num, label], i) => {
+      const gap = 10;
+      const w = (right - left - gap * 3) / 4;
+      [[US.fmtNum(m.impressions), "Impressions"], [US.fmtNum(m.reach), "Unique reach"], [US.fmtNum(m.clicks), "Clicks"], [US.fmtPct(m.ctr), "Click-through rate"]].forEach(([num, label], i) => {
         const x = left + i * (w + gap);
-        doc.setFillColor(244).roundedRect(x, y, w, 84, 6, 6, "F");
-        doc.setFont("helvetica", "bold").setFontSize(21).setTextColor(...ink).text(num, x + 14, y + 40);
-        doc.setFont("helvetica", "normal").setFontSize(11).setTextColor(...muted).text(label, x + 14, y + 62);
+        doc.setFillColor(244).roundedRect(x, y, w, 76, 6, 6, "F");
+        doc.setFont("helvetica", "bold").setFontSize(17).setTextColor(...ink).text(num, x + 12, y + 36);
+        doc.setFont("helvetica", "normal").setFontSize(10).setTextColor(...muted).text(label, x + 12, y + 56);
       });
 
-      doc.setFontSize(10).setTextColor(...muted).text(FOOTNOTE, left, y + 118);
+      // A small table: a heading, a note, then rows. cols gives each column's x and alignment.
+      const table = (title, note, head, body, top, cols) => {
+        let ty = top;
+        doc.setFont("helvetica", "bold").setFontSize(14).setTextColor(...ink).text(title, left, ty);
+        ty += 18;
+        doc.setFont("helvetica", "normal").setFontSize(10).setTextColor(...muted);
+        doc.splitTextToSize(pdfText(note), right - left).forEach((line) => { doc.text(line, left, ty); ty += 13; });
+        ty += 10;
+        [head, ...body].forEach((cells, row) => {
+          doc.setFont("helvetica", row ? "normal" : "bold").setFontSize(row ? 11 : 10).setTextColor(...(row ? ink : muted));
+          cells.forEach((cell, i) => doc.text(pdfText(cell), cols[i][0], ty, { align: cols[i][1] }));
+          doc.setDrawColor(228).line(left, ty + 8, right, ty + 8);
+          ty += 22;
+        });
+        return ty;
+      };
+
+      table("Dates the ad ran", r.endNote, ["Status", "Dates", "Length"], r.runs.map((s) => [s.label, s.when, s.length]), y + 116, [[left, "left"], [left + 150, "left"], [right, "right"]]);
+      doc.setFontSize(10).setTextColor(...muted).text(FOOTNOTE, left, 800);
+
+      // Page 2: countries and the ad in the app.
+      doc.addPage();
+      y = table("Impressions by country", "Placeholder countries and numbers.", ["Country", "Impressions", "Share"], r.countries.map((x) => [x.name, US.fmtNum(x.impressions), Math.round(x.share * 100) + "%"]), 72, [[left, "left"], [right - 90, "right"], [right, "right"]]);
+
+      y += 20;
+      doc.setFont("helvetica", "bold").setFontSize(14).setTextColor(...ink).text("The ad live in the app", left, y);
+      y += 14;
+      const frameW = 260;
+      const adW = frameW - 24;
+      const adH = image ? (adW * image.h) / image.w : adW * 9 / 16;
+      const frameH = 24 + 20 + 12 + adH + 30 + 20 + 12;
+      doc.setFillColor(9, 9, 9).roundedRect(left, y, frameW, frameH, 14, 14, "F");
+      let fy = y + 12;
+      doc.setFillColor(25, 25, 25).roundedRect(left + 12, fy, adW, 20, 4, 4, "F");
+      fy += 32;
+      if (image) doc.addImage(image.data, "PNG", left + 12, fy, adW, adH);
+      else {
+        doc.setFillColor(40, 40, 40).roundedRect(left + 12, fy, adW, adH, 8, 8, "F");
+        doc.setFontSize(10).setTextColor(200).text("Creative", left + 12 + adW / 2, fy + adH / 2, { align: "center" });
+      }
+      fy += adH + 18;
+      doc.setDrawColor(128).roundedRect(left + 12, fy - 9, 48, 13, 2, 2, "S");
+      doc.setFont("helvetica", "bold").setFontSize(7).setTextColor(200).text("Sponsored", left + 16, fy);
+      doc.setFont("helvetica", "normal").setFontSize(9).setTextColor(255).text(pdfText(doc.splitTextToSize(c.advertiser, adW - 120)[0]), left + 68, fy);
+      doc.setTextColor(255, 127, 0).text("Learn more", left + 12 + adW, fy, { align: "right" });
+      fy += 14;
+      doc.setFillColor(25, 25, 25).roundedRect(left + 12, fy, adW, 20, 4, 4, "F");
+      doc.setFont("helvetica", "normal").setFontSize(10).setTextColor(...muted).text(doc.splitTextToSize(SHOT_NOTE, right - left - frameW - 24), left + frameW + 24, y + 14);
+      doc.setFontSize(10).setTextColor(...muted).text(FOOTNOTE, left, 800);
+
       const slug = c.advertiser.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
       doc.save(`ultrastream-report-${slug || "campaign"}-${c.start}.pdf`);
     }

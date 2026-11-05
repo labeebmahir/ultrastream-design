@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <title>Upload content – UltraStream design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="css/studio.css">
+</head>
+<body data-page="upload">
+  <!-- Upload or edit a video or short. Nothing is uploaded: picked files are only previewed on this page.
+       Upload states: empty (default), filled, short, scheduled, picker, type, category, missing-file, missing-title, discard,
+       uploading, cancel-upload, processing, done, paused, interrupted, failed.
+       Edit states, or ?mode=edit&id=<id>: edit, edit-changed, edit-scheduled, edit-discard, edit-delete, edit-saved. -->
+  <div class="stage">
+    <main class="phone" aria-label="Upload content">
+      <div id="banner"></div>
+      <div class="studio-scroll studio-scroll--form">
+        <div class="up-header">
+          <button class="icon-btn" type="button" id="back" aria-label="Back"><i class="icon" data-lucide="arrow-left"></i></button>
+          <h1 class="studio-title" id="page-title">Upload content</h1>
+        </div>
+
+        <div class="up-section" id="type-section">
+          <div class="s-field" style="margin:0">
+            <span class="s-label" id="type-label">Content type</span>
+            <button class="s-select" type="button" id="type" data-select="Content type" aria-haspopup="listbox" aria-labelledby="type-label type"><span class="s-select__value"></span><i class="icon" data-lucide="chevron-down"></i></button>
+          </div>
+        </div>
+        <div class="up-section" id="file-section"></div>
+        <div class="up-section" id="thumb-section"></div>
+
+        <div class="s-field">
+          <label class="s-label" for="title">Title</label>
+          <input class="s-input" id="title" type="text" placeholder="Enter video title..." autocomplete="off">
+        </div>
+        <div class="s-field">
+          <label class="s-label" for="desc">Description</label>
+          <textarea class="s-input" id="desc" rows="4" maxlength="250" placeholder="Describe your video..." aria-describedby="desc-count"></textarea>
+          <span class="s-count" id="desc-count" aria-live="polite">0/250</span>
+        </div>
+        <div class="s-field">
+          <span class="s-label" id="category-label">Category</span>
+          <button class="s-select" type="button" id="category" data-select="Category" aria-haspopup="listbox" aria-labelledby="category-label category"><span class="s-select__value"></span><i class="icon" data-lucide="chevron-down"></i></button>
+        </div>
+
+        <div class="up-row" id="schedule-row">
+          <span id="schedule-label">Schedule for later</span>
+          <button class="switch" type="button" role="switch" aria-checked="false" aria-labelledby="schedule-label" id="schedule"></button>
+        </div>
+        <div class="up-schedule" id="schedule-fields" hidden>
+          <div class="s-field">
+            <span class="s-label" id="date-label">Date</span>
+            <button class="s-select s-select--picker" type="button" id="date-btn" aria-labelledby="date-label date-btn"><span class="s-select__value">Pick a date</span><i class="icon" data-lucide="calendar"></i></button>
+            <input class="s-hidden-input" type="date" id="date" tabindex="-1" aria-hidden="true">
+          </div>
+          <div class="s-field">
+            <span class="s-label" id="time-label">Time</span>
+            <button class="s-select s-select--picker" type="button" id="time-btn" aria-labelledby="time-label time-btn"><span class="s-select__value">Pick a time</span><i class="icon" data-lucide="clock-9"></i></button>
+            <input class="s-hidden-input" type="time" id="time" tabindex="-1" aria-hidden="true">
+          </div>
+        </div>
+
+        <div class="up-actions">
+          <button class="btn btn--primary btn--lg btn--block" type="button" id="publish">Publish video</button>
+          <button class="btn btn--primary btn--lg btn--block" type="button" id="save" hidden>Save changes</button>
+          <button class="btn btn-outline-red btn--52 btn--block" type="button" id="delete" hidden>Delete video</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/vendor/lucide.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="js/studio.js"></script>
+</body>
+</html>

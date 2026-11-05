@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <title>Create channel – UltraStream design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="css/studio.css">
+</head>
+<body data-page="channel">
+  <!-- Create channel. Nothing is sent or stored: a picked photo is only previewed on this page.
+       States: default, errors, filled, photo, picker, category, creating, success.
+       Edit channel, or ?mode=edit: edit, edit-picker, updating, edit-success, edit-delete. -->
+  <div class="stage">
+    <main class="phone" aria-label="Create channel">
+      <header class="app-header cs-header" id="edit-header" hidden>
+        <a class="icon-btn" href="ultra-studio.html" data-back aria-label="Back"><i class="icon" data-lucide="arrow-left"></i></a>
+        <h1 class="app-header__title studio-title studio-title--lg">Edit channel</h1>
+      </header>
+      <div class="ch-scroll" id="form-view">
+        <div class="ch-pagehead" id="create-head">
+          <h1 class="ch-pagehead__title">Create your channel</h1>
+          <p class="ch-pagehead__text">Start with your channel details.</p>
+        </div>
+        <div class="ch-avatar-row">
+          <span class="ch-avatar" id="avatar" role="img"></span>
+          <div class="ch-avatar-actions">
+            <button class="btn" type="button" id="upload-photo"><i class="icon icon--sm" data-lucide="camera"></i><span class="ch-long">Upload photo</span><span class="ch-short">Upload</span></button>
+            <button class="btn btn-outline-red" type="button" id="remove-photo">Remove</button>
+          </div>
+        </div>
+        <p class="s-error ch-avatar-error" id="avatar-error" role="alert" hidden></p>
+        <div class="ch-form">
+          <div class="s-field" id="f-name">
+            <label class="s-label" for="name">Channel name</label>
+            <input class="s-input" id="name" type="text" placeholder="e.g. King Pin" autocapitalize="words" autocomplete="off">
+            <p class="s-error" role="alert" hidden></p>
+            <p class="s-hint" data-edit-hint hidden>If you change your channel name, you won't be able to change it again for 30 days.</p>
+          </div>
+          <div class="s-field" id="f-handle">
+            <label class="s-label" for="handle">Channel handle</label>
+            <input class="s-input" id="handle" type="text" placeholder="e.g. @kingpin99" autocapitalize="none" autocomplete="off" spellcheck="false">
+            <p class="s-error" role="alert" hidden></p>
+            <p class="s-hint" data-edit-hint hidden>If you change your channel handle, you won't be able to change it again for 30 days.</p>
+          </div>
+          <div class="s-field" id="f-bio">
+            <label class="s-label" for="bio">Bio</label>
+            <textarea class="s-input" id="bio" rows="4" maxlength="250" placeholder="Tell more about your channel." aria-describedby="bio-count"></textarea>
+            <span class="s-count" id="bio-count" aria-live="polite">0/250</span>
+            <p class="s-error" role="alert" hidden></p>
+          </div>
+          <div class="s-field" id="f-category">
+            <span class="s-label" id="category-label">Category</span>
+            <button class="s-select" type="button" id="category" data-placeholder="Select..." aria-haspopup="listbox" aria-labelledby="category-label category"><span class="s-select__value"></span><i class="icon" data-lucide="chevron-down"></i></button>
+            <p class="s-error" role="alert" hidden></p>
+          </div>
+        </div>
+        <div class="ch-footer">
+          <button class="btn btn--primary btn--block" type="button" id="submit">Create channel</button>
+          <a class="ch-goback" href="create.html" data-back id="go-back"><i class="icon" data-lucide="arrow-left"></i>Go back</a>
+          <button class="btn btn-outline-red btn--10 btn--block" type="button" id="delete" hidden>Delete Channel</button>
+        </div>
+      </div>
+      <div class="ch-success" id="success" hidden>
+        <i class="icon" data-lucide="circle-check-big"></i>
+        <h1 class="ch-success__title" id="success-title"></h1>
+        <p class="ch-success__text" id="success-text"></p>
+        <a class="btn btn--primary" id="continue" href="discover.html">Continues</a>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/vendor/lucide.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="js/studio.js"></script>
+</body>
+</html>

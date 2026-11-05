@@ -13,7 +13,7 @@ If that's empty, read `docs/screens.md` and suggest the next sensible area. Earl
 2. Find the reference images in `../figma-exports/<area>/`. If that folder isn't there, ask the person for screenshots of the screens. Don't work from memory or guess a layout.
 3. Look at every image for the area, including all its states. Read the matching domain page in `.knowledge/` if it exists, because product rules win over Figma. Skip anything `docs/product.md` says isn't current.
 4. Build in `app/`, using shared components and adding to `assets/css/app.css` and `assets/js/app.js` when something will be reused. Add new shared components to `design-system/index.html`.
-5. Show every state in the reference. Let reviewers reach them, for example with `?state=empty` on the page's address, and list the state links in `app/index.html`.
+5. Show every state in the reference. Let reviewers reach them, for example with `?state=empty` on the page's address, and add each state to `US.APP_STATES` in `assets/js/app.js`, so it shows in the screen viewer and the app index. New screens also go in `US.APP_SCREENS`.
 6. Link the screen to any rebuilt screens it connects to. Replace "not rebuilt yet" messages where a real screen now exists.
 7. Use placeholder content: fictional names and gradient thumbnails, never Figma's artwork.
 8. Mark the screens as rebuilt in `docs/screens.md`.

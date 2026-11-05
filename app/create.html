@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <title>Create – UltraStream design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="css/studio.css">
+</head>
+<body data-page="create">
+  <!-- Create tab. ?as=guest shows the sign-up prompt, ?as=viewer (the default) the creator benefits, ?as=creator Ultra Studio.
+       With ?as=creator, ?state=new shows a new creator with zero stats and ?state=loading the loading state. -->
+  <div class="stage">
+    <main class="phone" aria-label="Create">
+      <header class="topbar" data-topbar id="guest-topbar" hidden></header>
+      <div class="studio-root" id="create-root"></div>
+      <nav class="tabbar" data-tabbar="create"></nav>
+    </main>
+  </div>
+
+  <script src="../assets/vendor/lucide.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="js/studio.js"></script>
+</body>
+</html>

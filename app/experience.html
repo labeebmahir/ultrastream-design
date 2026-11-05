@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <title>Experience type – UltraStream design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="css/onboarding.css">
+</head>
+<body data-screen="experience">
+  <div class="stage">
+    <main class="phone auth" aria-label="Experience type">
+      <header class="app-header" data-settings hidden>
+        <a class="icon-btn" href="settings.html" aria-label="Back to Settings"><i class="icon" data-lucide="arrow-left"></i></a>
+        <h1 class="app-header__title">Experience Type</h1>
+      </header>
+
+      <div class="onb-scroll">
+        <header class="onb-header" data-onboarding>
+          <h1 class="auth-title">Choose your experience</h1>
+          <p class="auth-sub">Select how you'd like to enjoy UltraStream.</p>
+        </header>
+
+        <div class="choice-list" role="radiogroup" aria-label="Experience">
+          <button class="choice" type="button" role="radio" aria-checked="true" data-id="ad_supporter">
+            <i class="icon choice__icon" data-lucide="heart-handshake"></i>
+            <span class="choice__title">Ad Supporter</span>
+            <span class="choice__text">Watch content with occasional ads. Earn coins by engaging with content.</span>
+          </button>
+          <button class="choice" type="button" role="radio" aria-checked="false" data-id="ad_free_premium">
+            <i class="icon choice__icon" data-lucide="star"></i>
+            <span class="choice__title">Ad Free Premium</span>
+            <span class="choice__text">Enjoy uninterrupted streaming with exclusive perks and bonus coins.</span>
+          </button>
+        </div>
+
+        <p class="onb-error" id="error" role="alert" hidden>Failed to save experience type. Please try again.</p>
+      </div>
+
+      <footer class="onb-footer" data-onboarding>
+        <button class="btn btn--primary btn--lg" id="continue" type="button">Continue</button>
+        <a class="back-link back-link--lg" href="sign-in.html"><i class="icon" data-lucide="arrow-left"></i>Go back</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="../assets/vendor/lucide.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="js/onboarding.js"></script>
+</body>
+</html>

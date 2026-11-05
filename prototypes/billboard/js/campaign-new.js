@@ -4,6 +4,9 @@
   let useSample = false;
   let attempted = false;
 
+  $("pay-roles").innerHTML = US.PAYMENT_ROLES.map((r) => `<option value="${r}"></option>`).join("");
+  $("pay-method").insertAdjacentHTML("beforeend", US.PAYMENT_METHODS.map((m) => `<option>${m}</option>`).join(""));
+
   $("types").innerHTML = Object.entries(US.AD_TYPES).map(([key, t], i) => `
     <label class="option">
       <input type="radio" name="type" value="${key}" ${i === 0 ? "checked" : ""}>
@@ -12,7 +15,7 @@
     </label>`).join("");
 
   function renderDurations() {
-    const type = value("type") || "prime-normal";
+    const type = value("type") || "billboard";
     const current = Number(value("days")) || 7;
     $("durations").innerHTML = US.DURATIONS.map((d) => `
       <label class="option">
@@ -37,6 +40,7 @@
       creative,
       c1: "#3a0ca3",
       c2: "#ff5c00",
+      payment: { by: $("pay-by").value.trim(), date: $("pay-date").value, method: $("pay-method").value, ref: $("pay-ref").value.trim() },
     };
   }
 
@@ -49,7 +53,7 @@
     const ad = US.adHTML(c, { preview: true });
     const placed = {
       billboard: ad + skeleton,
-      "prime-banner": skeleton + ad + skeleton,
+      featured: skeleton + ad + skeleton,
       standard: skeleton + ad + skeleton,
     }[t.format];
     const slot = `<div class="preview-slot preview-slot--${t.format}">Your creative goes here</div>`;
@@ -66,12 +70,13 @@
       : "";
 
     $("start").min = US.toYmd(US.addDays(US.now(), 1));
+    $("pay-date").max = US.toYmd(US.now());
     if (attempted) validate();
   }
 
   function overlaps(c) {
     const start = US.toDate(c.start);
-    const end = US.endDate(c);
+    const end = US.addDays(start, c.days);
     return US.campaigns().filter((o) => o.type === c.type && US.toDate(o.start) < end && US.endDate(o) > start);
   }
 
@@ -89,7 +94,10 @@
       setInvalid("f-creative", !creative && !useSample),
       setInvalid("f-url", !urlOk),
       setInvalid("f-start", !c.start || c.start < tomorrow),
-      setInvalid("f-confirm", !$("confirm").checked),
+      setInvalid("f-pay-by", !c.payment.by),
+      setInvalid("f-pay-date", !c.payment.date || c.payment.date > US.toYmd(US.now())),
+      setInvalid("f-pay-method", !c.payment.method),
+      setInvalid("f-pay-ref", !c.payment.ref),
     ];
     return !errors.some(Boolean);
   }
@@ -147,8 +155,8 @@
 
   $("types").addEventListener("change", () => { renderDurations(); render(); });
   $("durations").addEventListener("change", render);
-  ["advertiser", "start", "url"].forEach((id) => $(id).addEventListener("input", render));
-  $("confirm").addEventListener("change", render);
+  ["advertiser", "start", "url", "pay-by", "pay-date", "pay-ref"].forEach((id) => $(id).addEventListener("input", render));
+  $("pay-method").addEventListener("change", render);
   document.addEventListener("us:change", render);
 
   $("form").addEventListener("submit", (e) => {
@@ -157,9 +165,10 @@
     if (!validate()) {
       const first = document.querySelector(".field--invalid");
       first?.scrollIntoView({ block: "center", behavior: "smooth" });
-      first?.querySelector("input:not([hidden]), button")?.focus({ preventScroll: true });
+      first?.querySelector("input:not([hidden]), select, button")?.focus({ preventScroll: true });
       return;
     }
+    // Scheduled straight away: the list opens with the new campaign highlighted.
     const saved = US.addCampaign(draft());
     if (!saved) {
       US.toast("Browser storage is full. Use a smaller image or press Reset.");

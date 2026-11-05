@@ -8,42 +8,42 @@
   <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
   <title>Watch – UltraStream design</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/base.css">
   <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="css/watch.css">
 </head>
-<body>
+<body class="watch-page">
   <div class="stage">
     <main class="phone" aria-label="Watch">
-      <header class="topbar">
-        <a class="icon-btn" href="discover.html" aria-label="Back to Discover">
-          <i class="icon" data-lucide="arrow-left"></i>
-        </a>
-      </header>
       <div class="player" id="player"></div>
-      <section class="watch">
-        <h1 class="watch__title" id="title"></h1>
-        <div class="card__sub" id="sub"></div>
-        <div class="owner">
-          <span class="avatar" id="avatar"></span>
-          <span class="owner__text"><span class="owner__name" id="channel"></span><span id="handle"></span><br>90k followers • 245 following</span>
-          <button data-todo class="btn btn--primary" type="button">Follow</button>
-        </div>
-        <div class="actions-row">
-          <button data-todo class="pill-btn pill-btn--on" type="button" aria-label="Like, 12.5k"><i class="icon" data-lucide="thumbs-up"></i>12.5k</button>
-          <button data-todo class="pill-btn" type="button" aria-label="Dislike"><i class="icon" data-lucide="thumbs-down"></i></button>
-          <button data-todo class="pill-btn" type="button" aria-label="Comments, 200"><i class="icon" data-lucide="message-circle"></i>200</button>
-          <button data-todo class="pill-btn" type="button"><i class="icon" data-lucide="hand-coins"></i>Reward</button>
-          <button data-todo class="pill-btn" type="button" aria-label="Share"><i class="icon" data-lucide="share"></i></button>
-          <button data-todo class="pill-btn" type="button" aria-label="Report"><i class="icon" data-lucide="flag"></i></button>
-        </div>
-        <div class="description">A sample description for this video. Real descriptions can run up to 250 characters.</div>
-      </section>
+      <a class="icon-btn icon-btn--boxed player__back" href="discover.html" aria-label="Back to Discover"><i class="icon" data-lucide="chevron-left"></i></a>
+      <div class="watch-body" id="watch-body">
+        <section class="watch">
+          <div><h1 class="watch__title" id="title"></h1><p class="watch__meta" id="sub"></p></div>
+          <div class="owner">
+            <a class="owner__profile" id="owner-link" href="channel.html">
+              <span class="avatar" id="avatar"></span>
+              <span class="owner__text"><span class="owner__name" id="channel"></span><span id="handle"></span></span>
+            </a>
+            <button class="btn btn--primary" type="button" id="follow">Follow</button>
+          </div>
+          <div class="actions-row" id="actions">
+            <span class="pill-group" id="rate"><button class="pill-btn" type="button" id="like" aria-pressed="false" aria-label="Like, 12.5K"><i class="icon" data-lucide="thumbs-up"></i><span id="like-count">12.5K</span></button><button class="pill-btn pill-btn--icon" type="button" id="dislike" aria-pressed="false" aria-label="Dislike"><i class="icon" data-lucide="thumbs-down"></i></button></span>
+            <button class="pill-btn" type="button" id="comments-btn" aria-label="Comments, 4"><i class="icon" data-lucide="message-circle"></i><span id="comment-count">4</span></button>
+            <button class="pill-btn pill-btn--reward" type="button" id="reward-btn"><i class="icon" data-lucide="hand-coins"></i>Reward</button>
+            <button class="pill-btn pill-btn--share" type="button" id="share-btn" aria-label="Share"><i class="icon" data-lucide="share"></i></button>
+          </div>
+          <div class="description" id="description"></div>
+          <h2 class="section-title">Related Videos</h2>
+          <div class="related" id="related"></div>
+        </section>
+      </div>
     </main>
   </div>
 
   <script src="../assets/vendor/lucide.min.js"></script>
   <script src="../assets/js/app.js"></script>
-  <script>US.renderWatch();</script>
+  <script src="js/watch.js"></script>
 </body>
 </html>
